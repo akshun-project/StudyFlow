@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { SignInButton, UserButton, useUser } from "@clerk/clerk-react";
+
 export default function Hero() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { isSignedIn } = useUser(); // check if user is signed in
@@ -143,7 +144,7 @@ export default function Hero() {
             Take Quiz Now
           </button>
 
-          <button className="group px-7 py-2.5 flex items-center gap-2 font-medium">
+          <button  onClick={() => navigate("/faq")}   className="group px-7 py-2.5 flex items-center gap-2 font-medium">
             Learn More
             <svg
               className="group-hover:translate-x-1 transition pt-0.5"
