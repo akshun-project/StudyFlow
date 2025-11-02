@@ -91,7 +91,8 @@ export default function Hero() {
         {/* Desktop: Login / Avatar */}
         <div className="hidden md:flex items-center">
           {!isSignedIn ? (
-            <SignInButton mode="modal">
+            <SignInButton mode="modal" redirectUrl={window.location.pathname}>
+
               <button className="group flex items-center gap-2 px-5 py-2 text-base border rounded-md hover:bg-indigo-50">
                 Log In
               </button>
