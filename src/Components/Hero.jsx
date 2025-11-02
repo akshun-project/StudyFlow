@@ -97,7 +97,7 @@ export default function Hero() {
               </button>
             </SignInButton>
           ) : (
-            <UserButton afterSignOutUrl="/" />
+            <UserButton redirectUrl="/" />
           )}
         </div>
       </nav>
@@ -133,7 +133,7 @@ export default function Hero() {
           Plan. Learn. Quiz. Maintain Your Study Streak
         </h1>
         <p className="max-w-xl text-center mt-8 px-4 text-gray-900">
-          Build your daily study schedule, take quizzes in the evening, and
+          Build your daily study schedule, take quizzes anytime, and
           track your progress effortlessly with StudyFlow.
         </p>
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
@@ -144,7 +144,10 @@ export default function Hero() {
             Take Quiz Now
           </button>
 
-          <button  onClick={() => navigate("/faq")}   className="group px-7 py-2.5 flex items-center gap-2 font-medium">
+          <button
+            onClick={() => navigate("/faq")}
+            className="group px-7 py-2.5 flex items-center gap-2 font-medium"
+          >
             Learn More
             <svg
               className="group-hover:translate-x-1 transition pt-0.5"
