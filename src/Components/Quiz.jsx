@@ -1,11 +1,26 @@
 // src/components/Quiz.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import client from "../geminiClient/gemini";
-import { supabase } from "../Supabase/supabaseClient"; // named import (must match file above)
+import { supabase } from "../Supabase/supabaseClient";
 import { useUser } from "@clerk/clerk-react";
+import { useNavigate } from "react-router-dom";
+
+/**
+ * Notes:
+ * - Ensure your router defines: <Route path="/quiz-explain/:quizId" element={<QuizExplain/>} />
+ * - classData must be defined (you already have it).
+ */
 
 export default function Quiz() {
   const { user } = useUser();
+
+  let navigate = null;
+  try {
+    navigate = useNavigate();
+  } catch (e) {
+    navigate = null;
+  }
+
   const [step, setStep] = useState(1);
   const [checkedResponse, setCheckedResponse] = useState(null);
   const [studentClass, setStudentClass] = useState("");
@@ -21,15 +36,27 @@ export default function Quiz() {
   const [timeSeconds, setTimeSeconds] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
 
-  React.useEffect(() => {
+  // store last saved quiz_data id so explanations link to it
+  const [quizResultId, setQuizResultId] = useState(null);
+
+  // track user's per-question chosen options
+  const [userAnswers, setUserAnswers] = useState([]);
+
+  // simple notification popup system
+  const [notifications, setNotifications] = useState([]);
+  const pushNotification = (msg, type = "info", ttl = 3500) => {
+    const id = Date.now() + Math.random();
+    setNotifications((n) => [...n, { id, msg, type }]);
+    setTimeout(() => {
+      setNotifications((n) => n.filter((x) => x.id !== id));
+    }, ttl);
+  };
+
+  useEffect(() => {
     let interval = null;
-
     if (timerRunning) {
-      interval = setInterval(() => {
-        setTimeSeconds((t) => t + 1);
-      }, 1000);
+      interval = setInterval(() => setTimeSeconds((t) => t + 1), 1000);
     }
-
     return () => clearInterval(interval);
   }, [timerRunning]);
 
@@ -379,6 +406,10 @@ export default function Quiz() {
     setSelectedOption(null);
     setScore(0);
     setError("");
+    setQuizResultId(null);
+    setUserAnswers([]);
+    setTimeSeconds(0);
+    setTimerRunning(false);
   };
 
   async function extractTextFromResponse(gemResp) {
@@ -395,6 +426,7 @@ export default function Quiz() {
     return "";
   }
 
+  // generate quiz with Gemini
   const generateQuizWithGemini = async () => {
     setError("");
     if (!studentClass || subjects.length === 0) {
@@ -453,7 +485,7 @@ Return ONLY JSON:
         ];
       }
 
-      // Normalize minimal shape if needed (ensure options array)
+      // normalize to ensure 4 options and A-D answer
       const normalized = parsed.map((q) => {
         const question = q.question || q.prompt || "Question";
         let options = q.options || q.choices || [];
@@ -487,6 +519,7 @@ Return ONLY JSON:
     }
   };
 
+  // original choose (kept for reference) - but rendering uses the record version
   const handleChoose = (opt) => {
     if (!quiz[currentIndex] || selectedOption) return;
     setSelectedOption(opt);
@@ -504,45 +537,294 @@ Return ONLY JSON:
       if (currentIndex < quiz.length - 1) setCurrentIndex((i) => i + 1);
       else {
         setStep(6);
-        saveQuizResult(); // save on completion
+        saveQuizResult();
         setTimerRunning(false);
       }
     }, 800);
   };
 
-  // ✅ FIXED & CLEAN VERSION → paste this
+  // -- coins and explanation helpers
+  async function getCoins(userId) {
+    try {
+      const { data, error } = await supabase
+        .from("coins")
+        .select("balance")
+        .eq("user_id", userId)
+        .maybeSingle();
+      if (error) {
+        console.warn("getCoins error:", error);
+        return 0;
+      }
+      return data?.balance ?? 0;
+    } catch (e) {
+      console.error("getCoins:", e);
+      return 0;
+    }
+  }
+
+  async function deductCoins(userId, amount) {
+    // simple read-update. For heavy production, do this in DB function to avoid race.
+    try {
+      const { data, error } = await supabase
+        .from("coins")
+        .select("balance")
+        .eq("user_id", userId)
+        .maybeSingle();
+      if (error) throw error;
+      if (!data) {
+        await supabase.from("coins").insert([{ user_id: userId, balance: 0 }]);
+        throw new Error("Insufficient coins");
+      }
+      if ((data.balance || 0) < amount) throw new Error("Insufficient coins");
+      const newBalance = (data.balance || 0) - amount;
+      const { error: updErr } = await supabase
+        .from("coins")
+        .update({ balance: newBalance })
+        .eq("user_id", userId);
+      if (updErr) throw updErr;
+      return newBalance;
+    } catch (err) {
+      throw err;
+    }
+  }
+  async function generateExplanationForQuestion(questionObj, userAnswer) {
+    const prompt = `
+You are a fast and friendly CBSE tutor (class 10–12).
+
+Give the explanation in **exactly 3 numbered points**.
+
+Rules:
+• Total answer must be within 3–4 short lines.
+• No headings, no markdown, no extra text.
+• Use very simple, clear language.
+• Focus only on: student's mistake (or correctness), correct option logic, and a rule.
+
+Explain ONLY these:
+1) Why the student's answer is correct OR incorrect.
+2) Why the correct answer is right (in simple words).
+3) A quick rule/trick to remember for next time.
+
+Question:
+${questionObj.question}
+
+Options:
+${questionObj.options
+  .map((o, i) => `${String.fromCharCode(65 + i)}. ${o}`)
+  .join("\n")}
+
+Correct answer: ${questionObj.answer}
+Student answered: ${userAnswer}
+
+Return ONLY the 3 numbered points in this format:
+1) ...
+2) ...
+3) ...
+`;
+
+    try {
+      const resp = await client.models.generateContent({
+        model: "gemini-2.5-flash",
+        contents: prompt,
+      });
+
+      const text = await extractTextFromResponse(resp);
+      return text?.trim() || "No explanation available.";
+    } catch (e) {
+      console.error("generateExplanationForQuestion error:", e);
+      return "Failed to generate explanation.";
+    }
+  }
+
+  // ---------- save quiz result (returns id and adds +5 coins) ----------
   async function saveQuizResult() {
     try {
       setSaving(true);
-
       if (!user) {
         console.warn("No Clerk user logged in — skipping save.");
         return;
       }
-
       const userId = user.id;
       const topic = subjects.map((s) => `${s}: ${chapters[s]}`).join(", ");
 
-      const { error: insertErr } = await supabase.from("quiz_data").insert([
-        {
-          user_id: userId,
-          topic,
-          score,
-          total_questions: quiz.length,
-          time_seconds: timeSeconds,
-          duration_minutes: Math.round(timeSeconds / 60),
-          created_at: new Date(),
-        },
-      ]);
+      const payload = {
+        user_id: userId,
+        topic,
+        score,
+        total_questions: quiz.length,
+        time_seconds: timeSeconds,
+        duration_minutes: Math.round(timeSeconds / 60),
+        created_at: new Date(),
+      };
 
-      if (insertErr) throw insertErr;
+      const { data, error } = await supabase
+        .from("quiz_data")
+        .insert([payload])
+        .select()
+        .single();
+      if (error) throw error;
+      if (data?.id) setQuizResultId(data.id);
 
-      console.log("✅ Quiz saved successfully!");
+      pushNotification("Quiz saved!", "success", 3000);
+
+      // +5 coins reward
+      const { data: coinRow } = await supabase
+        .from("coins")
+        .select("balance")
+        .eq("user_id", userId)
+        .maybeSingle();
+      if (!coinRow) {
+        await supabase.from("coins").insert([{ user_id: userId, balance: 5 }]);
+      } else {
+        await supabase
+          .from("coins")
+          .update({ balance: (coinRow.balance || 0) + 5 })
+          .eq("user_id", userId);
+      }
+      pushNotification("+5 coins added!", "success", 3000);
     } catch (err) {
-      console.error("❌ Failed to save quiz:", err);
+      console.error("Failed to save quiz:", err);
       setError("Couldn't save quiz data.");
     } finally {
       setSaving(false);
+    }
+  }
+
+  // answer recording version  
+  const handleChooseWithRecord = (opt) => {
+    if (!quiz[currentIndex] || selectedOption) return;
+    setSelectedOption(opt);
+    setUserAnswers((prev) => {
+      const copy = [...prev];
+      copy[currentIndex] = opt;
+      return copy;
+    });
+
+    const correctLetter = (quiz[currentIndex].answer || "").toUpperCase();
+    const idx = quiz[currentIndex].options.indexOf(opt);
+    const selectedLetter = idx >= 0 ? String.fromCharCode(65 + idx) : null;
+    const isCorrect =
+      selectedLetter === correctLetter ||
+      (opt &&
+        opt.toLowerCase() === (quiz[currentIndex].answer || "").toLowerCase());
+    if (isCorrect) setScore((s) => s + 1);
+
+    setTimeout(() => {
+      setSelectedOption(null);
+      if (currentIndex < quiz.length - 1) setCurrentIndex((i) => i + 1);
+      else {
+        setStep(6);
+        saveQuizResult();
+        setTimerRunning(false);
+      }
+    }, 800);
+  };
+
+  // ---------- explanation flow ----------
+  async function explainAndRedirect() {
+    try {
+      setLoading(true);
+      setError("");
+
+      if (!user) {
+        setError("Please login to unlock explanations.");
+        return;
+      }
+      if (!quizResultId) {
+        setError("Quiz hasn't been saved yet. Please wait and try again.");
+        return;
+      }
+
+      // find wrong questions
+      const badList = [];
+      for (let i = 0; i < quiz.length; i++) {
+        const q = quiz[i];
+        const userAns = userAnswers[i] ?? null;
+        const correctIdx = /^[A-D]$/.test((q.answer || "").toUpperCase())
+          ? q.answer.toUpperCase().charCodeAt(0) - 65
+          : -1;
+        const correctOpt = correctIdx >= 0 ? q.options[correctIdx] : null;
+        if (!userAns || userAns !== correctOpt) {
+          badList.push({
+            index: i,
+            question: q.question,
+            options: q.options,
+            user_answer: userAns,
+            correct_answer: correctOpt,
+          });
+        }
+      }
+
+      if (badList.length === 0) {
+        setError("Nice! Everything was correct — no explanations needed.");
+        return;
+      }
+
+      const totalCost = 10; // charge 10 coins total
+      const balance = await getCoins(user.id);
+      if ((balance || 0) < totalCost) {
+        setError(
+          `Not enough coins. You need ${totalCost} coins but have ${balance}.`
+        );
+        return;
+      }
+
+      // deduct once
+      await deductCoins(user.id, totalCost);
+      pushNotification(`-${totalCost} coins`, "info", 2500);
+
+      // Insert placeholders, generate, update rows
+      for (const item of badList) {
+        const { data: inserted, error: insErr } = await supabase
+          .from("quiz_explanations")
+          .insert([
+            {
+              user_id: user.id,
+              quiz_id: quizResultId,
+              question: item.question,
+              user_answer: item.user_answer,
+              correct_answer: item.correct_answer,
+              explanation: "Generating explanation...",
+            },
+          ])
+          .select()
+          .single();
+
+        if (insErr) {
+          console.warn("insert explanation placeholder failed:", insErr);
+          continue;
+        }
+
+        const rowId = inserted.id;
+
+        // generate the explanation
+        const explanationText = await generateExplanationForQuestion(
+          {
+            question: item.question,
+            options: item.options,
+            answer: item.correct_answer,
+          },
+          item.user_answer
+        );
+
+        // update explanation row
+        const { error: updErr } = await supabase
+          .from("quiz_explanations")
+          .update({ explanation: explanationText })
+          .eq("id", rowId);
+
+        if (updErr) console.warn("update explanation failed:", updErr);
+      }
+
+      pushNotification("Explanations ready!", "success", 3000);
+
+      const path = `/quiz-explain/${quizResultId}`;
+      if (navigate) navigate(path);
+      else window.location.href = path;
+    } catch (err) {
+      console.error("explainAndRedirect error:", err);
+      setError("Failed to generate explanations. Try again.");
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -553,11 +835,14 @@ Return ONLY JSON:
     setSubjects([]);
     setChapters({});
     resetQuizState();
+    setUserAnswers([]);
   };
 
+  // ---------- render ----------
   return (
     <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex items-center justify-center p-6">
       <div className="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-6">
+        {/* header */}
         <div className="flex items-center justify-between mb-4">
           <h1 className="text-xl font-bold text-indigo-700">
             StudyFlow — Daily Quiz
@@ -565,6 +850,7 @@ Return ONLY JSON:
           <div className="text-sm text-gray-500">Keep your streak alive ✨</div>
         </div>
 
+        {/* step 1 */}
         {step === 1 && (
           <div className="text-center py-10">
             <h2 className="text-2xl font-semibold mb-3">
@@ -593,6 +879,7 @@ Return ONLY JSON:
           </div>
         )}
 
+        {/* step 2: configure */}
         {step === 2 && (
           <div className="py-6">
             <div
@@ -710,6 +997,7 @@ Return ONLY JSON:
           </div>
         )}
 
+        {/* step 5: quiz taking */}
         {step === 5 && quiz.length > 0 && (
           <div className="py-4">
             <div className="flex justify-between items-center mb-3">
@@ -759,7 +1047,7 @@ Return ONLY JSON:
                       disabled={!!selectedOption}
                       onClick={() => {
                         setSelectedOption(opt);
-                        handleChoose(opt);
+                        handleChooseWithRecord(opt);
                       }}
                       className={`text-left p-3 rounded-md ${style}`}
                     >
@@ -777,6 +1065,7 @@ Return ONLY JSON:
           </div>
         )}
 
+        {/* step 6: results */}
         {step === 6 && (
           <div className="py-6 text-center">
             <h3 className="text-2xl font-bold mb-2">Quiz Completed 🎉</h3>
@@ -798,22 +1087,103 @@ Return ONLY JSON:
                 onClick={() => {
                   setStep(2);
                   resetQuizState();
+                  setUserAnswers([]);
                 }}
                 className="px-5 py-2 bg-indigo-600 text-white rounded-md"
               >
                 Take another quiz
               </button>
               <button
-                onClick={restartAll}
+                onClick={() => navigate("/")}
                 className="px-4 py-2 border rounded-md"
               >
                 Back home
               </button>
             </div>
+
+            <div className="mt-6">
+              <p className="text-sm text-gray-700 mb-2">
+                Want to see why some answers were incorrect?
+              </p>
+              <button
+                onClick={explainAndRedirect}
+                disabled={loading}
+                className="px-6 py-3 bg-yellow-500 text-white rounded-md"
+              >
+                {loading
+                  ? "Preparing explanations..this may take a few seconds."
+                  : "Unlock Explainations (10 coins)"}
+              </button>
+              {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+            </div>
           </div>
         )}
 
         {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
+      </div>
+
+      {/* floating notifications */}
+      <div className="fixed bottom-6 right-6 w-80 space-y-2 z-50">
+        {notifications.map((n) => (
+          <div
+            key={n.id}
+            className="bg-white inline-flex space-x-3 p-3 text-sm rounded border border-gray-200 shadow"
+          >
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 18 18"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16.5 8.31V9a7.5 7.5 0 1 1-4.447-6.855M16.5 3 9 10.508l-2.25-2.25"
+                stroke="#22C55E"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <div className="flex-1">
+              <h3 className="text-slate-700 font-medium">{n.msg}</h3>
+            </div>
+            <button
+              onClick={() =>
+                setNotifications((s) => s.filter((x) => x.id !== n.id))
+              }
+              aria-label="close"
+              className="cursor-pointer mb-auto text-slate-400 hover:text-slate-600 active:scale-95 transition"
+            >
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <rect
+                  y="12.532"
+                  width="17.498"
+                  height="2.1"
+                  rx="1.05"
+                  transform="rotate(-45.74 0 12.532)"
+                  fill="currentColor"
+                  fillOpacity=".7"
+                />
+                <rect
+                  x="12.531"
+                  y="13.914"
+                  width="17.498"
+                  height="2.1"
+                  rx="1.05"
+                  transform="rotate(-135.74 12.531 13.914)"
+                  fill="currentColor"
+                  fillOpacity=".7"
+                />
+              </svg>
+            </button>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -13,13 +13,16 @@ import Footer from "./Components/Footer";
 // ✅ Sync user
 import SyncUserToSupabase from "./Clerk/SyncUserToSupabase";
 
+// ✅ Add this import
+import QuizExplain from "./Components/QuizExplain";
+
 function App() {
   return (
     <>
       <SyncUserToSupabase />
 
       <Routes>
-        {/* ✅ Landing page = All sections together */}
+        {/* ✅ Landing page */}
         <Route
           path="/"
           element={
@@ -32,22 +35,9 @@ function App() {
           }
         />
 
-        {/* ✅ Protected pages */}
+        <Route path="/faq" element={<Faq />} />
 
-
-          <Route
-
-        
-          path="faq"
-          element={
-            
-              <Faq />
-    
-          }
-        />
         <Route
-
-        
           path="/planner"
           element={
             <ProtectedRoute>
@@ -61,6 +51,16 @@ function App() {
           element={
             <ProtectedRoute>
               <Quiz />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ✅ ✅ ✅ Add THIS route for explanations */}
+        <Route
+          path="/quiz-explain/:quizId"
+          element={
+            <ProtectedRoute>
+              <QuizExplain />
             </ProtectedRoute>
           }
         />

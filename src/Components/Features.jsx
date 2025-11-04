@@ -29,7 +29,7 @@ export default function Features() {
                     <div className="space-y-2">
                         <h3 className="text-base font-semibold text-slate-700">Smart Study Planner</h3>
                         <p className="text-sm text-slate-600">
-                            Create daily or weekly study plans that keep you organized and focused.
+                            Create personalised daily study plans instantly and stay organised everyday.
                         </p>
                     </div>
                 </div>
@@ -52,7 +52,7 @@ export default function Features() {
                     <div className="space-y-2">
                         <h3 className="text-base font-semibold text-slate-700">Progress Tracking</h3>
                         <p className="text-sm text-slate-600">
-                            Track completed tasks, subjects, chapters, and improve your study consistency.
+                             Track your streaks, quizzes, and study progress automatically in real time.
                         </p>
                     </div>
                 </div>
@@ -75,7 +75,7 @@ export default function Features() {
                     <div className="space-y-2">
                         <h3 className="text-base font-semibold text-slate-700">Smart Reminders</h3>
                         <p className="text-sm text-slate-600">
-                            Never miss a study session again with automatic reminders and notifications.
+                        Get simple reminders so you never miss your study session again. Stay consistent effortlessly.
                         </p>
                     </div>
                 </div>

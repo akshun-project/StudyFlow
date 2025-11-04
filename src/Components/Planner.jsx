@@ -38,6 +38,7 @@ export default function Planner() {
           "Triangles",
           "Coordinate Geometry",
           "Introduction to Trigonometry",
+          "Some Applications of Trigonometry",
           "Circles",
           "Areas Related to Circles",
           "Surface Areas and Volumes",
