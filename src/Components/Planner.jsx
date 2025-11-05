@@ -1,4 +1,5 @@
-import { useState } from "react";
+ 
+  import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import client from "../geminiClient/gemini";
 import { supabase } from "../Supabase/supabaseClient";
@@ -13,9 +14,7 @@ export default function Planner() {
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState("");
   const [error, setError] = useState("");
-
-  // Data for each class
-  const classData = {
+     const classData = {
     10: {
       subjects: [
         "Math",
@@ -337,7 +336,26 @@ export default function Planner() {
     },
   };
 
-  // Subject toggle
+  // ✅ Fix: Limit max 8 hours + auto round to 0.5
+  const handleDurationChange = (e) => {
+    let value = parseFloat(e.target.value);
+
+    if (isNaN(value)) {
+      setTotalTime("");
+      return;
+    }
+
+    // Round to nearest 0.5 hour
+    value = Math.round(value * 2) / 2;
+
+    // Enforce limits 0.5 → 8
+    if (value < 0.5) value = 0.5;
+    if (value > 8) value = 8;
+
+    setTotalTime(value);
+  };
+
+  // ✅ Subject toggle
   const handleSubjectChange = (subject) => {
     if (subjects.includes(subject)) {
       setSubjects(subjects.filter((s) => s !== subject));
@@ -353,14 +371,19 @@ export default function Planner() {
     setChapters({ ...chapters, [subject]: chapter });
   };
 
-  // Generate & Save Study Plan
+  // ✅ Generate & Save Study Plan
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!studentClass || subjects.length === 0 || !totalTime) {
       alert("Please fill all fields!");
       return;
     }
-
+   for(const subject of subjects){
+    if(!chapters[subject]|| chapters[subject].trim()=== ""){
+      alert(`Please select a chapter for ${subject}`);
+      return ; 
+    }
+   }
     setLoading(true);
     setPlan("");
     setError("");
@@ -368,23 +391,22 @@ export default function Planner() {
     try {
       const prompt = `
 You are a helpful study planner assistant.
-Create a **well-structured, visually clear study plan** for a Class ${studentClass} student.
+Create a well-structured study plan.
 
-Subjects: ${subjects.join(", ")}.
+Class: ${studentClass}
+Subjects: ${subjects.join(", ")}
 Chapters: ${subjects
         .map((s) => `${s}: ${chapters[s] || "all chapters"}`)
-        .join(", ")}.
-Total study time: ${totalTime} hours.
-Start time: ${startTime || "9:00 AM"}.
+        .join(", ")}
+Total Time: ${totalTime} hours
+Start Time: ${startTime || "9:00 AM"}
 
-Output format:
-Return as JSON:
+Output JSON:
 {
   "plan": [
-    { "time": "9:00 AM - 9:45 AM", "subject": "Math", "chapter": "Polynomials", "activity": "Understand formulas 🔢" },
-    { "time": "9:45 AM - 10:30 AM", "subject": "Physics", "chapter": "Electricity", "activity": "Solve examples ⚡" }
+    { "time": "9:00 AM - 9:45 AM", "subject": "Math", "chapter": "Polynomials", "activity": "Understand formulas" }
   ],
-  "note": "Keep short breaks between sessions 🍎"
+  "note": "Keep breaks!"
 }`;
 
       const response = await client.models.generateContent({
@@ -406,17 +428,20 @@ Return as JSON:
 
       // ✅ Save to Supabase
       if (user && parsed.plan) {
-        const { error: dbError } = await supabase.from("planner_data").insert([
-          {
-            user_id: user.id,
-            class: studentClass,
-            subjects,
-            chapters,
-            total_time: totalTime,
-            schedule: JSON.stringify(parsed.plan),
-            created_at: new Date(),
-          },
-        ]);
+        const { error: dbError } = await supabase
+          .from("planner_data")
+          .insert([
+            {
+              user_id: user.id,
+              class: studentClass,
+              subjects,
+              chapters,
+              total_time: totalTime,
+              schedule: JSON.stringify(parsed.plan),
+              created_at: new Date(),
+            },
+          ]);
+
         if (dbError) console.error("Supabase insert error:", dbError);
       }
     } catch (err) {
@@ -507,23 +532,21 @@ Return as JSON:
           <>
             <div>
               <label className="font-medium mb-2 block">
-                Total Study Time (hours)
+                Total Study Time (max 8 hours)
               </label>
               <input
                 type="number"
                 min="0.5"
                 step="0.5"
                 value={totalTime}
-                onChange={(e) => setTotalTime(e.target.value)}
+                onChange={handleDurationChange}
                 placeholder="Enter total hours"
                 className="border p-2 rounded-md w-full"
               />
             </div>
 
             <div>
-              <label className="font-medium mb-2 block">
-                Start Time (optional)
-              </label>
+              <label className="font-medium mb-2 block">Start Time</label>
               <input
                 type="time"
                 value={startTime}
@@ -543,7 +566,6 @@ Return as JSON:
         </button>
       </form>
 
-      {/* Output */}
       {loading && (
         <p className="mt-4 text-indigo-600 animate-pulse">
           🧠 Creating your plan...
