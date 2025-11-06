@@ -1,5 +1,4 @@
- 
-  import { useState } from "react";
+import { useState } from "react";
 import { useUser } from "@clerk/clerk-react";
 import client from "../geminiClient/gemini";
 import { supabase } from "../Supabase/supabaseClient";
@@ -14,7 +13,7 @@ export default function Planner() {
   const [loading, setLoading] = useState(false);
   const [plan, setPlan] = useState("");
   const [error, setError] = useState("");
-     const classData = {
+  const classData = {
     10: {
       subjects: [
         "Math",
@@ -378,12 +377,12 @@ export default function Planner() {
       alert("Please fill all fields!");
       return;
     }
-   for(const subject of subjects){
-    if(!chapters[subject]|| chapters[subject].trim()=== ""){
-      alert(`Please select a chapter for ${subject}`);
-      return ; 
+    for (const subject of subjects) {
+      if (!chapters[subject] || chapters[subject].trim() === "") {
+        alert(`Please select a chapter for ${subject}`);
+        return;
+      }
     }
-   }
     setLoading(true);
     setPlan("");
     setError("");
@@ -428,19 +427,17 @@ Output JSON:
 
       // ✅ Save to Supabase
       if (user && parsed.plan) {
-        const { error: dbError } = await supabase
-          .from("planner_data")
-          .insert([
-            {
-              user_id: user.id,
-              class: studentClass,
-              subjects,
-              chapters,
-              total_time: totalTime,
-              schedule: JSON.stringify(parsed.plan),
-              created_at: new Date(),
-            },
-          ]);
+        const { error: dbError } = await supabase.from("planner_data").insert([
+          {
+            user_id: user.id,
+            class: studentClass,
+            subjects,
+            chapters,
+            total_time: totalTime,
+            schedule: JSON.stringify(parsed.plan),
+            created_at: new Date(),
+          },
+        ]);
 
         if (dbError) console.error("Supabase insert error:", dbError);
       }

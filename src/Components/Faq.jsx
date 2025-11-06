@@ -1,4 +1,5 @@
-import React from "react";
+ import React from "react";
+import { motion } from "framer-motion";
 
 const Faq = () => {
   const [openIndex, setOpenIndex] = React.useState(null);
@@ -25,7 +26,7 @@ const Faq = () => {
         "Coins prevent misuse and keep systems stable. It also motivates students to stay active.",
     },
     {
-      question: "Why does creating a quiz or plan take 20–25 seconds?",
+      question: "Why does creating a quiz or plan take 15–20 seconds?",
       answer:
         "StudyFlow generates accurate questions and plans, which need a few seconds to process.",
     },
@@ -42,28 +43,35 @@ const Faq = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center text-center text-slate-800 px-3 py-12">
-      {/* Header */}
-      <p className="text-base font-medium text-indigo-600">FAQ</p>
-      <h1 className="text-3xl md:text-4xl font-semibold mt-2">
+    <section className="py-20 px-6 max-w-4xl mx-auto flex flex-col items-center text-center text-slate-800">
+      <p className="text-sm font-semibold uppercase text-indigo-600 tracking-wider">
+        FAQ
+      </p>
+      <h1 className="text-2xl md:text-5xl font-semibold mt-2 leading-tight">
         Frequently Asked Questions
       </h1>
-      <p className="text-sm text-slate-500 mt-4 max-w-sm">
+      <p className="text-sm text-slate-600 mt-3 max-w-sm">
         Quick answers to help you understand StudyFlow better.
       </p>
 
-      {/* FAQ List */}
       <div className="max-w-xl w-full mt-8 flex flex-col gap-4 items-start text-left">
         {faqsData.map((faq, index) => (
-          <div key={index} className="flex flex-col items-start w-full">
-            {/* Question Box */}
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            viewport={{ once: true }}
+            className="flex flex-col items-start w-full"
+          >
             <div
-              className="flex items-center justify-between w-full cursor-pointer bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 p-4 rounded-lg"
+              className="flex items-center justify-between w-full cursor-pointer bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 p-4 rounded-lg hover:shadow-md hover:border-indigo-200 transition-all"
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
             >
-              <h2 className="text-sm font-medium">{faq.question}</h2>
+              <h2 className="text-base font-medium text-slate-800">
+                {faq.question}
+              </h2>
 
-              {/* Icon */}
               <svg
                 width="18"
                 height="18"
@@ -72,7 +80,7 @@ const Faq = () => {
                 xmlns="http://www.w3.org/2000/svg"
                 className={`${
                   openIndex === index ? "rotate-180" : ""
-                } transition-all duration-500 ease-in-out`}
+                } transition-transform duration-500 ease-in-out`}
               >
                 <path
                   d="m4.5 7.2 3.793 3.793a1 1 0 0 0 1.414 0L13.5 7.2"
@@ -84,7 +92,6 @@ const Faq = () => {
               </svg>
             </div>
 
-            {/* Answer */}
             <p
               className={`text-sm text-slate-500 px-4 transition-all duration-500 ease-in-out overflow-hidden ${
                 openIndex === index
@@ -94,10 +101,10 @@ const Faq = () => {
             >
               {faq.answer}
             </p>
-          </div>
+          </motion.div>
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 

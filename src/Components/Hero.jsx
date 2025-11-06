@@ -1,141 +1,82 @@
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+ import { useState, useEffect } from "react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { SignInButton, UserButton, useUser } from "@clerk/clerk-react";
-import { supabase } from "../Supabase/supabaseClient";  
+import { supabase } from "../Supabase/supabaseClient";
+import { motion } from "framer-motion";
 
 export default function Hero() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [coins, setCoins] = useState(0);
-
   const { isSignedIn, user } = useUser();
   const navigate = useNavigate();
+  const location = useLocation();
 
-  // ✅ Fetch coins from Supabase
   useEffect(() => {
     if (!isSignedIn || !user) return;
-
     async function fetchCoins() {
       const { data } = await supabase
         .from("coins")
         .select("balance")
         .eq("user_id", user.id)
         .single();
-
       if (data) setCoins(data.balance || 0);
     }
-
     fetchCoins();
   }, [isSignedIn, user]);
 
+  const fadeUp = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: "easeOut" } },
+  };
+
   return (
-    <div className="bg-[url(https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/gradientBackground.png)] text-sm text-gray-500">
+    <main className="relative min-h-screen bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/gradientBackground.png')] bg-cover bg-center text-gray-700 overflow-hidden">
+
       {/* ✅ Navbar */}
-      {/* ✅ NAVBAR FIXED */}
-      <nav className="flex items-center justify-between px-5 md:px-16 lg:px-24 xl:px-32 py-6 border-b border-gray-300 font-medium relative z-10 bg-white/80 backdrop-blur-md">
-        {/* ✅ LEFT — LOGO */}
-        <Link to="/" className="font-bold text-2xl text-indigo-700">
-          StudyFlow
-        </Link>
-
-        {/* ✅ CENTER — DESKTOP MENU */}
-        <ul className="hidden md:flex gap-10 text-[1vw] font-medium">
-          <li>
-            <Link className="hover:text-indigo-600" to="/">
-              Home
-            </Link>
-          </li>
-          <li>
-            <Link className="hover:text-indigo-600" to="/planner">
-              Planner
-            </Link>
-          </li>
-          <li>
-            <Link className="hover:text-indigo-600" to="/quiz">
-              Quiz
-            </Link>
-          </li>
-          <li>
-            <Link className="hover:text-indigo-600" to="/dashboard">
-              Dashboard
-            </Link>
-          </li>
-        </ul>
-
-        {/* ✅ RIGHT — COINS + LOGIN + HAMBURGER */}
-        <div className="flex items-center gap-7">
-          {/* ✅ Coins ALWAYS visible (desktop + mobile) */}
-          {isSignedIn && (
-            <div className="flex items-center gap-1 bg-yellow-100 px-3  rounded-full border border-yellow-300">
-              <span className="text-yellow-700 text-sm font-semibold">
-                {coins}
-              </span>
-              <span className="text-yellow-600 text-lg">🪙</span>
-            </div>
-          )}
-
-          {/*  Desktop Login / Avatar */}
-          <div className="hidden md:block">
-            {!isSignedIn ? (
-              <SignInButton mode="modal">
-                <button className="px-5 py-2 border rounded-md hover:bg-indigo-50">
-                  Log In
-                </button>
-              </SignInButton>
-            ) : (
-              <UserButton afterSignOutUrl="/" />
-            )}
-          </div>
-
-          {/*  Hamburger (Mobile Only) */}
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden text-gray-700 focus:outline-none"
+      <header className="fixed top-0 left-0 w-full z-20 bg-white/70 backdrop-blur-md border-b border-gray-200 shadow-sm">
+        <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 py-5 font-medium">
+          <Link
+            to="/"
+            className="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600"
           >
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              viewBox="0 0 24 24"
-            >
-              <path
-                d="M4 6h16M4 12h16M4 18h16"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
-        </div>
+            StudyFlow
+          </Link>
 
-        {/*  Mobile Menu (opens BELOW navbar) */}
-        {menuOpen && (
-          <ul className="md:hidden absolute top-full left-0 w-full bg-white shadow-md flex flex-col gap-6 text-base px-6 py-6 z-50">
-            <li>
-              <Link to="/" onClick={() => setMenuOpen(false)}>
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link to="/planner" onClick={() => setMenuOpen(false)}>
-                Planner
-              </Link>
-            </li>
-            <li>
-              <Link to="/quiz" onClick={() => setMenuOpen(false)}>
-                Quiz
-              </Link>
-            </li>
-            <li>
-              <Link to="/dashboard" onClick={() => setMenuOpen(false)}>
-                Dashboard
-              </Link>
-            </li>
+          <ul className="hidden md:flex gap-10 text-base font-medium">
+            {["/", "/planner", "/quiz", "/dashboard"].map((path, idx) => (
+              <li key={idx}>
+                <Link
+                  to={path}
+                  className={`relative transition-all ${
+                    location.pathname === path
+                      ? "text-indigo-700 font-semibold after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[2px] after:bg-indigo-600 after:rounded-full"
+                      : "hover:text-indigo-600"
+                  }`}
+                >
+                  {path === "/" ? "Home" : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
+                </Link>
+              </li>
+            ))}
+          </ul>
 
-            {/* ✅ Mobile Login / Avatar */}
-            <div className="mt-4">
+          <div className="flex items-center gap-6">
+            {isSignedIn && (
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                className="flex items-center gap-1 bg-yellow-100 px-3 py-1 rounded-full border border-yellow-300 shadow-sm"
+              >
+                <span className="text-yellow-700 text-sm font-semibold">{coins}</span>
+                <span className="text-yellow-600 text-lg animate-bounce">🪙</span>
+              </motion.div>
+            )}
+
+            <div className="hidden md:block">
               {!isSignedIn ? (
                 <SignInButton mode="modal">
-                  <button className="px-4 py-2 border rounded-md hover:bg-indigo-50">
+                  <button
+                    aria-label="Log in to StudyFlow"
+                    className="px-5 py-2 border border-indigo-300 rounded-lg text-indigo-700 hover:bg-indigo-50 transition-all font-medium"
+                  >
                     Log In
                   </button>
                 </SignInButton>
@@ -143,17 +84,73 @@ export default function Hero() {
                 <UserButton afterSignOutUrl="/" />
               )}
             </div>
-          </ul>
-        )}
-      </nav>
+
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              aria-label="Toggle menu"
+              className="md:hidden text-gray-700 focus:outline-none"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M4 6h16M4 12h16M4 18h16"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </div>
+
+          {menuOpen && (
+            <motion.ul
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="md:hidden absolute top-full left-0 w-full bg-white shadow-md flex flex-col gap-5 text-base px-6 py-6 border-t border-gray-200 z-50"
+            >
+              {["/", "/planner", "/quiz", "/dashboard"].map((path, idx) => (
+                <li key={idx}>
+                  <Link
+                    to={path}
+                    onClick={() => setMenuOpen(false)}
+                    className="hover:text-indigo-600 transition"
+                  >
+                    {path === "/" ? "Home" : path.slice(1).charAt(0).toUpperCase() + path.slice(2)}
+                  </Link>
+                </li>
+              ))}
+              <div className="mt-4">
+                {!isSignedIn ? (
+                  <SignInButton mode="modal">
+                    <button className="w-full px-4 py-2 border rounded-lg hover:bg-indigo-50 transition">
+                      Log In
+                    </button>
+                  </SignInButton>
+                ) : (
+                  <UserButton afterSignOutUrl="/" />
+                )}
+              </div>
+            </motion.ul>
+          )}
+        </nav>
+      </header>
 
       {/* ✅ Hero Section */}
-      <div className="h-screen flex flex-col justify-center items-center px-4 text-center relative">
-        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-9 border border-gray-500/30 rounded-full bg-gray-300/15 pl-4 p-1 text-sm text-gray-800 max-w-full">
+      <section className="h-screen flex flex-col justify-center items-center text-center px-6 pt-24 max-w-4xl mx-auto">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          className="flex flex-wrap items-center justify-center gap-2 mb-6 border border-gray-300/50 rounded-full bg-gray-100/40 pl-4 p-1 text-sm text-gray-800"
+        >
           <p>Make your study plan today!</p>
-          <div
+          <button
             onClick={() => navigate("/planner")}
-            className="flex items-center cursor-pointer gap-2 bg-white border border-gray-500/30 rounded-2xl px-3 py-1 whitespace-nowrap"
+            className="flex items-center gap-2 bg-white border border-gray-300/70 rounded-2xl px-3 py-1 shadow-sm hover:shadow-md transition"
           >
             <p>Explore</p>
             <svg
@@ -171,29 +168,49 @@ export default function Hero() {
                 strokeLinejoin="round"
               />
             </svg>
-          </div>
-        </div>
+          </button>
+        </motion.div>
 
-        <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold max-w-4xl text-gray-800">
-          Plan. Learn. Quiz. Maintain Your Study Streak
-        </h1>
+        <motion.h1
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.2 }}
+          className="text-4xl sm:text-5xl md:text-6xl font-bold max-w-4xl text-gray-800 leading-tight"
+        >
+          <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">
+            Plan. Learn. Quiz.
+          </span>{" "}
+          Build Your Study Flow.
+        </motion.h1>
 
-        <p className="max-w-xl text-center mt-8 px-4 text-gray-900">
-          Build your daily study schedule, take quizzes anytime, and track your
-          progress effortlessly with StudyFlow.
-        </p>
+        <motion.p
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.4 }}
+          className="max-w-lg mt-10 text-gray-600 text-base md:text-lg leading-relaxed"
+        >
+          Stay consistent, study smarter, and feel proud of your progress with StudyFlow.
+        </motion.p>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-6">
+        <motion.div
+          variants={fadeUp}
+          initial="hidden"
+          animate="visible"
+          transition={{ delay: 0.6 }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8"
+        >
           <button
             onClick={() => navigate("/quiz")}
-            className="px-7 py-3 rounded bg-indigo-600 hover:bg-indigo-700 text-white font-medium"
+            className="px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition transform text-white font-semibold shadow-md hover:shadow-lg"
           >
             Take Quiz Now
           </button>
 
           <button
             onClick={() => navigate("/faq")}
-            className="group px-7 py-2.5 flex items-center gap-2 font-medium"
+            className="group px-7 py-2.5 flex items-center gap-2 font-medium text-gray-700 hover:text-indigo-600 transition"
           >
             Learn More
             <svg
@@ -213,8 +230,8 @@ export default function Hero() {
               />
             </svg>
           </button>
-        </div>
-      </div>
-    </div>
+        </motion.div>
+      </section>
+    </main>
   );
 }

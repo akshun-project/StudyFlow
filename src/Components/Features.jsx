@@ -1,86 +1,107 @@
-import React from 'react';
+ import React from "react";
+import { motion } from "framer-motion";
+
 export default function Features() {
-    return (
-        <>
-            <h1 className="text-3xl font-semibold text-center mt-4">
-                Powerful StudyFlow Features
-            </h1>
+  return (
+    <section className="py-20 px-6 max-w-6xl mx-auto text-center">
+      <h1 className="text-3xl font-semibold text-center">
+        Powerful StudyFlow Features
+      </h1>
 
-            <p className="text-sm text-slate-500 text-center mt-2 max-w-md mx-auto">
-                Tools designed to help students plan smarter, stay consistent, and achieve better study outcomes.
+      <p className="text-sm text-slate-700 text-center mt-4 max-w-md mx-auto">
+        Tools designed to help students plan smarter, stay consistent, and achieve better study outcomes.
+      </p>
+
+      <div className="flex items-center justify-center flex-wrap gap-6 mt-14 md:mt-20 px-4 md:px-0">
+        {/* Feature 1 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="flex flex-col text-center items-center justify-center rounded-xl p-6 border border-violet-200 gap-6 max-w-sm transition hover:shadow-lg hover:-translate-y-1 hover:border-violet-300 bg-white/60 backdrop-blur-sm"
+        >
+          <div className="p-6 aspect-square bg-violet-100 rounded-full flex items-center justify-center">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M4 6H20M4 12H20M4 18H14"
+                stroke="#7F22FE"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-slate-800">
+              Smart Study Planner
+            </h3>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Create personalised daily study plans instantly and stay organised everyday.
             </p>
+          </div>
+        </motion.div>
 
-            <div className="flex items-center justify-center flex-wrap gap-6 mt-20 px-4 md:px-0">
+        {/* Feature 2 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="flex flex-col text-center items-center justify-center rounded-xl p-6 border border-green-200 gap-6 max-w-sm transition hover:shadow-lg hover:-translate-y-1 hover:border-green-300 bg-white/60 backdrop-blur-sm"
+        >
+          <div className="p-6 aspect-square bg-green-100 rounded-full flex items-center justify-center">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M5 12l4 4L19 6"
+                stroke="#00A63E"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
 
-                {/* Feature 1 */}
-                <div className="flex flex-col text-center items-center justify-center rounded-xl p-6 border border-violet-200 gap-6 max-w-sm">
-                    <div className="p-6 aspect-square bg-violet-100 rounded-full flex items-center justify-center">
-                        {/* Study Planning Icon */}
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                            <path 
-                                d="M4 6H20M4 12H20M4 18H14" 
-                                stroke="#7F22FE" 
-                                strokeWidth="2" 
-                                strokeLinecap="round"
-                            />
-                        </svg>
-                    </div>
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-slate-800">
+              Progress Tracking
+            </h3>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Track your streaks, quizzes, and study progress automatically in real time.
+            </p>
+          </div>
+        </motion.div>
 
-                    <div className="space-y-2">
-                        <h3 className="text-base font-semibold text-slate-700">Smart Study Planner</h3>
-                        <p className="text-sm text-slate-600">
-                            Create personalised daily study plans instantly and stay organised everyday.
-                        </p>
-                    </div>
-                </div>
+        {/* Feature 3 */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+          viewport={{ once: true }}
+          className="flex flex-col text-center items-center justify-center rounded-xl p-6 border border-orange-200 gap-6 max-w-sm transition hover:shadow-lg hover:-translate-y-1 hover:border-orange-300 bg-white/60 backdrop-blur-sm"
+        >
+          <div className="p-6 aspect-square bg-orange-100 rounded-full flex items-center justify-center">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+              <path
+                d="M12 8v4l2.5 2.5M12 1a9 9 0 1 0 9 9"
+                stroke="#F54900"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
 
-                {/* Feature 2 */}
-                <div className="flex flex-col text-center items-center justify-center rounded-xl p-6 border border-green-200 gap-6 max-w-sm">
-                    <div className="p-6 aspect-square bg-green-100 rounded-full flex items-center justify-center">
-                        {/* Progress Tracking Icon */}
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                            <path 
-                                d="M5 12l4 4L19 6" 
-                                stroke="#00A63E" 
-                                strokeWidth="2" 
-                                strokeLinecap="round" 
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                    </div>
-
-                    <div className="space-y-2">
-                        <h3 className="text-base font-semibold text-slate-700">Progress Tracking</h3>
-                        <p className="text-sm text-slate-600">
-                             Track your streaks, quizzes, and study progress automatically in real time.
-                        </p>
-                    </div>
-                </div>
-
-                {/* Feature 3 */}
-                <div className="flex flex-col text-center items-center justify-center rounded-xl p-6 border border-orange-200 gap-6 max-w-sm">
-                    <div className="p-6 aspect-square bg-orange-100 rounded-full flex items-center justify-center">
-                        {/* Reminder Icon */}
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                            <path 
-                                d="M12 8v4l2.5 2.5M12 1a9 9 0 1 0 9 9" 
-                                stroke="#F54900"
-                                strokeWidth="2"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                            />
-                        </svg>
-                    </div>
-
-                    <div className="space-y-2">
-                        <h3 className="text-base font-semibold text-slate-700">Smart Reminders</h3>
-                        <p className="text-sm text-slate-600">
-                        Get simple reminders so you never miss your study session again. Stay consistent effortlessly.
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-        </>
-    );
+          <div className="space-y-2">
+            <h3 className="text-base font-semibold text-slate-800">
+              Smart Reminders
+            </h3>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Get simple reminders so you never miss your study session again. Stay consistent effortlessly.
+            </p>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  );
 }
