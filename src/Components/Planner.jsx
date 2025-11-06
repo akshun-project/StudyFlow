@@ -504,7 +504,7 @@ Respond strictly as JSON:
         📘 Smart Study Planner
       </h1>
       <p className="text-gray-500 text-sm mb-8">
-        Create your personalized study plan now it only takes a few seconds.
+        Create your personalized study plan now.
       </p>
 
       <form
