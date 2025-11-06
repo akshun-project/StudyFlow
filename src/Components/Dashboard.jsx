@@ -1,8 +1,6 @@
-// src/Components/Dashboard.jsx
 import { useState, useEffect, useCallback } from "react";
-import { useUser } from "@clerk/clerk-react";
+import { useUser, useClerk } from "@clerk/clerk-react";
 import { supabase } from "../Supabase/supabaseClient";
-
 import {
   BarChart3,
   BookOpen,
@@ -11,30 +9,31 @@ import {
   LogOut,
   Trophy,
 } from "lucide-react";
+import { motion } from "framer-motion";
 
-
-const DEFAULT_TOTAL_QUESTIONS = 8;  
+const DEFAULT_TOTAL_QUESTIONS = 8;
 
 export default function Dashboard() {
   const { user } = useUser();
-  const [activeTab, setActiveTab] = useState("overview");
+  const { signOut } = useClerk();
 
+  const [activeTab, setActiveTab] = useState("overview");
   const [quizData, setQuizData] = useState([]);
   const [plannerData, setPlannerData] = useState([]);
   const [streak, setStreak] = useState(0);
-  const [coins, setCoins] = useState(0); // coin balance
+  const [coins, setCoins] = useState(0);
   const [loading, setLoading] = useState(true);
 
   const menuItems = [
     { id: "overview", icon: <BarChart3 size={22} />, label: "Overview" },
     { id: "planner", icon: <ClipboardList size={22} />, label: "Planner" },
     { id: "quiz", icon: <BookOpen size={22} />, label: "Quiz" },
-    { id: "achievements", icon: <Trophy size={22} />, label: "Achievements" },
     { id: "profile", icon: <User size={22} />, label: "Profile" },
+    { id: "achievements", icon: <Trophy size={22} />, label: "Achievements" },
   ];
 
   // --------------------------
-  // Coins helpers (supabase "coins" table expected: user_id, balance)
+  // Supabase helpers
   // --------------------------
   const fetchCoins = async (userId) => {
     try {
@@ -43,79 +42,32 @@ export default function Dashboard() {
         .select("balance")
         .eq("user_id", userId)
         .maybeSingle();
-
-      if (error) {
-        console.warn("coins fetch error:", error);
-        return 0;
-      }
-
+      if (error) return 0;
       if (!data) {
-        // create a row for first-time user
         await supabase.from("coins").insert({ user_id: userId, balance: 0 });
         return 0;
       }
-
       return data.balance ?? 0;
-    } catch (err) {
-      console.error("fetchCoins error:", err);
+    } catch {
       return 0;
     }
   };
 
   const setCoinsInDb = async (userId, newBalance) => {
     try {
-      // upsert-like behavior: try update first, else insert
-      const { error: updErr } = await supabase
+      const { error } = await supabase
         .from("coins")
         .update({ balance: newBalance })
         .eq("user_id", userId);
-
-      if (updErr) {
-        // maybe row doesn't exist, insert
+      if (error) {
         await supabase
           .from("coins")
           .insert({ user_id: userId, balance: newBalance });
       }
       setCoins(newBalance);
-      return newBalance;
-    } catch (err) {
-      console.error("setCoinsInDb error:", err);
-      return null;
-    }
+    } catch {}
   };
 
-  // Add coins (positive amount) — returns new balance or null on error
-  const addCoins = async (amount = 1) => {
-    if (!user) return null;
-    try {
-      const current = await fetchCoins(user.id);
-      const newBalance = (current || 0) + Number(amount || 0);
-      return await setCoinsInDb(user.id, newBalance);
-    } catch (err) {
-      console.error("addCoins error:", err);
-      return null;
-    }
-  };
-
-  // Spend coins (deduct if enough balance). Returns new balance or false if insufficient.
-  const spendCoins = async (amount = 0) => {
-    if (!user) return false;
-    try {
-      const current = await fetchCoins(user.id);
-      const amt = Number(amount || 0);
-      if ((current || 0) < amt) return false;
-      const newBalance = current - amt;
-      await setCoinsInDb(user.id, newBalance);
-      return newBalance;
-    } catch (err) {
-      console.error("spendCoins error:", err);
-      return false;
-    }
-  };
-
-  // --------------------------
-  // fetch function (reusable)
-  // --------------------------
   const loadDashboardData = useCallback(
     async (
       opts = {
@@ -127,45 +79,37 @@ export default function Dashboard() {
     ) => {
       if (!user) return;
       setLoading(true);
-
       try {
         if (opts.fetchPlanner) {
-          const { data: plans, error: pErr } = await supabase
+          const { data } = await supabase
             .from("planner_data")
             .select("*")
             .eq("user_id", user.id)
             .order("created_at", { ascending: false });
-          if (pErr) console.warn("planner_data fetch error:", pErr);
-          setPlannerData(plans || []);
+          setPlannerData(data || []);
         }
 
         if (opts.fetchQuiz) {
-          const { data: quiz, error: qErr } = await supabase
+          const { data } = await supabase
             .from("quiz_data")
             .select("*")
             .eq("user_id", user.id)
             .order("created_at", { ascending: false });
-          if (qErr) console.warn("quiz_data fetch error:", qErr);
-          setQuizData(quiz || []);
+          setQuizData(data || []);
         }
 
         if (opts.fetchStreak) {
-          const { data: streakRow, error: sErr } = await supabase
+          const { data } = await supabase
             .from("streaks")
             .select("*")
             .eq("user_id", user.id)
-            .maybeSingle(); // maybeSingle avoids 406 when no rows
-          if (sErr) console.warn("streaks fetch error:", sErr);
-          if (streakRow) {
-            setStreak(streakRow.current_streak ?? 0);
-          } else {
-            setStreak(0);
-          }
+            .maybeSingle();
+          setStreak(data?.current_streak ?? 0);
         }
 
         if (opts.fetchCoins) {
           const b = await fetchCoins(user.id);
-          setCoins(b || 0);
+          setCoins(b);
         }
       } catch (err) {
         console.error("loadDashboardData error:", err);
@@ -176,170 +120,15 @@ export default function Dashboard() {
     [user]
   );
 
-  // On mount & when user changes: initial load
   useEffect(() => {
     if (!user) return;
     loadDashboardData();
-
-    // update streak (daily-open based) immediately after load (so user opening app counts)
-    (async function updateStreakOnOpen() {
-      try {
-        const today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
-        const yesterdayDate = new Date();
-        yesterdayDate.setDate(yesterdayDate.getDate() - 1);
-        const yesterday = yesterdayDate.toISOString().split("T")[0];
-
-        // fetch single streak row for user
-        const { data: row, error } = await supabase
-          .from("streaks")
-          .select("*")
-          .eq("user_id", user.id)
-          .maybeSingle();
-
-        if (error) {
-          console.warn("streak fetch error:", error);
-        }
-
-        if (!row) {
-          // create first streak record
-          const { error: insertErr } = await supabase.from("streaks").insert({
-            user_id: user.id,
-            last_active: today,
-            current_streak: 1,
-          });
-          if (insertErr) console.warn("streak insert error:", insertErr);
-          setStreak(1);
-        } else {
-          const lastActive = row.last_active
-            ? row.last_active.split("T")[0]
-            : row.last_active;
-          if (lastActive === today) {
-            // already counted today
-            setStreak(row.current_streak ?? 0);
-          } else {
-            // only increment if last_active is yesterday; else reset to 1
-            const newCount =
-              lastActive === yesterday ? (row.current_streak ?? 0) + 1 : 1;
-            const { error: updErr } = await supabase
-              .from("streaks")
-              .update({ current_streak: newCount, last_active: today })
-              .eq("user_id", user.id);
-            if (updErr) console.warn("streak update error:", updErr);
-            setStreak(newCount);
-          }
-        }
-      } catch (err) {
-        console.error("updateStreakOnOpen error:", err);
-      }
-    })();
   }, [user, loadDashboardData]);
 
-  // Real-time subscriptions for quiz_data and planner_data (keeps dashboard live)
-  useEffect(() => {
-    if (!user) return;
-
-    // subscribe to inserts/updates/deletes for quiz_data for this user
-    const quizChannel = supabase
-      .channel(`public:quiz_data:user_${user.id}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "quiz_data",
-          filter: `user_id=eq.${user.id}`,
-        },
-        (payload) => {
-          // when quiz_data changes, reload quiz data (or we could update incrementally)
-          loadDashboardData({
-            fetchPlanner: false,
-            fetchQuiz: true,
-            fetchStreak: false,
-            fetchCoins: false,
-          });
-        }
-      )
-      .subscribe();
-
-    // planner_data realtime
-    const plannerChannel = supabase
-      .channel(`public:planner_data:user_${user.id}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "planner_data",
-          filter: `user_id=eq.${user.id}`,
-        },
-        () => {
-          loadDashboardData({
-            fetchPlanner: true,
-            fetchQuiz: false,
-            fetchStreak: false,
-            fetchCoins: false,
-          });
-        }
-      )
-      .subscribe();
-
-    // streaks realtime update
-    const streakChannel = supabase
-      .channel(`public:streaks:user_${user.id}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "streaks",
-          filter: `user_id=eq.${user.id}`,
-        },
-        (payload) => {
-          const newRow = payload.new;
-          if (newRow?.current_streak != null) setStreak(newRow.current_streak);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      // cleanup subscriptions
-      supabase.removeChannel(quizChannel);
-      supabase.removeChannel(plannerChannel);
-      supabase.removeChannel(streakChannel);
-    };
-  }, [user, loadDashboardData]);
-
-  useEffect(() => {
-    if (!user) return;
-
-    const coinsChannel = supabase
-      .channel(`public:coins:user_${user.id}`)
-      .on(
-        "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "coins",
-          filter: `user_id=eq.${user.id}`,
-        },
-        (payload) => {
-          if (payload?.new?.balance != null) setCoins(payload.new.balance);
-        }
-      )
-      .subscribe();
-
-    return () => {
-      supabase.removeChannel(coinsChannel);
-    };
-  }, [user]);
-
-  if (!user) {
+  if (!user)
     return <div className="p-6">Please log in to view your dashboard.</div>;
-  }
-
   if (loading) return <p className="p-6">Loading...</p>;
 
-  // Accuracy calculation:
   const accuracy =
     quizData.length > 0
       ? Math.round(
@@ -347,14 +136,7 @@ export default function Dashboard() {
             const totalQs =
               Number(q.total_questions) || DEFAULT_TOTAL_QUESTIONS;
             const correct = Number(q.score) || 0;
-
-            // calculate percent for this quiz
-            const percent =
-              totalQs === 0
-                ? 0
-                : Math.min(100, Math.round((correct / totalQs) * 100));
-
-            return sum + percent;
+            return sum + Math.round((correct / totalQs) * 100);
           }, 0) / quizData.length
         )
       : 0;
@@ -364,9 +146,7 @@ export default function Dashboard() {
       {/* Sidebar */}
       <aside className="hidden md:flex flex-col w-64 bg-white shadow-lg border-r">
         <div className="p-6 border-b">
-          <h1 className="text-2xl font-bold text-indigo-600">
-            StudyFlow Dashboard
-          </h1>
+          <h1 className="text-2xl font-bold text-indigo-600">StudyFlow</h1>
         </div>
 
         <nav className="flex flex-col flex-grow p-4 space-y-2">
@@ -374,10 +154,10 @@ export default function Dashboard() {
             <button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-lg text-gray-700 font-medium transition-all duration-200 ${
+              className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
                 activeTab === item.id
-                  ? "bg-indigo-100 text-indigo-700"
-                  : "hover:bg-gray-100"
+                  ? "bg-indigo-100 text-indigo-700 shadow-sm"
+                  : "text-gray-700 hover:bg-gray-100"
               }`}
             >
               {item.icon}
@@ -386,69 +166,86 @@ export default function Dashboard() {
           ))}
         </nav>
 
-        <button className="flex items-center gap-3 p-4 border-t text-red-600 hover:bg-red-50">
+        <button
+          onClick={() => signOut()}
+          className="flex items-center gap-3 p-4 border-t text-red-600 hover:bg-red-50 transition"
+        >
           <LogOut size={22} /> Logout
         </button>
       </aside>
 
       {/* Main */}
       <main className="flex-1 p-6 overflow-y-auto">
+        {/* Overview */}
         {activeTab === "overview" && (
           <section>
-            <h2 className="text-2xl font-semibold mb-4">Overview</h2>
+            <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+              Overview
+            </h2>
 
-            <div className="grid md:grid-cols-4 gap-6">
-              <div className="bg-white rounded-xl shadow p-6">
-                <h3 className="text-gray-500 text-sm">Your Coins</h3>
-                <p className="text-3xl font-bold text-yellow-600 mt-2">
-                  🪙 {coins}
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl shadow p-6">
-                <h3 className="text-gray-500 text-sm">Study Streak</h3>
-                <p className="text-3xl font-bold text-indigo-600 mt-2">
-                  🔥 {streak}
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl shadow p-6">
-                <h3 className="text-gray-500 text-sm">Plans Created</h3>
-                <p className="text-3xl font-bold text-green-600 mt-2">
-                  {plannerData.length}
-                </p>
-              </div>
-
-              <div className="bg-white rounded-xl shadow p-6">
-                <h3 className="text-gray-500 text-sm">Quiz Accuracy</h3>
-                <p className="text-3xl font-bold text-blue-600 mt-2">
-                  {accuracy}%
-                </p>
-              </div>
+            <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+              {[
+                {
+                  label: "Your Coins",
+                  value: `🪙 ${coins}`,
+                  color: "from-yellow-50 to-white",
+                  text: "text-yellow-700",
+                },
+                {
+                  label: "Study Streak",
+                  value: `🔥 ${streak}`,
+                  color: "from-indigo-50 to-white",
+                  text: "text-indigo-700",
+                },
+                {
+                  label: "Plans Created",
+                  value: plannerData.length,
+                  color: "from-green-50 to-white",
+                  text: "text-green-700",
+                },
+                {
+                  label: "Quiz Accuracy",
+                  value: `${accuracy}%`,
+                  color: "from-blue-50 to-white",
+                  text: "text-blue-700",
+                },
+              ].map((card, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ scale: 1.02 }}
+                  className={`bg-gradient-to-br ${card.color} rounded-xl shadow-md p-6 hover:shadow-lg transition`}
+                >
+                  <h3 className="text-gray-500 text-sm font-medium">
+                    {card.label}
+                  </h3>
+                  <p className={`text-3xl font-bold mt-2 ${card.text}`}>
+                    {card.value}
+                  </p>
+                </motion.div>
+              ))}
             </div>
           </section>
         )}
 
+        {/* Planner */}
         {activeTab === "planner" && (
           <section className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold mb-6 text-indigo-700">
               Your Study Plans
             </h2>
-
             {plannerData.length === 0 ? (
               <p className="text-gray-600">No study plans found.</p>
             ) : (
               <div className="space-y-6">
                 {plannerData.map((p) => {
                   const schedule = JSON.parse(p.schedule || "[]");
-
                   return (
                     <div
                       key={p.id}
                       className="bg-white rounded-xl shadow-md border border-gray-200 p-5"
                     >
                       <div className="flex justify-between items-center mb-3">
-                        <h3 className="text-xl font-semibold">
+                        <h3 className="text-xl font-semibold text-gray-800">
                           Class {p.class} —{" "}
                           <span className="text-indigo-600 font-medium">
                             {Array.isArray(p.subjects)
@@ -465,7 +262,7 @@ export default function Dashboard() {
                         {schedule.map((item, index) => (
                           <div
                             key={index}
-                            className="p-4 bg-gray-50 border rounded-lg flex justify-between items-start"
+                            className="p-4 bg-gray-50 border rounded-lg flex justify-between items-start hover:bg-gray-100 transition"
                           >
                             <div>
                               <p className="text-sm font-semibold text-gray-800">
@@ -481,13 +278,9 @@ export default function Dashboard() {
                                 {item.activity}
                               </p>
                             </div>
-
-                            {/* removed checkbox/completion UI as requested */}
-                            <div className="flex flex-col items-center">
-                              <span className="text-xs mt-1 text-gray-500">
-                                Planned
-                              </span>
-                            </div>
+                            <span className="text-xs mt-1 text-gray-500">
+                              Planned
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -499,32 +292,94 @@ export default function Dashboard() {
           </section>
         )}
 
+        {/* Quiz */}
         {activeTab === "quiz" && (
           <section>
-            <h2 className="text-2xl font-semibold mb-4">Quiz Performance</h2>
+            <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+              Quiz Performance
+            </h2>
+
+            {/* ✅ Summary Card */}
+            {quizData.length > 0 && (
+              <div className="mb-6 bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 rounded-lg p-4 flex justify-between items-center">
+                <div>
+                  <h3 className="text-lg font-semibold text-indigo-700">
+                    Total Quizzes: {quizData.length}
+                  </h3>
+                  <p className="text-sm text-gray-600">
+                    Overall Accuracy:{" "}
+                    <span className="font-semibold text-green-600">
+                      {accuracy}%
+                    </span>
+                  </p>
+                </div>
+                <div className="text-3xl">🎯</div>
+              </div>
+            )}
+
+            {/* ✅ Empty State */}
             {quizData.length === 0 ? (
-              <p>No quiz attempts yet.</p>
+              <div className="text-center py-20 bg-white rounded-xl shadow-sm border border-gray-100">
+                <p className="text-4xl mb-3">🧩</p>
+                <h3 className="text-lg font-semibold text-gray-800 mb-1">
+                  No Quiz Attempts Yet
+                </h3>
+                <p className="text-sm text-gray-600 mb-4">
+                  Take your first quiz to start tracking your performance!
+                </p>
+                <button
+                  onClick={() => setActiveTab("quiz")}
+                  className="px-5 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
+                >
+                  Take a Quiz Now
+                </button>
+              </div>
             ) : (
+              /* ✅ Enhanced Quiz Cards */
               <ul className="space-y-4">
                 {quizData.map((q) => {
                   const totalQs = q.total_questions ?? DEFAULT_TOTAL_QUESTIONS;
-                  const percent =
-                    totalQs === 0
-                      ? 0
-                      : Math.round((Number(q.score || 0) / totalQs) * 100);
+                  const percent = Math.round(
+                    (Number(q.score || 0) / totalQs) * 100
+                  );
+
+                  // Color based on performance
+                  const percentColor =
+                    percent >= 80
+                      ? "text-green-600"
+                      : percent >= 50
+                      ? "text-yellow-600"
+                      : "text-red-600";
+
                   return (
-                    <li key={q.id} className="bg-white p-4 rounded-lg shadow">
-                      <p className="font-semibold">
-                        Score: {q.score} / {totalQs} ({percent}%)
+                    <motion.li
+                      key={q.id}
+                      whileHover={{ scale: 1.02 }}
+                      transition={{ duration: 0.2 }}
+                      className="bg-gradient-to-br from-white to-indigo-50 border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition"
+                    >
+                      <div className="flex justify-between items-center mb-2">
+                        <p className="text-lg font-semibold text-gray-800">
+                          Score:{" "}
+                          <span className="text-indigo-700">{q.score}</span> /{" "}
+                          {totalQs}
+                        </p>
+                        <span
+                          className={`text-sm font-semibold ${percentColor}`}
+                        >
+                          {percent}% Accuracy
+                        </span>
+                      </div>
+
+                      <p className="text-sm text-gray-600">
+                        <span className="font-medium">Topic:</span>{" "}
+                        {q.topic || "N/A"}
                       </p>
-                      <p className="text-sm text-gray-500">
+
+                      <p className="text-xs text-gray-400 mt-1">
                         {new Date(q.created_at).toLocaleString()}
                       </p>
-                      <div className="text-xs text-gray-400 mt-1">
-                        Topic: {q.topic}
-                      </div>
-                      {/* hint: quiz explanation unlocking should be implemented in quiz.jsx and call spendCoins(10) */}
-                    </li>
+                    </motion.li>
                   );
                 })}
               </ul>
@@ -533,22 +388,81 @@ export default function Dashboard() {
         )}
 
         {activeTab === "achievements" && (
-          <section>
-            <h2 className="text-2xl font-semibold mb-4">Achievements</h2>
-            <p className="text-gray-600">🏆 Coming soon!</p>
+          <section className="text-center py-20">
+            <div className="flex flex-col items-center justify-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center rounded-full shadow-inner mb-6">
+                <Trophy size={36} className="text-indigo-500" />
+              </div>
+              <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+                Achievements Coming Soon!
+              </h2>
+              <p className="text-gray-600 max-w-md mx-auto text-sm">
+                We're working on adding exciting achievements and rewards to
+                keep you motivated. Stay tuned they'll appear here soon! 🚀
+              </p>
+            </div>
           </section>
         )}
 
+        {/* Profile */}
         {activeTab === "profile" && (
-          <section>
-            <h2 className="text-2xl font-semibold mb-4">Profile</h2>
-            <p className="text-gray-600">Welcome, {user.fullName}</p>
+          <section className="max-w-3xl mx-auto">
+            <h2 className="text-2xl font-semibold mb-6 text-gray-800">
+              Your Profile
+            </h2>
+
+            <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
+              {/* User avatar */}
+              <img
+                src={user.imageUrl}
+                alt={user.fullName}
+                className="w-20 h-20 rounded-full border-2 border-indigo-500 shadow-sm"
+              />
+
+              <div className="text-center sm:text-left">
+                <h3 className="text-xl font-semibold text-gray-800">
+                  {user.fullName} 👋
+                </h3>
+                <p className="text-sm text-gray-500 mt-1">
+                  {user.primaryEmailAddress?.emailAddress}
+                </p>
+
+                <p className="mt-4 text-gray-600 text-sm leading-relaxed">
+                  Welcome back to{" "}
+                  <span className="font-medium text-indigo-600">StudyFlow</span>
+                  . You're doing great — stay consistent, keep learning, and
+                  track your progress easily.
+                </p>
+              </div>
+            </div>
+
+            {/* Small Stats Cards */}
+            <div className="grid sm:grid-cols-3 gap-4 mt-8">
+              <div className="bg-indigo-50 rounded-lg p-4 text-center border border-indigo-100">
+                <p className="text-lg font-semibold text-indigo-700">
+                  {plannerData.length}
+                </p>
+                <p className="text-sm text-gray-600">Plans Created</p>
+              </div>
+              <div className="bg-green-50 rounded-lg p-4 text-center border border-green-100">
+                <p className="text-lg font-semibold text-green-700">
+                  {quizData.length}
+                </p>
+                <p className="text-sm text-gray-600">Quizzes Taken</p>
+              </div>
+              <div className="bg-yellow-50 rounded-lg p-4 text-center border border-yellow-100">
+                <p className="text-lg font-semibold text-yellow-700">
+                  {streak}
+                </p>
+                <p className="text-sm text-gray-600">Day Streak</p>
+              </div>
+            </div>
           </section>
         )}
       </main>
 
-      {/* mobile nav */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t flex justify-around py-2 shadow-lg">
+      {/* Mobile nav */}
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t flex justify-around py-2 shadow-lg">
         {menuItems.map((item) => (
           <button
             key={item.id}
