@@ -1,658 +1,167 @@
-// src/components/Quiz.jsx
-import React, { useState, useEffect } from "react";
-import client from "../geminiClient/gemini";
-import { supabase } from "../Supabase/supabaseClient";
+ // src/Components/Quiz.jsx
+import React, { useState, useEffect, useRef } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../Supabase/supabaseClient";
+import client from "../geminiClient/gemini";
+import classData from "./classData";
 
-/**
- * Notes:
- * - Ensure your router defines: <Route path="/quiz-explain/:quizId" element={<QuizExplain/>} />
- * - classData must be defined (you already have it).
- */
+// Components
+import QuizSetup from "./QuizSetup";
+import QuizPlay from "./QuizPlay";
+import QuizResult from "./QuizResult";
+
+// Coin utils
+import { addCoins, getCoins, deductCoins } from "../utils/coinUtils";
 
 export default function Quiz() {
   const { user } = useUser();
+  const navigate = useNavigate();
 
-  let navigate = null;
-  try {
-    navigate = useNavigate();
-  } catch (e) {
-    navigate = null;
-  }
-
+  // --- STATE ---
   const [step, setStep] = useState(1);
-  const [checkedResponse, setCheckedResponse] = useState(null);
   const [studentClass, setStudentClass] = useState("");
   const [subjects, setSubjects] = useState([]);
   const [chapters, setChapters] = useState({});
-  const [loading, setLoading] = useState(false);
   const [quiz, setQuiz] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [score, setScore] = useState(0);
-  const [error, setError] = useState("");
-  const [saving, setSaving] = useState(false);
   const [timeSeconds, setTimeSeconds] = useState(0);
   const [timerRunning, setTimerRunning] = useState(false);
-
-  // store last saved quiz_data id so explanations link to it
+  const [loading, setLoading] = useState(false);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState("");
   const [quizResultId, setQuizResultId] = useState(null);
-
-  // track user's per-question chosen options
   const [userAnswers, setUserAnswers] = useState([]);
 
-  // simple notification popup system
-  const [notifications, setNotifications] = useState([]);
-  const pushNotification = (msg, type = "info", ttl = 3500) => {
-    const id = Date.now() + Math.random();
-    setNotifications((n) => [...n, { id, msg, type }]);
-    setTimeout(() => {
-      setNotifications((n) => n.filter((x) => x.id !== id));
-    }, ttl);
-  };
+  const timerRef = useRef(0);
 
+  // --- TIMER ---
   useEffect(() => {
-    let interval = null;
+    let interval;
     if (timerRunning) {
-      interval = setInterval(() => setTimeSeconds((t) => t + 1), 1000);
+      interval = setInterval(() => {
+        setTimeSeconds((t) => {
+          const next = t + 1;
+          timerRef.current = next;
+          return next;
+        });
+      }, 1000);
     }
     return () => clearInterval(interval);
   }, [timerRunning]);
 
-  const classData = {
-    10: {
-      subjects: [
-        "Math",
-        "Physics",
-        "Chemistry",
-        "Biology",
-        "English",
-        "History",
-        "Geography",
-        "PoliticalScience",
-        "Economics",
-      ],
-      chapters: {
-        Math: [
-          "Chapter 1: Real Numbers",
-          "Chapter 2: Polynomials",
-          "Chapter 3: Pair Of Linear Equations In Two Variables",
-          "Chapter 4: Quadratic Equations",
-          "Chapter 5: Arithmetic Progressions",
-          "Chapter 6: Triangles",
-          "Chapter 7: Coordinate Geometry",
-          "Chapter 8: Introduction To Trigonometry",
-          "Chapter 9: Some Applications Of Trigonometry",
-          "Chapter 10: Circles",
-          "Chapter 11: Areas Related To Circles",
-          "Chapter 12: Surface Areas And Volumes",
-          "Chapter 13: Statistics",
-          "Chapter 14: Probability",
-        ],
-        Physics: [
-          "CHAPTER 1: Light-Reflection and Refraction",
-          "CHAPTER 2:The Human Eye And The Colourful World",
-          "CHAPTER 3:Electricity",
-          "CHAPTER 4: Magnetic Effects Of Electric Current",
-          "CHAPTER 5: Sources Of Energy",
-          "CHAPTER 6: Our Environment",
-        ],
-        Chemistry: [
-          "Chapter 1: Chemical Reactions and Equations",
-          "Chapter 2: Acids, Bases and Salts",
-          "Chapter 3: Metals and Non-metals",
-          "Chapter 4: Carbon and its Compounds",
-        ],
-        Biology: [
-          "Chapter 1: Life Process",
-          "Chapter 2: Control and Coordination",
-          "Chapter 3: Reproduction",
-          "Chapter 4: Heredity",
-          "Chapter 5: Our Environment",
-        ],
-
-        English: [
-          "A Letter to God",
-          "Nelson Mandela: Long Walk to Freedom",
-          "From the Diary of Anne Frank",
-          "The Hundred Dresses – I & II",
-          "Mijbil the Otter",
-          "Madam Rides the Bus",
-          "The Sermon at Benares",
-          "The Proposal",
-          "Dust of Snow",
-          "Fire and Ice",
-          "A Tiger in the Zoo",
-          "How to Tell Wild Animals",
-          "The Ball Poem",
-          "A Triumph of Surgery",
-          "The Midnight Visitor",
-          "The Thief’s Story",
-          "Bholi",
-        ],
-
-        History: [
-          "The Rise of Nationalism in Europe",
-          "Nationalism in India",
-          "The Making of a Global World",
-          "The Age of Industrialization",
-          "Print Culture and the Modern World",
-        ],
-
-        Geography: [
-          "Resources and Development",
-          "Forest and Wildlife Resources",
-          "Water Resources",
-          "Agriculture",
-          "Minerals and Energy Resources",
-          "Manufacturing Industries",
-          "Lifelines of National Economy",
-        ],
-
-        PoliticalScience: [
-          "Power Sharing",
-          "Federalism",
-          "Gender, Religion and Caste",
-          "Political Parties",
-          "Outcomes of Democracy",
-        ],
-
-        Economics: [
-          "Development",
-          "Sectors of the Indian Economy",
-          "Money and Credit",
-          "Globalisation and the Indian Economy",
-          "Consumer Rights",
-        ],
-      },
-    },
-    11: {
-      subjects: [
-        "Math",
-        "Physics",
-        "Chemistry",
-        "Botany",
-        "Zoology",
-        "Genetics",
-        "Economics",
-      ],
-      chapters: {
-        Math: [
-          "Sets",
-          "Relations and Functions",
-          "Trigonometric Functions",
-          "Complex Numbers",
-          "Linear Inequalities",
-          "Permutations and Combinations",
-          "Binomial Theorem",
-          "Sequence and Series",
-          "Straight Lines",
-          "Conic Sections",
-          "Introduction to Three Dimensional Geometry",
-          "Limits and Derivatives",
-          "Statistics",
-          "Probability",
-        ],
-
-        Physics: [
-          "Physical World",
-          "Units and Measurements",
-          "Motion in a Straight Line",
-          "Motion in a Plane",
-          "Laws of Motion",
-          "Work, Energy and Power",
-          "System of Particles and Rotational Motion",
-          "Gravitation",
-          "Mechanical Properties of Solids",
-          "Mechanical Properties of Fluids",
-          "Thermal Properties of Matter",
-          "Thermodynamics",
-          "Kinetic Theory",
-          "Oscillations",
-          "Waves",
-        ],
-
-        Chemistry: [
-          "Some Basic Concepts of Chemistry",
-          "Structure of Atom",
-          "Classification of Elements",
-          "Chemical Bonding",
-          "Thermodynamics",
-          "Equilibrium",
-          "Redox Reactions",
-          "General organic chemistry (GOC)",
-          "Hydrocarbons",
-        ],
-        Botany: [
-          "The Living World",
-          "Biological Classification",
-          "Plant Kingdom",
-          "Morphology of Flowering Plants",
-          "Anatomy of Flowering Plants",
-          "Transport in Plants",
-          "Mineral Nutrition",
-          "Photosynthesis in Higher Plants",
-          "Respiration in Plants",
-          "Plant Growth and Development",
-        ],
-
-        Zoology: [
-          "Animal Kingdom",
-          "Structural Organisation in Animals",
-          "Digestion and Absorption",
-          "Breathing and Exchange of Gases",
-          "Body Fluids and Circulation",
-          "Excretory Products and Their Elimination",
-          "Locomotion and Movement",
-          "Neural Control and Coordination",
-          "Chemical Coordination and Integration",
-        ],
-
-        Genetics: [
-          // --- Cell Biology and Biomolecules ---
-          "Cell: The Unit of Life",
-          "Biomolecules",
-          "Cell Cycle and Cell Division",
-        ],
-        Economics: [
-          "Introduction to Microeconomics",
-          "Consumer's Equilibrium and Demand",
-          "Producer Behaviour and Supply",
-          "Forms of Market and Price Determination under Perfect Competition with Simple Applications",
-          "Introduction to Statistics for Economics",
-          "Collection, Organisation and Presentation of Data",
-          "Statistical Tools and Interpretation",
-        ],
-      },
-    },
-    12: {
-      subjects: [
-        "Math",
-        "Physics",
-        "Chemistry",
-        "Botany",
-        "Zoology",
-        "GeneticsAndEvolution",
-        "English",
-      ],
-      chapters: {
-        Math: [
-          "Relations and Functions",
-          "Inverse Trigonometric Functions",
-          "Matrices",
-          "Determinants",
-          "Continuity and Differentiability",
-          "Application of Derivatives",
-          "Integration",
-          "Application of Integral",
-          "Differential Equations",
-          "Vector Algebra",
-          "Three Dimensional Geometry",
-          "Linear Programming",
-          "Probability",
-        ],
-        Physics: [
-          // --- Electrostatics & Current Electricity ---
-          "Electrostatics",
-          "Electric Potential and Capacitance",
-          "Current Electricity",
-          "Moving Charges and Magnetism",
-          "Magnetism and Matter",
-          "Electromagnetic Induction",
-          "Alternating Currents",
-          "Ray Optics",
-          "Wave Optics",
-          "Dual Nature of Matter and Radiation",
-          "Atoms",
-          "Nuclei",
-          "Semiconductor",
-        ],
-
-        Chemistry: [
-          "Solutions",
-          "Electrochemistry",
-          "Chemical Kinetics",
-          "The d-Block Elements",
-          "The Organic Chemistry - Some Basic Principles",
-          "Hydrocarbons",
-          "Alcohols, Phenols and Ethers",
-          "The Chemistry of Aldehydes, Ketones and Carboxylic Acids",
-          "Amines",
-          "Biomolecules",
-        ],
-        Botany: [
-          "Reproduction in Plants",
-          "Plant Growth and Development",
-          "Photosynthesis",
-          "Respiration in Plants",
-          "Transport in Plants",
-          "Mineral Nutrition",
-          "Plant Hormones",
-        ],
-
-        Zoology: [
-          "Human Reproduction",
-          "Reproductive Health",
-          "Human Development",
-          "Blood and Circulation",
-          "Excretory Products and Their Elimination",
-          "Muscle and Movement",
-          "Neural Control and Coordination",
-          "Chemical Coordination and Integration",
-          "Locomotion and Movement",
-          "Respiration in Humans",
-          "Digestion and Absorption",
-          "Breathing and Exchange of Gases",
-        ],
-
-        GeneticsAndEvolution: [
-          "DNA Replication and Recombination",
-          "Structure of Gene and Chromosomes",
-          "Mendelian Inheritance",
-          "Molecular Genetics",
-          "Evolution",
-          "Human Genetics and Biotechnology",
-          "Biotechnology Principles and Processes",
-          "Biotechnology and Its Applications",
-        ],
-        English: [
-          "The Last Lesson",
-          "Lost Spring",
-          "Deep Water",
-          "The Rattrap",
-          "Indigo",
-          "Poets and Pancakes",
-          "The Interview",
-          "Going Places",
-          "My Mother at Sixty-Six",
-          "An Elementary School Classroom in a Slum",
-          "Keeping Quiet",
-          "A Thing of Beauty",
-          "A Roadside Stand",
-          "Aunt Jennifer's Tigers",
-          "The Third Level",
-          "The Tiger King",
-          "Journey to the End of the Earth",
-          "The Enemy",
-          "Should Wizard Hit Mommy?",
-          "On the Face of It",
-          "Evans Tries an O-Level",
-        ],
-      },
-    },
-  };
-
-  const toggleSubject = (s) => {
-    if (subjects.includes(s)) {
-      const newSubjects = subjects.filter((x) => x !== s);
-      const newChapters = { ...chapters };
-      delete newChapters[s];
-      setSubjects(newSubjects);
-      setChapters(newChapters);
-    } else {
-      if (subjects.length >= 3) return;
-      setSubjects([...subjects, s]);
-    }
-  };
-
-  const handleChapterChange = (subject, chapter) => {
-    setChapters({ ...chapters, [subject]: chapter });
-  };
-
-  const resetQuizState = () => {
-    setQuiz([]);
-    setCurrentIndex(0);
-    setSelectedOption(null);
-    setScore(0);
-    setError("");
-    setQuizResultId(null);
-    setUserAnswers([]);
-    setTimeSeconds(0);
-    setTimerRunning(false);
-  };
-
-  async function extractTextFromResponse(gemResp) {
+  // --- EXTRACT TEXT FROM GEMINI RESPONSE ---
+  async function extractTextFromGeminiResponse(resp) {
     try {
-      if (!gemResp) return "";
-      if (typeof gemResp === "string") return gemResp;
-      if (typeof gemResp.text === "function") return await gemResp.text();
-      if (typeof gemResp.text === "string") return gemResp.text;
-      if (gemResp.response && typeof gemResp.response.text === "function")
-        return await gemResp.response.text();
-    } catch (e) {
-      console.warn("extractTextFromResponse fallback:", e);
+      return (
+        resp?.response?.candidates?.[0]?.content?.parts?.[0]?.text ||
+        resp?.text ||
+        ""
+      );
+    } catch {
+      return "";
     }
-    return "";
   }
 
-  // generate quiz with Gemini
+  // --- QUIZ GENERATION PROMPT (20Q) ---
+  const buildQuizPrompt = () => `
+You are an experienced CBSE teacher and AI question setter.
+Create 20 multiple-choice questions for Class ${studentClass} students.
+
+Focus only on the following subjects and chapters:
+${subjects.map((s) => `- ${s}: ${chapters[s]}`).join("\n")}
+
+Requirements:
+- Each question tests one clear concept or fact.
+- Mix difficulty: 12 easy, 6 medium, 2 challenge-level questions.
+- Each question must have exactly 4 options (A–D) and one correct answer.
+- Avoid similar or repetitive questions.
+
+Return output strictly in valid JSON only, no markdown or explanation.
+Format:
+[
+  {"question": "string", "options": ["A","B","C","D"], "answer": "A"},
+  {"question": "...", "options": ["..."], "answer": "B"}
+]
+
+Rules:
+- Questions must be under 25-30 words.
+- Ensure correct spelling and clarity.
+`;
+
+  // --- GENERATE QUIZ ---
   const generateQuizWithGemini = async () => {
-    setError("");
     if (!studentClass || subjects.length === 0) {
-      setError("Please choose a class and at least one subject (max 3).");
+      setError("Please select your class and at least one subject.");
       return;
     }
     for (const s of subjects) {
       if (!chapters[s]) {
-        setError(`Please pick a chapter for ${s}.`);
+        setError(`Please select a chapter for ${s}.`);
         return;
       }
     }
 
     setLoading(true);
-    resetQuizState();
+    setError("");
+    setQuiz([]);
+    setCurrentIndex(0);
+    setScore(0);
+    setUserAnswers([]);
+    setQuizResultId(null);
+
+    const prompt = buildQuizPrompt();
+
+    console.time("Gemini Quiz Generation");
 
     try {
-      const prompt = `
-You are a friendly school tutor.
-Create 20 multiple-choice questions for a Class ${studentClass} student.
-Subjects and chapters:
-${subjects.map((s) => `- ${s}: ${chapters[s]}`).join("\n")}
-Return ONLY JSON:
-[
-  {"question": "...", "options": ["A","B","C","D"], "answer": "A"}
-]`;
-
       const resp = await client.models.generateContent({
         model: "gemini-2.5-flash",
         contents: prompt,
       });
 
-      const text = await extractTextFromResponse(resp);
-      let parsed = null;
-      try {
-        const start = text.indexOf("[");
-        const end = text.lastIndexOf("]");
-        if (start !== -1 && end !== -1 && end > start) {
-          const raw = text.slice(start, end + 1);
-          parsed = JSON.parse(raw);
-        } else {
-          parsed = JSON.parse(text);
-        }
-      } catch (e) {
-        console.warn("Parse failed:", e, "raw:", text);
-      }
+      console.timeEnd("Gemini Quiz Generation");
 
-      if (!Array.isArray(parsed) || parsed.length === 0) {
-        setError("AI returned unexpected format; showing fallback quiz.");
-        parsed = [
-          {
-            question: "Placeholder question",
-            options: ["A", "B", "C", "D"],
-            answer: "A",
-          },
-        ];
-      }
+      const text = await extractTextFromGeminiResponse(resp);
+      const clean = text.replace(/```json|```/g, "").trim();
+      const fixed = clean.endsWith("]") ? clean : clean + "]";
+      const parsed = JSON.parse(fixed);
 
-      // normalize to ensure 4 options and A-D answer
-      const normalized = parsed.map((q) => {
-        const question = q.question || q.prompt || "Question";
-        let options = q.options || q.choices || [];
-        if (!Array.isArray(options))
-          options =
-            typeof options === "string"
-              ? options
-                  .split("\n")
-                  .map((s) => s.trim())
-                  .filter(Boolean)
-              : [];
-        while (options.length < 4) options.push(`Option ${options.length + 1}`);
-        let answer = (q.answer || q.correct || "").toString().trim();
-        if (!/^[A-D]$/i.test(answer)) answer = "A";
-        return {
-          question,
-          options: options.slice(0, 4),
-          answer: answer.toUpperCase(),
-        };
-      });
+      if (!Array.isArray(parsed) || parsed.length === 0)
+        throw new Error("Invalid quiz format.");
 
-      setQuiz(normalized);
-      setStep(5);
+      setQuiz(parsed);
+      setStep(2);
       setTimeSeconds(0);
+      timerRef.current = 0;
       setTimerRunning(true);
     } catch (err) {
-      console.error("Gemini error:", err);
-      setError("Failed to generate quiz.");
+      console.error("Gemini quiz error:", err);
+      setError("AI couldn't generate a quiz right now. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
-  // original choose (kept for reference) - but rendering uses the record version
-  const handleChoose = (opt) => {
-    if (!quiz[currentIndex] || selectedOption) return;
-    setSelectedOption(opt);
-    const correctLetter = (quiz[currentIndex].answer || "").toUpperCase();
-    const idx = quiz[currentIndex].options.indexOf(opt);
-    const selectedLetter = idx >= 0 ? String.fromCharCode(65 + idx) : null;
-    const isCorrect =
-      selectedLetter === correctLetter ||
-      (opt &&
-        opt.toLowerCase() === (quiz[currentIndex].answer || "").toLowerCase());
-    if (isCorrect) setScore((s) => s + 1);
-
-    setTimeout(() => {
-      setSelectedOption(null);
-      if (currentIndex < quiz.length - 1) setCurrentIndex((i) => i + 1);
-      else {
-        setStep(6);
-        saveQuizResult();
-        setTimerRunning(false);
-      }
-    }, 800);
-  };
-
-  // -- coins and explanation helpers
-  async function getCoins(userId) {
-    try {
-      const { data, error } = await supabase
-        .from("coins")
-        .select("balance")
-        .eq("user_id", userId)
-        .maybeSingle();
-      if (error) {
-        console.warn("getCoins error:", error);
-        return 0;
-      }
-      return data?.balance ?? 0;
-    } catch (e) {
-      console.error("getCoins:", e);
-      return 0;
-    }
-  }
-
-  async function deductCoins(userId, amount) {
-    // simple read-update. For heavy production, do this in DB function to avoid race.
-    try {
-      const { data, error } = await supabase
-        .from("coins")
-        .select("balance")
-        .eq("user_id", userId)
-        .maybeSingle();
-      if (error) throw error;
-      if (!data) {
-        await supabase.from("coins").insert([{ user_id: userId, balance: 0 }]);
-        throw new Error("Insufficient coins");
-      }
-      if ((data.balance || 0) < amount) throw new Error("Insufficient coins");
-      const newBalance = (data.balance || 0) - amount;
-      const { error: updErr } = await supabase
-        .from("coins")
-        .update({ balance: newBalance })
-        .eq("user_id", userId);
-      if (updErr) throw updErr;
-      return newBalance;
-    } catch (err) {
-      throw err;
-    }
-  }
-  async function generateExplanationForQuestion(questionObj, userAnswer) {
-    const prompt = `
-You are a fast and friendly CBSE tutor (class 10–12).
-
-Give the explanation in **exactly 3 numbered points**.
-
-Rules:
-• Total answer must be within 3–4 short lines.
-• No headings, no markdown, no extra text.
-• Use very simple, clear language.
-• Focus only on: student's mistake (or correctness), correct option logic, and a rule.
-
-Explain ONLY these:
-1) Why the student's answer is correct OR incorrect.
-2) Why the correct answer is right (in simple words).
-3) A quick rule/trick to remember for next time.
-
-Question:
-${questionObj.question}
-
-Options:
-${questionObj.options
-  .map((o, i) => `${String.fromCharCode(65 + i)}. ${o}`)
-  .join("\n")}
-
-Correct answer: ${questionObj.answer}
-Student answered: ${userAnswer}
-
-Return ONLY the 3 numbered points in this format:
-1) ...
-2) ...
-3) ...
-`;
+  // --- SAVE QUIZ RESULT (+5 COINS) ---
+  const saveQuizResult = async (finalScore = null) => {
+    if (!user) return;
+    setSaving(true);
 
     try {
-      const resp = await client.models.generateContent({
-        model: "gemini-2.5-flash",
-        contents: prompt,
-      });
-
-      const text = await extractTextFromResponse(resp);
-      return text?.trim() || "No explanation available.";
-    } catch (e) {
-      console.error("generateExplanationForQuestion error:", e);
-      return "Failed to generate explanation.";
-    }
-  }
-
-  // ---------- save quiz result (returns id and adds +5 coins) ----------
-  async function saveQuizResult() {
-    try {
-      setSaving(true);
-      if (!user) {
-        console.warn("No Clerk user logged in — skipping save.");
-        return;
-      }
-      const userId = user.id;
-      const topic = subjects.map((s) => `${s}: ${chapters[s]}`).join(", ");
+      const scoreToSave = finalScore ?? score;
+      const currentTime = timerRef.current || timeSeconds || 0;
+      const duration_minutes = Math.ceil(currentTime / 60);
 
       const payload = {
-        user_id: userId,
-        topic,
-        score,
+        user_id: user.id,
+        topic: subjects.map((s) => `${s}: ${chapters[s]}`).join(", "),
+        score: scoreToSave,
         total_questions: quiz.length,
-        time_seconds: timeSeconds,
-        duration_minutes: Math.round(timeSeconds / 60),
+        time_seconds: currentTime,
+        duration_minutes,
         created_at: new Date(),
       };
 
@@ -661,529 +170,212 @@ Return ONLY the 3 numbered points in this format:
         .insert([payload])
         .select()
         .single();
+
       if (error) throw error;
       if (data?.id) setQuizResultId(data.id);
 
-      pushNotification("Quiz saved!", "success", 3000);
-
-      // +5 coins reward
-      const { data: coinRow } = await supabase
-        .from("coins")
-        .select("balance")
-        .eq("user_id", userId)
-        .maybeSingle();
-      if (!coinRow) {
-        await supabase.from("coins").insert([{ user_id: userId, balance: 5 }]);
-      } else {
-        await supabase
-          .from("coins")
-          .update({ balance: (coinRow.balance || 0) + 5 })
-          .eq("user_id", userId);
-      }
-      pushNotification("+5 coins added!", "success", 3000);
+      await addCoins(user.id, 5);
+      console.log("✅ +5 coins added for quiz completion");
     } catch (err) {
-      console.error("Failed to save quiz:", err);
-      setError("Couldn't save quiz data.");
+      console.error("Save error:", err);
+      setError("Failed to save quiz results.");
     } finally {
       setSaving(false);
     }
-  }
+  };
 
-  // answer recording version  
-  const handleChooseWithRecord = (opt) => {
+  // --- ANSWER HANDLING ---
+  const handleChoose = (opt) => {
     if (!quiz[currentIndex] || selectedOption) return;
-    setSelectedOption(opt);
-    setUserAnswers((prev) => {
-      const copy = [...prev];
-      copy[currentIndex] = opt;
-      return copy;
-    });
 
     const correctLetter = (quiz[currentIndex].answer || "").toUpperCase();
-    const idx = quiz[currentIndex].options.indexOf(opt);
-    const selectedLetter = idx >= 0 ? String.fromCharCode(65 + idx) : null;
-    const isCorrect =
-      selectedLetter === correctLetter ||
-      (opt &&
-        opt.toLowerCase() === (quiz[currentIndex].answer || "").toLowerCase());
-    if (isCorrect) setScore((s) => s + 1);
+    const correctIdx = /^[A-D]$/.test(correctLetter)
+      ? correctLetter.charCodeAt(0) - 65
+      : -1;
+    const correctOpt =
+      correctIdx >= 0 ? quiz[currentIndex].options[correctIdx] : null;
+
+    const isCorrect = opt === correctOpt;
+    const newScore = isCorrect ? score + 1 : score;
+
+    setSelectedOption(opt);
+    setUserAnswers((prev) => {
+      const updated = [...prev];
+      updated[currentIndex] = opt;
+      return updated;
+    });
+    setScore(newScore);
 
     setTimeout(() => {
       setSelectedOption(null);
-      if (currentIndex < quiz.length - 1) setCurrentIndex((i) => i + 1);
-      else {
-        setStep(6);
-        saveQuizResult();
+      if (currentIndex < quiz.length - 1) {
+        setCurrentIndex((i) => i + 1);
+      } else {
         setTimerRunning(false);
+        setStep(3);
+        saveQuizResult(newScore);
       }
     }, 800);
   };
 
-  // ---------- explanation flow ----------
-  async function explainAndRedirect() {
+  // --- EXPLANATION PROMPT ---
+  const buildExplainPrompt = (q, studentClass) => `
+You are a CBSE subject expert helping a student quickly understand their mistake.
+
+Question: ${q.question}
+User Answer: ${q.user_answer}
+Correct Answer: ${q.correct_answer}
+
+Give the explanation in exactly 3 numbered lines.
+Follow this strict format:
+1) Correct Concept: [short and clear, 1 sentence only]
+2) Why Incorrect: [1 sentence explaining student's confusion]
+3) Trick to Remember: [1 short memory tip or rule]
+
+Rules:
+- Output only plain text, no markdown or greetings.
+- Each point must start with 1), 2), 3).
+- Keep total under 70 words.
+- Be accurate and encouraging.
+`;
+
+  // --- GENERATE EXPLANATIONS (−10 COINS) ---
+  const handleExplain = async () => {
+    if (!user) return setError("Please log in to unlock explanations.");
+    if (!quizResultId) return setError("Quiz result not found. Try again.");
+
+    setLoading(true);
+
     try {
-      setLoading(true);
-      setError("");
-
-      if (!user) {
-        setError("Please login to unlock explanations.");
-        return;
-      }
-      if (!quizResultId) {
-        setError("Quiz hasn't been saved yet. Please wait and try again.");
-        return;
-      }
-
-      // find wrong questions
-      const badList = [];
-      for (let i = 0; i < quiz.length; i++) {
-        const q = quiz[i];
-        const userAns = userAnswers[i] ?? null;
-        const correctIdx = /^[A-D]$/.test((q.answer || "").toUpperCase())
-          ? q.answer.toUpperCase().charCodeAt(0) - 65
-          : -1;
-        const correctOpt = correctIdx >= 0 ? q.options[correctIdx] : null;
-        if (!userAns || userAns !== correctOpt) {
-          badList.push({
-            index: i,
-            question: q.question,
-            options: q.options,
-            user_answer: userAns,
-            correct_answer: correctOpt,
-          });
-        }
-      }
-
-      if (badList.length === 0) {
-        setError("Nice! Everything was correct — no explanations needed.");
-        return;
-      }
-
-      const totalCost = 10; // charge 10 coins total
       const balance = await getCoins(user.id);
-      if ((balance || 0) < totalCost) {
-        setError(
-          `Not enough coins. You need ${totalCost} coins but have ${balance}.`
-        );
+      if (balance < 10) {
+        setError("Not enough coins (need 10). Earn more by completing quizzes!");
+        setLoading(false);
         return;
       }
 
-      // deduct once
-      await deductCoins(user.id, totalCost);
-      pushNotification(`-${totalCost} coins`, "info", 2500);
+      await deductCoins(user.id, 10);
+      console.log("💸 −10 coins deducted for explanations");
 
-      // Insert placeholders, generate, update rows
-      for (const item of badList) {
-        const { data: inserted, error: insErr } = await supabase
-          .from("quiz_explanations")
-          .insert([
-            {
-              user_id: user.id,
-              quiz_id: quizResultId,
-              question: item.question,
-              user_answer: item.user_answer,
-              correct_answer: item.correct_answer,
-              explanation: "Generating explanation...",
-            },
-          ])
-          .select()
-          .single();
+      const wrongQuestions = quiz
+        .map((q, i) => {
+          const correctLetter = (q.answer || "").toUpperCase();
+          const correctIndex = /^[A-D]$/.test(correctLetter)
+            ? correctLetter.charCodeAt(0) - 65
+            : -1;
+          const correctOption =
+            correctIndex >= 0 ? q.options[correctIndex] : null;
 
-        if (insErr) {
-          console.warn("insert explanation placeholder failed:", insErr);
-          continue;
-        }
+          return userAnswers[i] !== correctOption
+            ? {
+                question: q.question,
+                correct_answer: correctOption,
+                user_answer: userAnswers[i] || "Not answered",
+              }
+            : null;
+        })
+        .filter(Boolean);
 
-        const rowId = inserted.id;
+      for (const q of wrongQuestions) {
+        const expPrompt = buildExplainPrompt(q, studentClass);
 
-        // generate the explanation
-        const explanationText = await generateExplanationForQuestion(
+        const resp = await client.models.generateContent({
+          model: "gemini-2.5-flash",
+          contents: expPrompt,
+        });
+
+        const text = await extractTextFromGeminiResponse(resp);
+        const explanation = text.replace(/```/g, "").trim();
+
+        await supabase.from("quiz_explanations").insert([
           {
-            question: item.question,
-            options: item.options,
-            answer: item.correct_answer,
+            user_id: user.id,
+            quiz_id: quizResultId,
+            question: q.question,
+            correct_answer: q.correct_answer,
+            user_answer: q.user_answer,
+            explanation,
           },
-          item.user_answer
-        );
-
-        // update explanation row
-        const { error: updErr } = await supabase
-          .from("quiz_explanations")
-          .update({ explanation: explanationText })
-          .eq("id", rowId);
-
-        if (updErr) console.warn("update explanation failed:", updErr);
+        ]);
       }
 
-      pushNotification("Explanations ready!", "success", 3000);
-
-      const path = `/quiz-explain/${quizResultId}`;
-      if (navigate) navigate(path);
-      else window.location.href = path;
+      navigate(`/quiz-explain/${quizResultId}`);
     } catch (err) {
-      console.error("explainAndRedirect error:", err);
-      setError("Failed to generate explanations. Try again.");
+      console.error("Explain error:", err);
+      setError("Couldn't generate explanations. Try again.");
     } finally {
       setLoading(false);
     }
-  }
-
-  const restartAll = () => {
-    setStep(1);
-    setCheckedResponse(null);
-    setStudentClass("");
-    setSubjects([]);
-    setChapters({});
-    resetQuizState();
-    setUserAnswers([]);
   };
 
-  // ---------- render ----------
+  // --- RESET QUIZ ---
+  const resetQuiz = () => {
+    setStep(1);
+    setQuiz([]);
+    setScore(0);
+    setUserAnswers([]);
+    setError("");
+    setCurrentIndex(0);
+    setTimeSeconds(0);
+    timerRef.current = 0;
+  };
+
+  // --- RENDER ---
   return (
-    <div className="min-h-screen bg-gradient-to-b from-indigo-50 to-white flex items-center justify-center p-6">
-      <div className="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-6">
-        {/* header */}
-        <div className="flex items-center justify-between mb-4">
-          <h1 className="text-xl font-bold text-indigo-700">
-            StudyFlow — Daily Quiz
-          </h1>
-          <div className="text-sm text-gray-500">Keep your streak alive ✨</div>
-        </div>
-
-        {/* step 1 */}
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-indigo-50 to-white p-6">
+      <div className="w-full max-w-3xl">
         {step === 1 && (
-          <div className="text-center py-10">
-            <h2 className="text-2xl font-semibold mb-3">
-              Did you complete today’s plan?
-            </h2>
-            <div className="flex justify-center gap-4">
-              <button
-                onClick={() => {
-                  setCheckedResponse("yes");
-                  setStep(2);
-                }}
-                className="px-6 py-3 bg-green-500 text-white rounded-lg"
-              >
-                Yes ✅
-              </button>
-              <button
-                onClick={() => {
-                  setCheckedResponse("no");
-                  setStep(2);
-                }}
-                className="px-6 py-3 bg-yellow-500 text-white rounded-lg"
-              >
-                Not yet 💪
-              </button>
-            </div>
-          </div>
+          <QuizSetup
+            classData={classData}
+            studentClass={studentClass}
+            setStudentClass={setStudentClass}
+            subjects={subjects}
+            setSubjects={setSubjects}
+            chapters={chapters}
+            setChapters={setChapters}
+            loading={loading}
+            onGenerate={generateQuizWithGemini}
+            onCancel={resetQuiz}
+          />
         )}
 
-        {/* step 2: configure */}
-        {step === 2 && (
-          <div className="py-6">
-            <div
-              className={`p-4 rounded-lg mb-6 ${
-                checkedResponse === "yes"
-                  ? "bg-green-50 border border-green-200"
-                  : "bg-yellow-50 border border-yellow-200"
-              }`}
-            >
-              <h3 className="font-semibold mb-2">
-                {checkedResponse === "yes"
-                  ? "Awesome — keep it up!"
-                  : "No worries — small steps matter!"}
-              </h3>
-              <p className="text-gray-700">
-                {checkedResponse === "yes"
-                  ? "You did great today. Let’s test what you learned!"
-                  : "Let’s do a short quiz to build momentum — you got this!"}
+        {step === 2 && quiz.length > 0 && (
+          <QuizPlay
+            quiz={quiz}
+            currentIndex={currentIndex}
+            score={score}
+            selectedOption={selectedOption}
+            handleChoose={handleChoose}
+            loading={loading}
+            timerSeconds={timeSeconds}
+            onBackHome={() => navigate("/dashboard")}
+          />
+        )}
+
+        {step === 3 && (
+          <QuizResult
+            score={score}
+            total={quiz.length}
+            saving={saving}
+            error={error}
+            timeSeconds={timeSeconds}
+            onRetry={resetQuiz}
+            onExplain={handleExplain}
+            onBackHome={() => navigate("/dashboard")}
+            loading={loading}
+          />
+        )}
+
+        {loading && step === 3 && (
+          <div className="fixed inset-0 bg-white/70 flex items-center justify-center z-50">
+            <div className="bg-white shadow-lg rounded-xl p-6 text-center">
+              <div className="animate-spin h-6 w-6 border-4 border-indigo-500 border-t-transparent rounded-full mx-auto mb-3"></div>
+              <p className="text-gray-700 font-medium">
+                Generating explanations...
               </p>
             </div>
-
-            <div className="mb-4">
-              <label className="block text-sm font-medium mb-2">
-                Select Class
-              </label>
-              <select
-                value={studentClass}
-                onChange={(e) => {
-                  setStudentClass(e.target.value);
-                  setSubjects([]);
-                  setChapters({});
-                }}
-                className="w-full border rounded-md p-2"
-              >
-                <option value="">Choose Class</option>
-                {Object.keys(classData).map((c) => (
-                  <option key={c} value={c}>
-                    Class {c}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            {studentClass && (
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">
-                  Select Subjects (max 3)
-                </label>
-                <div className="flex flex-wrap gap-3">
-                  {classData[studentClass].subjects.map((s) => (
-                    <button
-                      key={s}
-                      type="button"
-                      onClick={() => toggleSubject(s)}
-                      className={`px-3 py-2 rounded-md border ${
-                        subjects.includes(s)
-                          ? "bg-indigo-600 text-white border-indigo-600"
-                          : "bg-white text-gray-800"
-                      }`}
-                    >
-                      {s}
-                    </button>
-                  ))}
-                </div>
-                <p className="text-xs text-gray-500 mt-2">
-                  Tip: choose up to 3 subjects to generate a focused quiz.
-                </p>
-              </div>
-            )}
-
-            {subjects.length > 0 && (
-              <div className="mb-4">
-                <label className="block text-sm font-medium mb-2">
-                  Choose one chapter per selected subject
-                </label>
-                <div className="space-y-3">
-                  {subjects.map((s) => (
-                    <div key={s}>
-                      <div className="font-medium mb-1">{s}</div>
-                      <select
-                        value={chapters[s] || ""}
-                        onChange={(e) => handleChapterChange(s, e.target.value)}
-                        className="w-full border rounded-md p-2"
-                      >
-                        <option value="">Choose Chapter for {s}</option>
-                        {classData[studentClass].chapters[s].map((ch) => (
-                          <option key={ch} value={ch}>
-                            {ch}
-                          </option>
-                        ))}
-                      </select>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            <div className="flex items-center gap-3">
-              <button
-                onClick={generateQuizWithGemini}
-                disabled={loading}
-                className="px-5 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 disabled:opacity-60"
-              >
-                {loading ? "Generating..." : "Generate Quiz"}
-              </button>
-              <button
-                onClick={restartAll}
-                className="px-4 py-2 border rounded-md"
-              >
-                Cancel
-              </button>
-            </div>
-
-            {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
           </div>
         )}
-
-        {/* step 5: quiz taking */}
-        {step === 5 && quiz.length > 0 && (
-          <div className="py-4">
-            <div className="flex justify-between items-center mb-3">
-              <div className="text-sm text-gray-600">
-                Question {currentIndex + 1} / {quiz.length}
-              </div>
-              <div className="text-sm font-semibold text-indigo-700">
-                Score: {score}
-              </div>
-            </div>
-
-            <div className="bg-gray-50 p-5 rounded-lg">
-              <div className="text-lg font-medium mb-4">
-                {quiz[currentIndex]?.question}
-              </div>
-
-              <div className="grid grid-cols-1 gap-3">
-                {(quiz[currentIndex]?.options || []).map((opt, idx) => {
-                  const isSelected = selectedOption === opt;
-                  const letter = String.fromCharCode(65 + idx);
-                  const correctLetter = (
-                    quiz[currentIndex].answer || ""
-                  ).toUpperCase();
-                  const correctIdx = /^[A-D]$/.test(correctLetter)
-                    ? correctLetter.charCodeAt(0) - 65
-                    : -1;
-                  const correctOpt =
-                    correctIdx >= 0
-                      ? quiz[currentIndex].options[correctIdx]
-                      : null;
-
-                  let style = "bg-white hover:bg-indigo-50 border";
-                  if (selectedOption) {
-                    if (isSelected) {
-                      style =
-                        opt === correctOpt
-                          ? "bg-green-100 border-green-400 text-green-800"
-                          : "bg-red-100 border-red-400 text-red-800";
-                    } else if (opt === correctOpt) {
-                      style = "bg-green-50 border-green-200 text-green-700";
-                    } else style = "bg-white border";
-                  }
-
-                  return (
-                    <button
-                      key={idx}
-                      disabled={!!selectedOption}
-                      onClick={() => {
-                        setSelectedOption(opt);
-                        handleChooseWithRecord(opt);
-                      }}
-                      className={`text-left p-3 rounded-md ${style}`}
-                    >
-                      <div className="flex items-center gap-3">
-                        <div className="w-6 h-6 flex items-center justify-center font-semibold text-sm">
-                          {letter}
-                        </div>
-                        <div>{opt}</div>
-                      </div>
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* step 6: results */}
-        {step === 6 && (
-          <div className="py-6 text-center">
-            <h3 className="text-2xl font-bold mb-2">Quiz Completed 🎉</h3>
-            <p className="text-gray-700 mb-4">
-              You scored <span className="font-semibold">{score}</span> /{" "}
-              <span className="font-semibold">{quiz.length}</span>.
-            </p>
-
-            {saving ? (
-              <p className="text-indigo-600">Saving your result...</p>
-            ) : (
-              <p className="text-green-600 font-medium">
-                Saved to your progress ✅
-              </p>
-            )}
-
-            <div className="mt-5 flex justify-center gap-3">
-              <button
-                onClick={() => {
-                  setStep(2);
-                  resetQuizState();
-                  setUserAnswers([]);
-                }}
-                className="px-5 py-2 bg-indigo-600 text-white rounded-md"
-              >
-                Take another quiz
-              </button>
-              <button
-                onClick={() => navigate("/")}
-                className="px-4 py-2 border rounded-md"
-              >
-                Back home
-              </button>
-            </div>
-
-            <div className="mt-6">
-              <p className="text-sm text-gray-700 mb-2">
-                Want to see why some answers were incorrect?
-              </p>
-              <button
-                onClick={explainAndRedirect}
-                disabled={loading}
-                className="px-6 py-3 bg-yellow-500 text-white rounded-md"
-              >
-                {loading
-                  ? "Preparing explanations..this may take a few seconds."
-                  : "Unlock Explainations (10 coins)"}
-              </button>
-              {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
-            </div>
-          </div>
-        )}
-
-        {error && <p className="mt-3 text-sm text-red-600">{error}</p>}
-      </div>
-
-      {/* floating notifications */}
-      <div className="fixed bottom-6 right-6 w-80 space-y-2 z-50">
-        {notifications.map((n) => (
-          <div
-            key={n.id}
-            className="bg-white inline-flex space-x-3 p-3 text-sm rounded border border-gray-200 shadow"
-          >
-            <svg
-              width="18"
-              height="18"
-              viewBox="0 0 18 18"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M16.5 8.31V9a7.5 7.5 0 1 1-4.447-6.855M16.5 3 9 10.508l-2.25-2.25"
-                stroke="#22C55E"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <div className="flex-1">
-              <h3 className="text-slate-700 font-medium">{n.msg}</h3>
-            </div>
-            <button
-              onClick={() =>
-                setNotifications((s) => s.filter((x) => x.id !== n.id))
-              }
-              aria-label="close"
-              className="cursor-pointer mb-auto text-slate-400 hover:text-slate-600 active:scale-95 transition"
-            >
-              <svg
-                width="14"
-                height="14"
-                viewBox="0 0 14 14"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <rect
-                  y="12.532"
-                  width="17.498"
-                  height="2.1"
-                  rx="1.05"
-                  transform="rotate(-45.74 0 12.532)"
-                  fill="currentColor"
-                  fillOpacity=".7"
-                />
-                <rect
-                  x="12.531"
-                  y="13.914"
-                  width="17.498"
-                  height="2.1"
-                  rx="1.05"
-                  transform="rotate(-135.74 12.531 13.914)"
-                  fill="currentColor"
-                  fillOpacity=".7"
-                />
-              </svg>
-            </button>
-          </div>
-        ))}
       </div>
     </div>
   );
