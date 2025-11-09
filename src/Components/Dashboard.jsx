@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback } from "react";
+ import { useState, useEffect, useCallback } from "react";
 import { useUser, useClerk } from "@clerk/clerk-react";
 import { supabase } from "../Supabase/supabaseClient";
+
 import {
   BarChart3,
   BookOpen,
@@ -9,7 +10,9 @@ import {
   LogOut,
   Trophy,
 } from "lucide-react";
+
 import { motion } from "framer-motion";
+import { getCoins } from "../utils/coinUtils"; // ✅ FIXED
 
 const DEFAULT_TOTAL_QUESTIONS = 8;
 
@@ -33,23 +36,8 @@ export default function Dashboard() {
   ];
 
   // --------------------------
-  // Supabase helpers
+  // 🔥 Load Dashboard Data
   // --------------------------
-  const fetchCoins = async (userId) => {
-    try {
-      const { data, error } = await supabase
-        .from("coins")
-        .select("balance")
-        .eq("user_id", userId)
-        .maybeSingle();
-
-      if (error || !data) return 0;
-      return data.balance ?? 0;
-    } catch {
-      return 0;
-    }
-  };
-
   const loadDashboardData = useCallback(
     async (
       opts = {
@@ -63,7 +51,7 @@ export default function Dashboard() {
       setLoading(true);
 
       try {
-        // Planner
+        // 📌 Planner
         if (opts.fetchPlanner) {
           const { data } = await supabase
             .from("planner_data")
@@ -73,7 +61,7 @@ export default function Dashboard() {
           setPlannerData(data || []);
         }
 
-        // Quiz
+        // 📌 Quiz
         if (opts.fetchQuiz) {
           const { data } = await supabase
             .from("quiz_data")
@@ -83,7 +71,7 @@ export default function Dashboard() {
           setQuizData(data || []);
         }
 
-        // Streak
+        // 📌 Streak
         if (opts.fetchStreak) {
           const { data } = await supabase
             .from("streaks")
@@ -93,10 +81,10 @@ export default function Dashboard() {
           setStreak(data?.current_streak ?? 0);
         }
 
-        // Coins
+        // 📌 Coins (uses coinUtils → row auto-created for new users)
         if (opts.fetchCoins) {
-          const b = await fetchCoins(user.id);
-          setCoins(b);
+          const bal = await getCoins(user.id);
+          setCoins(bal);
         }
       } catch (err) {
         console.error("loadDashboardData error:", err);
@@ -116,7 +104,7 @@ export default function Dashboard() {
   }, [user, loadDashboardData]);
 
   // --------------------------
-  // 🔥 REALTIME STREAK LISTENER
+  // 🔥 REALTIME STREAK
   // --------------------------
   useEffect(() => {
     if (!user) return;
@@ -125,9 +113,13 @@ export default function Dashboard() {
       .channel(`public:streaks:user_${user.id}`)
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "streaks", filter: `user_id=eq.${user.id}` },
+        {
+          event: "*",
+          schema: "public",
+          table: "streaks",
+          filter: `user_id=eq.${user.id}`,
+        },
         () => {
-          console.log("Realtime streak update detected");
           loadDashboardData({
             fetchStreak: true,
             fetchCoins: false,
@@ -138,13 +130,11 @@ export default function Dashboard() {
       )
       .subscribe();
 
-    return () => {
-      supabase.removeChannel(streakChannel);
-    };
+    return () => supabase.removeChannel(streakChannel);
   }, [user, loadDashboardData]);
 
   // --------------------------
-  // 🪙 REALTIME COINS LISTENER
+  // 🔥 REALTIME COINS
   // --------------------------
   useEffect(() => {
     if (!user) return;
@@ -153,9 +143,13 @@ export default function Dashboard() {
       .channel(`public:coins:user_${user.id}`)
       .on(
         "postgres_changes",
-        { event: "*", schema: "public", table: "coins", filter: `user_id=eq.${user.id}` },
+        {
+          event: "*",
+          schema: "public",
+          table: "coins",
+          filter: `user_id=eq.${user.id}`,
+        },
         () => {
-          console.log("Realtime coins update detected");
           loadDashboardData({
             fetchCoins: true,
             fetchStreak: false,
@@ -166,13 +160,11 @@ export default function Dashboard() {
       )
       .subscribe();
 
-    return () => {
-      supabase.removeChannel(coinsChannel);
-    };
+    return () => supabase.removeChannel(coinsChannel);
   }, [user, loadDashboardData]);
 
   // --------------------------
-  // UI Logic
+  // Calculations
   // --------------------------
   if (!user)
     return <div className="p-6">Please log in to view your dashboard.</div>;
@@ -183,8 +175,7 @@ export default function Dashboard() {
     quizData.length > 0
       ? Math.round(
           quizData.reduce((sum, q) => {
-            const totalQs =
-              Number(q.total_questions) || DEFAULT_TOTAL_QUESTIONS;
+            const totalQs = Number(q.total_questions) || DEFAULT_TOTAL_QUESTIONS;
             const correct = Number(q.score) || 0;
             return sum + Math.round((correct / totalQs) * 100);
           }, 0) / quizData.length
@@ -192,7 +183,7 @@ export default function Dashboard() {
       : 0;
 
   // --------------------------
-  // JSX Output
+  // JSX OUTPUT
   // --------------------------
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-50">
@@ -333,6 +324,7 @@ export default function Dashboard() {
                                 {item.activity}
                               </p>
                             </div>
+
                             <span className="text-xs mt-1 text-gray-500">
                               Planned
                             </span>
@@ -354,7 +346,6 @@ export default function Dashboard() {
               Quiz Performance
             </h2>
 
-            {/* Summary Card */}
             {quizData.length > 0 && (
               <div className="mb-6 bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 rounded-lg p-4 flex justify-between items-center">
                 <div>
@@ -372,7 +363,6 @@ export default function Dashboard() {
               </div>
             )}
 
-            {/* Empty State */}
             {quizData.length === 0 ? (
               <div className="text-center py-20 bg-white rounded-xl shadow-sm border border-gray-100">
                 <p className="text-4xl mb-3">🧩</p>
@@ -380,7 +370,7 @@ export default function Dashboard() {
                   No Quiz Attempts Yet
                 </h3>
                 <p className="text-sm text-gray-600 mb-4">
-                  Take your first quiz to start tracking your performance!
+                  Take your first quiz , earn 5 coins and update your streak.
                 </p>
               </div>
             ) : (
@@ -410,9 +400,8 @@ export default function Dashboard() {
                           <span className="text-indigo-700">{q.score}</span> /{" "}
                           {totalQs}
                         </p>
-                        <span
-                          className={`text-sm font-semibold ${percentColor}`}
-                        >
+
+                        <span className={`text-sm font-semibold ${percentColor}`}>
                           {percent}% Accuracy
                         </span>
                       </div>
@@ -440,12 +429,14 @@ export default function Dashboard() {
               <div className="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center rounded-full shadow-inner mb-6">
                 <Trophy size={36} className="text-indigo-500" />
               </div>
+
               <h2 className="text-2xl font-semibold text-gray-800 mb-2">
                 Achievements Coming Soon!
               </h2>
+
               <p className="text-gray-600 max-w-md mx-auto text-sm">
-                We're working on adding exciting achievements and rewards to
-                keep you motivated. Stay tuned — they'll appear here soon! 🚀
+                We're working on adding exciting achievements and rewards to keep
+                you motivated. Stay tuned — they'll appear here soon! 🚀
               </p>
             </div>
           </section>
@@ -469,15 +460,15 @@ export default function Dashboard() {
                 <h3 className="text-xl font-semibold text-gray-800">
                   {user.fullName} 👋
                 </h3>
+
                 <p className="text-sm text-gray-500 mt-1">
                   {user.primaryEmailAddress?.emailAddress}
                 </p>
 
                 <p className="mt-4 text-gray-600 text-sm leading-relaxed">
                   Welcome back to{" "}
-                  <span className="font-medium text-indigo-600">StudyFlow</span>
-                  . You're doing great — stay consistent, keep learning, and
-                  track your progress easily.
+                  <span className="font-medium text-indigo-600">StudyFlow</span>.
+                  Keep learning and stay consistent — you're doing great!
                 </p>
               </div>
             </div>
@@ -489,12 +480,14 @@ export default function Dashboard() {
                 </p>
                 <p className="text-sm text-gray-600">Plans Created</p>
               </div>
+
               <div className="bg-green-50 rounded-lg p-4 text-center border border-green-100">
                 <p className="text-lg font-semibold text-green-700">
                   {quizData.length}
                 </p>
                 <p className="text-sm text-gray-600">Quizzes Taken</p>
               </div>
+
               <div className="bg-yellow-50 rounded-lg p-4 text-center border border-yellow-100">
                 <p className="text-lg font-semibold text-yellow-700">
                   {streak}
@@ -506,7 +499,7 @@ export default function Dashboard() {
         )}
       </main>
 
-      {/* Mobile bottom nav */}
+      {/* Mobile Bottom Nav */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t flex justify-around py-2 shadow-lg">
         {menuItems.map((item) => (
           <button

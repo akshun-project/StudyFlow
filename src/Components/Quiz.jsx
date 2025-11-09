@@ -76,7 +76,7 @@ ${subjects.map((s) => `- ${s}: ${chapters[s]}`).join("\n")}
 
 Requirements:
 - Each question tests one clear concept or fact.
-- Mix difficulty: 12 easy, 6 medium, 2 challenge-level questions.
+- Mix difficulty: 10 easy, 8 medium, 2 challenge-level questions.
 - Each question must have exactly 4 options (A–D) and one correct answer.
 - Avoid similar or repetitive questions.
 

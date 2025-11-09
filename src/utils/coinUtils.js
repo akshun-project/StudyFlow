@@ -1,40 +1,37 @@
-// src/utils/coinUtils.js
+ // src/utils/coinUtils.js
 import { supabase } from "../Supabase/supabaseClient";
 
-// ✅ Create coin row if not exist
-export async function ensureUserCoins(userId) {
-  const { data, error } = await supabase
+// ✅ Ensure user has a coin row
+async function ensureUserCoins(userId) {
+  const { data } = await supabase
     .from("coins")
     .select("*")
     .eq("user_id", userId)
     .maybeSingle();
 
   if (!data) {
-    await supabase.from("coins").insert({
-      user_id: userId,
-      balance: 0,
-    });
-    return { balance: 0 };
+    const { data: newRow } = await supabase
+      .from("coins")
+      .insert({ user_id: userId, balance: 0 })
+      .select()
+      .single();
+
+    return newRow;
   }
 
   return data;
 }
 
-// ✅ Get user coin balance
+// ✅ Get user coin balance (ALWAYS safe)
 export async function getCoins(userId) {
-  const { data } = await supabase
-    .from("coins")
-    .select("balance")
-    .eq("user_id", userId)
-    .maybeSingle();
-
-  return data?.balance ?? 0;
+  const row = await ensureUserCoins(userId);
+  return row.balance ?? 0;
 }
 
-// ✅ Add coins
+// ✅ Add coins safely
 export async function addCoins(userId, amount) {
-  const current = await getCoins(userId);
-  const newBalance = current + amount;
+  const row = await ensureUserCoins(userId);
+  const newBalance = row.balance + amount;
 
   await supabase
     .from("coins")
@@ -44,13 +41,13 @@ export async function addCoins(userId, amount) {
   return newBalance;
 }
 
-// ✅ Deduct coins (like 5 coins for explanation)
+// ✅ Deduct coins safely
 export async function deductCoins(userId, amount) {
-  const current = await getCoins(userId);
+  const row = await ensureUserCoins(userId);
 
-  if (current < amount) return null; // ❌ not enough coins
+  if (row.balance < amount) return null;
 
-  const newBalance = current - amount;
+  const newBalance = row.balance - amount;
 
   await supabase
     .from("coins")
