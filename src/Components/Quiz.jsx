@@ -15,6 +15,15 @@ import QuizResult from "./QuizResult";
 import { addCoins, getCoins, deductCoins } from "../utils/coinUtils";
 import {updateStreak} from "../utils/streakUtils";
 
+// --- SHUFFLE UTILS (Prevents answer pattern like B,B,C,C) ---
+function shuffleArray(arr) {
+  return arr
+    .map((v) => ({ v, sort: Math.random() }))
+    .sort((a, b) => a.sort - b.sort)
+    .map((x) => x.v);
+}
+
+
 export default function Quiz() {
   const { user } = useUser();
   const navigate = useNavigate();
@@ -133,7 +142,30 @@ Rules:
       if (!Array.isArray(parsed) || parsed.length === 0)
         throw new Error("Invalid quiz format.");
 
-      setQuiz(parsed);
+       // ✅ Shuffle options & update correct answer mapping
+const shuffledQuiz = parsed.map((q) => {
+  const originalOptions = [...q.options];
+  const shuffledOptions = shuffleArray(originalOptions);
+
+  // find old correct answer index (A=0, B=1...)
+  const correctLetter = (q.answer || "").toUpperCase();
+  const oldIndex =
+    /^[A-D]$/.test(correctLetter)
+      ? correctLetter.charCodeAt(0) - 65
+      : 0;
+
+  const correctOption = originalOptions[oldIndex];
+  const newIndex = shuffledOptions.indexOf(correctOption);
+
+  return {
+    question: q.question,
+    options: shuffledOptions,
+    answer: ["A", "B", "C", "D"][newIndex],
+  };
+});
+
+setQuiz(shuffledQuiz);
+
       setStep(2);
       setTimeSeconds(0);
       timerRef.current = 0;
