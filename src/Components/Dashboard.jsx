@@ -42,30 +42,12 @@ export default function Dashboard() {
         .select("balance")
         .eq("user_id", userId)
         .maybeSingle();
-      if (error) return 0;
-      if (!data) {
-        await supabase.from("coins").insert({ user_id: userId, balance: 0 });
-        return 0;
-      }
+
+      if (error || !data) return 0;
       return data.balance ?? 0;
     } catch {
       return 0;
     }
-  };
-
-  const setCoinsInDb = async (userId, newBalance) => {
-    try {
-      const { error } = await supabase
-        .from("coins")
-        .update({ balance: newBalance })
-        .eq("user_id", userId);
-      if (error) {
-        await supabase
-          .from("coins")
-          .insert({ user_id: userId, balance: newBalance });
-      }
-      setCoins(newBalance);
-    } catch {}
   };
 
   const loadDashboardData = useCallback(
@@ -79,7 +61,9 @@ export default function Dashboard() {
     ) => {
       if (!user) return;
       setLoading(true);
+
       try {
+        // Planner
         if (opts.fetchPlanner) {
           const { data } = await supabase
             .from("planner_data")
@@ -89,6 +73,7 @@ export default function Dashboard() {
           setPlannerData(data || []);
         }
 
+        // Quiz
         if (opts.fetchQuiz) {
           const { data } = await supabase
             .from("quiz_data")
@@ -98,6 +83,7 @@ export default function Dashboard() {
           setQuizData(data || []);
         }
 
+        // Streak
         if (opts.fetchStreak) {
           const { data } = await supabase
             .from("streaks")
@@ -107,6 +93,7 @@ export default function Dashboard() {
           setStreak(data?.current_streak ?? 0);
         }
 
+        // Coins
         if (opts.fetchCoins) {
           const b = await fetchCoins(user.id);
           setCoins(b);
@@ -120,13 +107,76 @@ export default function Dashboard() {
     [user]
   );
 
+  // --------------------------
+  // Initial load
+  // --------------------------
   useEffect(() => {
     if (!user) return;
     loadDashboardData();
   }, [user, loadDashboardData]);
 
+  // --------------------------
+  // 🔥 REALTIME STREAK LISTENER
+  // --------------------------
+  useEffect(() => {
+    if (!user) return;
+
+    const streakChannel = supabase
+      .channel(`public:streaks:user_${user.id}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "streaks", filter: `user_id=eq.${user.id}` },
+        () => {
+          console.log("Realtime streak update detected");
+          loadDashboardData({
+            fetchStreak: true,
+            fetchCoins: false,
+            fetchPlanner: false,
+            fetchQuiz: false,
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(streakChannel);
+    };
+  }, [user, loadDashboardData]);
+
+  // --------------------------
+  // 🪙 REALTIME COINS LISTENER
+  // --------------------------
+  useEffect(() => {
+    if (!user) return;
+
+    const coinsChannel = supabase
+      .channel(`public:coins:user_${user.id}`)
+      .on(
+        "postgres_changes",
+        { event: "*", schema: "public", table: "coins", filter: `user_id=eq.${user.id}` },
+        () => {
+          console.log("Realtime coins update detected");
+          loadDashboardData({
+            fetchCoins: true,
+            fetchStreak: false,
+            fetchPlanner: false,
+            fetchQuiz: false,
+          });
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabase.removeChannel(coinsChannel);
+    };
+  }, [user, loadDashboardData]);
+
+  // --------------------------
+  // UI Logic
+  // --------------------------
   if (!user)
     return <div className="p-6">Please log in to view your dashboard.</div>;
+
   if (loading) return <p className="p-6">Loading...</p>;
 
   const accuracy =
@@ -141,6 +191,9 @@ export default function Dashboard() {
         )
       : 0;
 
+  // --------------------------
+  // JSX Output
+  // --------------------------
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-50">
       {/* Sidebar */}
@@ -174,9 +227,9 @@ export default function Dashboard() {
         </button>
       </aside>
 
-      {/* Main */}
+      {/* Main Content */}
       <main className="flex-1 p-6 overflow-y-auto">
-        {/* Overview */}
+        {/* ---------------- Overview ---------------- */}
         {activeTab === "overview" && (
           <section>
             <h2 className="text-2xl font-semibold mb-6 text-gray-800">
@@ -227,18 +280,20 @@ export default function Dashboard() {
           </section>
         )}
 
-        {/* Planner */}
+        {/* ---------------- Planner ---------------- */}
         {activeTab === "planner" && (
           <section className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold mb-6 text-indigo-700">
               Your Study Plans
             </h2>
+
             {plannerData.length === 0 ? (
               <p className="text-gray-600">No study plans found.</p>
             ) : (
               <div className="space-y-6">
                 {plannerData.map((p) => {
                   const schedule = JSON.parse(p.schedule || "[]");
+
                   return (
                     <div
                       key={p.id}
@@ -292,14 +347,14 @@ export default function Dashboard() {
           </section>
         )}
 
-        {/* Quiz */}
+        {/* ---------------- Quiz ---------------- */}
         {activeTab === "quiz" && (
           <section>
             <h2 className="text-2xl font-semibold mb-6 text-gray-800">
               Quiz Performance
             </h2>
 
-            {/* ✅ Summary Card */}
+            {/* Summary Card */}
             {quizData.length > 0 && (
               <div className="mb-6 bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 rounded-lg p-4 flex justify-between items-center">
                 <div>
@@ -317,7 +372,7 @@ export default function Dashboard() {
               </div>
             )}
 
-            {/* ✅ Empty State */}
+            {/* Empty State */}
             {quizData.length === 0 ? (
               <div className="text-center py-20 bg-white rounded-xl shadow-sm border border-gray-100">
                 <p className="text-4xl mb-3">🧩</p>
@@ -327,15 +382,8 @@ export default function Dashboard() {
                 <p className="text-sm text-gray-600 mb-4">
                   Take your first quiz to start tracking your performance!
                 </p>
-                <button
-                  onClick={() => setActiveTab("quiz")}
-                  className="px-5 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition"
-                >
-                  Take a Quiz Now
-                </button>
               </div>
             ) : (
-              /* ✅ Enhanced Quiz Cards */
               <ul className="space-y-4">
                 {quizData.map((q) => {
                   const totalQs = q.total_questions ?? DEFAULT_TOTAL_QUESTIONS;
@@ -343,7 +391,6 @@ export default function Dashboard() {
                     (Number(q.score || 0) / totalQs) * 100
                   );
 
-                  // Color based on performance
                   const percentColor =
                     percent >= 80
                       ? "text-green-600"
@@ -355,7 +402,6 @@ export default function Dashboard() {
                     <motion.li
                       key={q.id}
                       whileHover={{ scale: 1.02 }}
-                      transition={{ duration: 0.2 }}
                       className="bg-gradient-to-br from-white to-indigo-50 border border-gray-200 rounded-xl p-5 shadow-sm hover:shadow-md transition"
                     >
                       <div className="flex justify-between items-center mb-2">
@@ -387,6 +433,7 @@ export default function Dashboard() {
           </section>
         )}
 
+        {/* ---------------- Achievements ---------------- */}
         {activeTab === "achievements" && (
           <section className="text-center py-20">
             <div className="flex flex-col items-center justify-center">
@@ -398,13 +445,13 @@ export default function Dashboard() {
               </h2>
               <p className="text-gray-600 max-w-md mx-auto text-sm">
                 We're working on adding exciting achievements and rewards to
-                keep you motivated. Stay tuned they'll appear here soon! 🚀
+                keep you motivated. Stay tuned — they'll appear here soon! 🚀
               </p>
             </div>
           </section>
         )}
 
-        {/* Profile */}
+        {/* ---------------- Profile ---------------- */}
         {activeTab === "profile" && (
           <section className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-semibold mb-6 text-gray-800">
@@ -412,7 +459,6 @@ export default function Dashboard() {
             </h2>
 
             <div className="bg-white rounded-xl shadow-md border border-gray-200 p-6 flex flex-col sm:flex-row items-center sm:items-start gap-6">
-              {/* User avatar */}
               <img
                 src={user.imageUrl}
                 alt={user.fullName}
@@ -436,7 +482,6 @@ export default function Dashboard() {
               </div>
             </div>
 
-            {/* Small Stats Cards */}
             <div className="grid sm:grid-cols-3 gap-4 mt-8">
               <div className="bg-indigo-50 rounded-lg p-4 text-center border border-indigo-100">
                 <p className="text-lg font-semibold text-indigo-700">
@@ -461,7 +506,7 @@ export default function Dashboard() {
         )}
       </main>
 
-      {/* Mobile nav */}
+      {/* Mobile bottom nav */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t flex justify-around py-2 shadow-lg">
         {menuItems.map((item) => (
           <button

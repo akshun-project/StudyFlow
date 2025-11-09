@@ -13,6 +13,7 @@ import QuizResult from "./QuizResult";
 
 // Coin utils
 import { addCoins, getCoins, deductCoins } from "../utils/coinUtils";
+import {updateStreak} from "../utils/streakUtils";
 
 export default function Quiz() {
   const { user } = useUser();
@@ -145,44 +146,51 @@ Rules:
     }
   };
 
-  // --- SAVE QUIZ RESULT (+5 COINS) ---
-  const saveQuizResult = async (finalScore = null) => {
-    if (!user) return;
-    setSaving(true);
+ 
+ // --- SAVE QUIZ RESULT (+5 COINS + STREAK) ---
+const saveQuizResult = async (finalScore = null) => {
+  if (!user) return;
+  setSaving(true);
 
-    try {
-      const scoreToSave = finalScore ?? score;
-      const currentTime = timerRef.current || timeSeconds || 0;
-      const duration_minutes = Math.ceil(currentTime / 60);
+  try {
+    const scoreToSave = finalScore ?? score;
+    const currentTime = timerRef.current || timeSeconds || 0;
+    const duration_minutes = Math.ceil(currentTime / 60);
 
-      const payload = {
-        user_id: user.id,
-        topic: subjects.map((s) => `${s}: ${chapters[s]}`).join(", "),
-        score: scoreToSave,
-        total_questions: quiz.length,
-        time_seconds: currentTime,
-        duration_minutes,
-        created_at: new Date(),
-      };
+    const payload = {
+      user_id: user.id,
+      topic: subjects.map((s) => `${s}: ${chapters[s]}`).join(", "),
+      score: scoreToSave,
+      total_questions: quiz.length,
+      time_seconds: currentTime,
+      duration_minutes,
+      created_at: new Date(),
+    };
 
-      const { data, error } = await supabase
-        .from("quiz_data")
-        .insert([payload])
-        .select()
-        .single();
+    const { data, error } = await supabase
+      .from("quiz_data")
+      .insert([payload])
+      .select()
+      .single();
 
-      if (error) throw error;
-      if (data?.id) setQuizResultId(data.id);
+    if (error) throw error;
+    if (data?.id) setQuizResultId(data.id);
 
-      await addCoins(user.id, 5);
-      console.log("✅ +5 coins added for quiz completion");
-    } catch (err) {
-      console.error("Save error:", err);
-      setError("Failed to save quiz results.");
-    } finally {
-      setSaving(false);
-    }
-  };
+    // ✅ Add coins
+    await addCoins(user.id, 5);
+    console.log("✅ +5 coins added");
+
+    // ✅ Update streak (VERY IMPORTANT)
+    await updateStreak(user.id);
+    console.log("🔥 Streak updated");
+
+  } catch (err) {
+    console.error("Save error:", err);
+    setError("Failed to save quiz results.");
+  } finally {
+    setSaving(false);
+  }
+};
 
   // --- ANSWER HANDLING ---
   const handleChoose = (opt) => {
