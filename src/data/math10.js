@@ -8,274 +8,274 @@ export const math10 = {
   questions: [
 
     // ---------- REAL NUMBERS ----------
+      // ---------- 1–8 ----------
     {
       id: 1,
-      question: "The HCF of 42 and 70 using Euclid’s division lemma is:",
-      options: ["2", "7", "14", "21"],
-      correctIndex: 2,
+      question: "The largest number that divides 70 and 125, leaving remainders 5 and 8 respectively, is:",
+      options: ["17", "13", "875", "45"],
+      correctIndex: 1,
     },
     {
       id: 2,
-      question: "Which of the following is an irrational number?",
-      options: ["0.12", "22/7", "√5", "1.25"],
+      question: "The value which occurs most frequently in a set of observations is called:",
+      options: ["Mean", "Median", "Mode", "Range"],
       correctIndex: 2,
     },
-
-    // ---------- POLYNOMIALS ----------
     {
       id: 3,
-      question: "If α and β are roots of x² – 5x + 6 = 0, then α + β =",
-      options: ["5", "6", "1", "–5"],
-      correctIndex: 0,
+      question: "The sum of the roots of the quadratic equation 3x² − 5x + 2 = 0 is:",
+      options: ["−5/3", "5/3", "3/5", "−2/3"],
+      correctIndex: 1,
     },
     {
       id: 4,
-      question: "Degree of polynomial 5x³ – 4x² + 7 is:",
-      options: ["1", "2", "3", "0"],
-      correctIndex: 2,
+      question: "The product of a non-zero rational number and an irrational number is always:",
+      options: ["Rational", "Irrational", "1", "0"],
+      correctIndex: 1,
     },
-
-    // ---------- PAIR OF LINEAR EQUATIONS ----------
     {
       id: 5,
-      question: "If two lines intersect at a point, the system is:",
-      options: ["Inconsistent", "Consistent and dependent", "Consistent and independent", "None"],
-      correctIndex: 2,
+      question: "Ratio of volume of a cone to a cylinder with same base radius & height is:",
+      options: ["1:2", "1:3", "2:3", "3:1"],
+      correctIndex: 1,
     },
     {
       id: 6,
-      question: "The pair 2x + 3y = 5 and 4x + 6y = 10 has:",
-      options: ["One solution", "Infinite solutions", "No solution", "Two solutions"],
-      correctIndex: 1,
+      question: "The midpoint of the segment joining (−5, 7) and (−1, 3) is:",
+      options: ["(−4, 5)", "(−3, 4)", "(−3, 5)", "(−2, 5)"],
+      correctIndex: 2,
     },
-
-    // ---------- QUADRATIC EQUATIONS ----------
     {
       id: 7,
-      question: "Roots of x² – 4 = 0 are:",
-      options: ["±4", "±2", "4, –1", "0, 4"],
-      correctIndex: 1,
+      question: "If P(E) = 0.05, then P(not E) is:",
+      options: ["0.05", "1", "0.95", "0"],
+      correctIndex: 2,
     },
     {
       id: 8,
-      question: "A quadratic equation has equal roots when:",
-      options: ["b² – 4ac > 0", "b² – 4ac = 0", "b² – 4ac < 0", "a = 0"],
-      correctIndex: 1,
+      question: "For what value of k are the lines 3x − y + 8 = 0 and 6x − ky + 16 = 0 coincident?",
+      options: ["−1/2", "1", "2", "−2"],
+      correctIndex: 2,
     },
 
-    // ---------- ARITHMETIC PROGRESSIONS ----------
+    // ---------- 9–16 ----------
     {
       id: 9,
-      question: "The nth term of the AP 3, 7, 11, 15,... is:",
-      options: ["4n + 3", "4n – 1", "3n + 4", "7n – 3"],
+      question: "The 10th term of the AP: 2, 7, 12, ... is:",
+      options: ["57", "47", "45", "67"],
       correctIndex: 1,
     },
     {
       id: 10,
-      question: "Sum of first 10 terms of AP 2, 4, 6,... is:",
-      options: ["50", "110", "60", "100"],
+      question: "If sin A = 3/4, then tan A =",
+      options: ["4/3", "√7/4", "3/5", "3/√7"],
       correctIndex: 3,
     },
-
-    // ---------- TRIANGLES ----------
     {
       id: 11,
-      question: "Two triangles are similar if:",
-      options: ["Only one angle is equal", "All sides unequal", "Their corresponding angles are equal", "None"],
+      question: "A die is thrown once. Probability of getting a number < 3 is:",
+      options: ["2/3", "1/6", "1/3", "1/2"],
       correctIndex: 2,
     },
     {
       id: 12,
-      question: "In similar triangles, ratio of areas is equal to:",
-      options: ["Ratio of sides", "Square of ratio of sides", "Cube of ratio", "Twice the ratio"],
-      correctIndex: 1,
+      question: "Nature of roots of equation 2x² − 4x + 3 = 0:",
+      options: ["Real & equal", "Real & unequal", "No real roots", "Cannot determine"],
+      correctIndex: 2,
     },
-
-    // ---------- CIRCLES ----------
     {
       id: 13,
-      question: "A tangent to a circle intersects it at:",
-      options: ["One point", "Two points", "Three points", "No point"],
-      correctIndex: 0,
+      question: "Area of sector of radius 4 cm and angle 30° is:",
+      options: ["2π/3", "8π/3", "4π/3", "4π/12"],
+      correctIndex: 2,
     },
     {
       id: 14,
-      question: "Angle between radius and tangent is:",
-      options: ["0°", "45°", "60°", "90°"],
-      correctIndex: 3,
+      question: "If HCF(65, 117) = 65m − 117, the value of m is:",
+      options: ["1", "3", "2", "4"],
+      correctIndex: 2,
     },
-
-    // ---------- COORDINATE GEOMETRY ----------
     {
       id: 15,
-      question: "Distance between (3, 4) and (6, 8) is:",
-      options: ["5", "4", "6", "3"],
-      correctIndex: 0,
+      question: "(1 − tan²45°) / (1 + tan²45°) =",
+      options: ["tan 90°", "1", "sin 45°", "0"],
+      correctIndex: 3,
     },
     {
       id: 16,
-      question: "Midpoint of (2, 3) and (6, 7) is:",
-      options: ["(4,5)", "(3,4)", "(5,4)", "(4,4)"],
-      correctIndex: 0,
+      question: "The zeroes of x² + 7x + 10 are:",
+      options: ["2 and 5", "2 and −5", "−2 and −5", "−2 and 5"],
+      correctIndex: 2,
     },
 
-    // ---------- MENSURATION (AREAS) ----------
+    // ---------- 17–24 ----------
     {
       id: 17,
-      question: "Area of triangle with base 10 cm and height 8 cm:",
-      options: ["40 cm²", "80 cm²", "20 cm²", "60 cm²"],
-      correctIndex: 0,
+      question: "If ΔABC ∼ ΔPQR with areas 81 & 49 and BC = 9, then QR is:",
+      options: ["9 cm", "8 cm", "7 cm", "10 cm"],
+      correctIndex: 2,
     },
     {
       id: 18,
-      question: "Area of circle with radius 7 cm:",
-      options: ["49π", "14π", "7π", "21π"],
-      correctIndex: 0,
+      question: "For 4x² − 2px + 1 = 0 to have equal roots, p =",
+      options: ["±4", "±2", "±1", "0"],
+      correctIndex: 1,
     },
-
-    // ---------- SURFACE AREAS & VOLUMES ----------
     {
       id: 19,
-      question: "Volume of a cuboid =",
-      options: ["2lb + bh", "l × b × h", "lb + h", "l² + b² + h²"],
-      correctIndex: 1,
+      question: "Probability of drawing a red face card from 52 cards is:",
+      options: ["1/26", "3/13", "3/26", "1/13"],
+      correctIndex: 2,
     },
     {
       id: 20,
-      question: "Volume of cylinder with radius r and height h:",
-      options: ["πrh²", "πr²h", "2πrh", "πr²h²"],
-      correctIndex: 1,
+      question: "Sphere of radius r melted to form cone of height r. Radius of cone =",
+      options: ["r", "3r", "4r", "2r"],
+      correctIndex: 3,
     },
-
-    // ---------- TRIGONOMETRY ----------
     {
       id: 21,
-      question: "tan 45° equals:",
-      options: ["0", "1", "√3", "1/√3"],
-      correctIndex: 1,
+      question: "If sin θ = cos θ, then θ =",
+      options: ["0°", "30°", "60°", "45°"],
+      correctIndex: 3,
     },
     {
       id: 22,
-      question: "sin²θ + cos²θ equals:",
-      options: ["1", "0", "2", "sinθ"],
-      correctIndex: 0,
+      question: "Distance between (2, −2) and (−1, x) is 5. One value of x is:",
+      options: ["−6", "−4", "2", "1"],
+      correctIndex: 2,
     },
     {
       id: 23,
-      question: "Value of sin 0° is:",
-      options: ["1", "0", "1/2", "√3/2"],
-      correctIndex: 1,
+      question: "If a₁₈ − a₁₄ = 32 in an AP, common difference is:",
+      options: ["4", "−8", "8", "16"],
+      correctIndex: 2,
     },
     {
       id: 24,
-      question: "In right triangle, tanθ =",
-      options: ["Opp/Hyp", "Hyp/Opp", "Opp/Adj", "Adj/Opp"],
-      correctIndex: 2,
+      question: "If difference between two numbers is 26 & one is thrice the other:",
+      options: [
+        "x+y=26, x=3y",
+        "x−y=26, x=3y",
+        "x−y=26, y=3x",
+        "x+y=26, y=3x"
+      ],
+      correctIndex: 1,
     },
 
-    // ---------- APPLICATIONS OF TRIGONOMETRY ----------
+    // ---------- 25–32 ----------
     {
       id: 25,
-      question: "Height of a tree can be found using:",
-      options: ["Algebra", "Mensuration", "Trigonometry", "AP only"],
-      correctIndex: 2,
+      question: "If 3 cot A = 4, then sin A =",
+      options: ["4/5", "5/3", "4/3", "3/5"],
+      correctIndex: 3,
     },
     {
       id: 26,
-      question: "Angle of elevation means:",
-      options: ["Eye looking down", "Eye looking up", "Angle from ground", "None"],
-      correctIndex: 1,
+      question: "Sum of first 11 terms of AP 2, 6, 10, ... is:",
+      options: ["220", "200", "242", "264"],
+      correctIndex: 2,
     },
-
-    // ---------- STATISTICS ----------
     {
       id: 27,
-      question: "Mean of 2, 4, 6, 8 is:",
-      options: ["6", "4", "5", "10"],
-      correctIndex: 1,
+      question: "Length of tangent from point 10 cm away from centre of radius 6 cm:",
+      options: ["16 cm", "4 cm", "8 cm", "12 cm"],
+      correctIndex: 2,
     },
     {
       id: 28,
-      question: "Median of 3, 5, 7, 9, 11:",
-      options: ["9", "5", "7", "6"],
-      correctIndex: 2,
+      question: "Decimal expansion of 14587/1250 terminates after:",
+      options: ["1 d.p.", "2 d.p.", "3 d.p.", "4 d.p."],
+      correctIndex: 3,
     },
     {
       id: 29,
-      question: "Mode of 4, 2, 4, 5, 6, 4, 8 is:",
-      options: ["4", "2", "5", "6"],
-      correctIndex: 0,
+      question: "cos A / sin(90° − A) equals:",
+      options: ["tan A", "0", "sin A", "1"],
+      correctIndex: 3,
     },
     {
       id: 30,
-      question: "Which averages can be more than one?",
-      options: ["Mean", "Median", "Mode", "None"],
-      correctIndex: 2,
+      question: "Relationship between Mean, Median, Mode:",
+      options: [
+        "Mode = 2 Median − 3 Mean",
+        "Mode = 3 Median − 2 Mean",
+        "Mode = 3 Mean − 2 Median",
+        "Mode = 2 Mean − 3 Median"
+      ],
+      correctIndex: 1,
     },
-
-    // ---------- PROBABILITY ----------
     {
       id: 31,
-      question: "Probability of getting head when tossing a coin:",
-      options: ["1/4", "1/2", "1/6", "2/3"],
-      correctIndex: 1,
+      question: "Area of largest triangle inscribed in semicircle of radius r is:",
+      options: ["2r²", "1/2 r²", "1/2 r", "r²"],
+      correctIndex: 3,
     },
     {
       id: 32,
-      question: "Probability of getting 7 on a die:",
-      options: ["1/6", "0", "1/7", "1"],
-      correctIndex: 1,
-    },
-    {
-      id: 33,
-      question: "Probability always lies between:",
-      options: ["0 and 10", "–1 and 1", "0 and 1", "1 and 2"],
-      correctIndex: 2,
+      question: "Capacity of cylinder = 1100 cm³, radius = 5 cm. Height =",
+      options: ["10 cm", "7 cm", "12 cm", "14 cm"],
+      correctIndex: 3,
     },
 
-    // ---------- IMPORTANT MIXED ----------
+    // ---------- 33–40 ----------
+    {
+      id: 33,
+      question: "If x=a, y=b solves x−y=2 and x+y=4, then (a,b) =",
+      options: ["(1,3)", "(0,0)", "(3,1)", "(3,1)"],
+      correctIndex: 2,
+    },
     {
       id: 34,
-      question: "Sum of angles of triangle:",
-      options: ["180°", "90°", "360°", "270°"],
-      correctIndex: 0,
+      question: "Area of circle doubled. Ratio new area : original area =",
+      options: ["1:2", "2:1", "1:4", "4:1"],
+      correctIndex: 3,
     },
     {
       id: 35,
-      question: "Slope of a vertical line is:",
-      options: ["0", "1", "Undefined", "∞"],
-      correctIndex: 2,
+      question: "A line intersecting a circle at two distinct points is called:",
+      options: ["Tangent", "Radius", "Diameter", "Secant"],
+      correctIndex: 3,
     },
     {
       id: 36,
-      question: "Roots of x² + 5x + 6 = 0 are:",
-      options: ["–2, –3", "2, 3", "1, –6", "3, –2"],
-      correctIndex: 0,
+      question: "Quadratic equation from speed condition of train 360 km:",
+      options: [
+        "x² + 5x + 1800 = 0",
+        "x² − 5x + 1800 = 0",
+        "x² − 5x − 1800 = 0",
+        "x² + 5x − 1800 = 0"
+      ],
+      correctIndex: 3,
     },
     {
       id: 37,
-      question: "In AP, if a = 5, d = 2, nth term is:",
-      options: ["5 + 2n", "5 + (n – 1)2", "5n + 2", "n + 10"],
-      correctIndex: 1,
+      question: "If 18, a, b, −3 are in AP, then a + b =",
+      options: ["17", "21", "15", "18"],
+      correctIndex: 2,
     },
     {
       id: 38,
-      question: "Area of sector =",
-      options: ["θ/360 × πr²", "πr² × 360/θ", "2πrθ", "πrθ²"],
-      correctIndex: 0,
-    },
-    {
-      id: 39,
-      question: "Which is a quadratic equation?",
-      options: ["x + 5 = 0", "x² – 3x + 2 = 0", "3x = 7", "5x³ + 1 = 0"],
+      question: "If Mean=26 and Mode=29, then Median is:",
+      options: ["28", "27", "27.5", "26"],
       correctIndex: 1,
     },
     {
-      id: 40,
-      question: "Volume of cone =",
-      options: ["πr²h", "1/2 πr²h", "1/3 πr²h", "2πrh"],
+      id: 39,
+      question: "TSA of toy = cone + hemisphere is:",
+      options: [
+        "πr(l + r)",
+        "πrl + πr²",
+        "πrl + 2πr²",
+        "2πr(l + r)"
+      ],
       correctIndex: 2,
     },
-
+    {
+      id: 40,
+      question: "If 2x+3y=7 and (k−1)x+(k+2)y=3k have infinite solutions, k =",
+      options: ["1", "5", "7", "-5"],
+      correctIndex: 2,
+    },
   ],
 };

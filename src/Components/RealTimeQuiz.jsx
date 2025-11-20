@@ -1,4 +1,4 @@
- // src/Components/RealTimeQuiz.jsx
+  // src/Components/RealTimeQuiz.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { supabase } from "../Supabase/supabaseClient";
 import { useUser } from "@clerk/clerk-react";
@@ -22,7 +22,6 @@ export default function RealTimeQuiz({ quiz, onExit }) {
     timerRef.current = setInterval(() => {
       setSeconds((s) => s + 1);
     }, 1000);
-
     return () => clearInterval(timerRef.current);
   }, []);
 
@@ -54,7 +53,7 @@ export default function RealTimeQuiz({ quiz, onExit }) {
       total_questions: quiz.questions.length,
       correct_answers: score,
       time_taken: seconds,
-      accuracy: Math.round((score / quiz.questions.length) * 100)
+      accuracy: Math.round((score / quiz.questions.length) * 100),
     });
   };
 
@@ -74,75 +73,94 @@ export default function RealTimeQuiz({ quiz, onExit }) {
   }
 
   return (
-    <div className="max-w-xl mx-auto px-4 pt-20 pb-16">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pb-24">
 
-      {/* Mobile exit */}
-      <button
-        onClick={onExit}
-        className="fixed top-4 left-4 z-50 md:hidden bg-white/95 backdrop-blur border border-slate-300 px-3 py-1.5 rounded-full text-sm font-medium text-slate-700 shadow hover:bg-slate-100"
-      >
-        ← Exit
-      </button>
+      {/* Sticky top bar */}
+      <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur shadow-sm border-b border-slate-200">
+        <div className="max-w-xl mx-auto px-4 py-3 flex justify-between items-center">
 
-      {/* Main test card */}
-      <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 space-y-5 transition-all">
+          {/* Exit */}
+          <button
+            onClick={onExit}
+            className="text-slate-600 text-sm font-semibold px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 transition"
+          >
+            ← Exit
+          </button>
 
-        {/* TOP Bar: Question count + Timer */}
-        <div className="flex justify-between items-center mb-2">
-          <p className="text-[13px] font-medium text-slate-500">
-            Question {index + 1} / {quiz.questions.length}
+          {/* Title */}
+          <p className="font-semibold text-slate-800 text-sm">
+            Q {index + 1}/{quiz.questions.length}
           </p>
 
-          <div className="px-3 py-1 rounded-full text-[12px] bg-indigo-100 text-indigo-700 font-semibold shadow-sm">
+          {/* Timer */}
+          <div className="px-3 py-1.5 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold shadow-sm">
             {Math.floor(seconds / 60)}:
             {(seconds % 60).toString().padStart(2, "0")}
           </div>
         </div>
+      </div>
 
-        {/* PASSAGE BOX 🔥 PREMIUM */}
-        {quiz.scenario && (
-          <div className="p-4 bg-gradient-to-b from-indigo-50 to-white border border-indigo-200 rounded-xl shadow-sm">
-            <h3 className="font-semibold text-indigo-700 mb-2 text-sm">Passage</h3>
-            <p className="text-slate-800 text-sm leading-relaxed whitespace-pre-line">
-              {quiz.scenario}
-            </p>
-          </div>
-        )}
+      {/* MAIN QUIZ CARD */}
+      <div className="max-w-xl mx-auto px-4 pt-24">
 
-        {/* QUESTION */}
-        <div>
-          <h2 className="text-base font-semibold text-slate-900 leading-snug mb-4">
+        <div className="
+          bg-white 
+          rounded-2xl 
+          shadow-xl 
+          border border-slate-200 
+          p-6 
+          space-y-5 
+          animate-fadeIn
+        ">
+          
+          {/* PASSAGE */}
+          {quiz.scenario && (
+            <div className="p-4 bg-indigo-50/70 border border-indigo-200 rounded-xl shadow-sm">
+              <h3 className="font-semibold text-indigo-700 mb-2 text-sm">
+                Passage
+              </h3>
+              <p className="text-slate-800 text-sm leading-relaxed whitespace-pre-line">
+                {quiz.scenario}
+              </p>
+            </div>
+          )}
+
+          {/* QUESTION */}
+          <h2 className="text-base font-semibold text-slate-900 leading-snug">
             {q.question}
           </h2>
-        </div>
 
-        {/* OPTIONS */}
-        <div className="space-y-3">
-          {q.options.map((opt, i) => {
-            const isCorrect = selected !== null && i === q.correctIndex;
-            const isWrong = selected === i && i !== q.correctIndex;
+          {/* OPTIONS */}
+          <div className="space-y-3">
+            {q.options.map((opt, i) => {
+              const isCorrect = selected !== null && i === q.correctIndex;
+              const isWrong = selected === i && i !== q.correctIndex;
 
-            return (
-              <button
-                key={i}
-                disabled={selected !== null}
-                onClick={() => handleSelect(i)}
-                className={`w-full text-left p-3.5 rounded-xl border text-[14px] transition-all duration-200
-                  ${
-                    selected === null
-                      ? "border-slate-300 bg-slate-50 hover:bg-slate-100 hover:scale-[1.01]"
-                      : isCorrect
-                      ? "bg-emerald-50 border-emerald-400 text-emerald-700 shadow-sm"
-                      : isWrong
-                      ? "bg-red-50 border-red-400 text-red-700 shadow-sm"
-                      : "bg-slate-50 border-slate-200 opacity-60"
-                  }
-                `}
-              >
-                {opt}
-              </button>
-            );
-          })}
+              return (
+                <button
+                  key={i}
+                  disabled={selected !== null}
+                  onClick={() => handleSelect(i)}
+                  className={`
+                    w-full text-left p-4 rounded-xl border transition-all duration-200
+                    text-[15px] font-medium
+                    ${
+                      selected === null
+                        ? "border-slate-300 bg-slate-50 hover:bg-slate-100 active:scale-[0.98] shadow-sm"
+                        : isCorrect
+                        ? "bg-emerald-50 border-emerald-400 text-emerald-700 shadow-md scale-[1.01]"
+                        : isWrong
+                        ? "bg-red-50 border-red-400 text-red-700 shadow-md scale-[1.01]"
+                        : "bg-slate-50 border-slate-200 opacity-50"
+                    }
+                  `}
+                >
+                  {opt}
+                </button>
+              );
+            })}
+          </div>
+
         </div>
       </div>
     </div>
