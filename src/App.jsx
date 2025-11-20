@@ -10,11 +10,14 @@ import Features from "./Components/Features";
 import Faq from "./Components/Faq";
 import Footer from "./Components/Footer";
 
-// ✅ Sync user
+// Sync user
 import SyncUserToSupabase from "./Clerk/SyncUserToSupabase";
 
-// ✅ Add this import
+// Add this
 import QuizExplain from "./Components/QuizExplain";
+
+// ⭐ Add Board Practice
+import BoardPractice from "./Components/BoardPractice";
 
 function App() {
   return (
@@ -22,7 +25,7 @@ function App() {
       <SyncUserToSupabase />
 
       <Routes>
-        {/* ✅ Landing page */}
+        {/* Landing page */}
         <Route
           path="/"
           element={
@@ -34,8 +37,9 @@ function App() {
             </>
           }
         />
-
-        <Route path="/faq" element={<Faq />} />
+65
+        
+        
 
         <Route
           path="/planner"
@@ -46,6 +50,7 @@ function App() {
           }
         />
 
+       
         <Route
           path="/quiz"
           element={
@@ -55,7 +60,6 @@ function App() {
           }
         />
 
-        {/* ✅ ✅ ✅ Add THIS route for explanations */}
         <Route
           path="/quiz-explain/:quizId"
           element={
@@ -70,6 +74,16 @@ function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ⭐ Board Practice Route (Case-Based Study, PYQs, Passages, etc.) */}
+        <Route
+          path="/board-practice"
+          element={
+            <ProtectedRoute>
+              <BoardPractice />
             </ProtectedRoute>
           }
         />

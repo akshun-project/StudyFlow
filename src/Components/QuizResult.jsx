@@ -1,4 +1,4 @@
- // src/Components/QuizResult.jsx
+   // src/Components/QuizResult.jsx
 import React from "react";
 
 export default function QuizResult({

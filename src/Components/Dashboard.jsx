@@ -1,4 +1,5 @@
- import { useState, useEffect, useCallback } from "react";
+ // src/Components/Dashboard.jsx
+import { useState, useEffect, useCallback } from "react";
 import { useUser, useClerk } from "@clerk/clerk-react";
 import { supabase } from "../Supabase/supabaseClient";
 
@@ -12,7 +13,7 @@ import {
 } from "lucide-react";
 
 import { motion } from "framer-motion";
-import { getCoins } from "../utils/coinUtils"; // ✅ FIXED
+import { getCoins } from "../utils/coinUtils";
 
 const DEFAULT_TOTAL_QUESTIONS = 8;
 
@@ -31,12 +32,12 @@ export default function Dashboard() {
     { id: "overview", icon: <BarChart3 size={22} />, label: "Overview" },
     { id: "planner", icon: <ClipboardList size={22} />, label: "Planner" },
     { id: "quiz", icon: <BookOpen size={22} />, label: "Quiz" },
-    { id: "profile", icon: <User size={22} />, label: "Profile" },
     { id: "achievements", icon: <Trophy size={22} />, label: "Achievements" },
+    { id: "profile", icon: <User size={22} />, label: "Profile" },
   ];
 
   // --------------------------
-  // 🔥 Load Dashboard Data
+  // Load Dashboard Data
   // --------------------------
   const loadDashboardData = useCallback(
     async (
@@ -51,7 +52,7 @@ export default function Dashboard() {
       setLoading(true);
 
       try {
-        // 📌 Planner
+        // Planner
         if (opts.fetchPlanner) {
           const { data } = await supabase
             .from("planner_data")
@@ -61,7 +62,7 @@ export default function Dashboard() {
           setPlannerData(data || []);
         }
 
-        // 📌 Quiz
+        // Quiz
         if (opts.fetchQuiz) {
           const { data } = await supabase
             .from("quiz_data")
@@ -71,7 +72,7 @@ export default function Dashboard() {
           setQuizData(data || []);
         }
 
-        // 📌 Streak
+        // Streak
         if (opts.fetchStreak) {
           const { data } = await supabase
             .from("streaks")
@@ -81,7 +82,7 @@ export default function Dashboard() {
           setStreak(data?.current_streak ?? 0);
         }
 
-        // 📌 Coins (uses coinUtils → row auto-created for new users)
+        // Coins
         if (opts.fetchCoins) {
           const bal = await getCoins(user.id);
           setCoins(bal);
@@ -95,16 +96,13 @@ export default function Dashboard() {
     [user]
   );
 
-  // --------------------------
-  // Initial load
-  // --------------------------
   useEffect(() => {
     if (!user) return;
     loadDashboardData();
   }, [user, loadDashboardData]);
 
   // --------------------------
-  // 🔥 REALTIME STREAK
+  // Realtime Streak Listener
   // --------------------------
   useEffect(() => {
     if (!user) return;
@@ -113,20 +111,14 @@ export default function Dashboard() {
       .channel(`public:streaks:user_${user.id}`)
       .on(
         "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "streaks",
-          filter: `user_id=eq.${user.id}`,
-        },
-        () => {
+        { event: "*", schema: "public", table: "streaks", filter: `user_id=eq.${user.id}` },
+        () =>
           loadDashboardData({
             fetchStreak: true,
-            fetchCoins: false,
-            fetchPlanner: false,
             fetchQuiz: false,
-          });
-        }
+            fetchPlanner: false,
+            fetchCoins: false,
+          })
       )
       .subscribe();
 
@@ -134,7 +126,7 @@ export default function Dashboard() {
   }, [user, loadDashboardData]);
 
   // --------------------------
-  // 🔥 REALTIME COINS
+  // Realtime Coins Listener
   // --------------------------
   useEffect(() => {
     if (!user) return;
@@ -143,32 +135,21 @@ export default function Dashboard() {
       .channel(`public:coins:user_${user.id}`)
       .on(
         "postgres_changes",
-        {
-          event: "*",
-          schema: "public",
-          table: "coins",
-          filter: `user_id=eq.${user.id}`,
-        },
-        () => {
+        { event: "*", schema: "public", table: "coins", filter: `user_id=eq.${user.id}` },
+        () =>
           loadDashboardData({
             fetchCoins: true,
             fetchStreak: false,
             fetchPlanner: false,
             fetchQuiz: false,
-          });
-        }
+          })
       )
       .subscribe();
 
     return () => supabase.removeChannel(coinsChannel);
   }, [user, loadDashboardData]);
 
-  // --------------------------
-  // Calculations
-  // --------------------------
-  if (!user)
-    return <div className="p-6">Please log in to view your dashboard.</div>;
-
+  if (!user) return <div className="p-6">Please log in to view your dashboard.</div>;
   if (loading) return <p className="p-6">Loading...</p>;
 
   const accuracy =
@@ -183,11 +164,12 @@ export default function Dashboard() {
       : 0;
 
   // --------------------------
-  // JSX OUTPUT
+  // Dashboard UI
   // --------------------------
   return (
     <div className="flex flex-col md:flex-row h-screen bg-gray-50">
-      {/* Sidebar */}
+      
+      {/* SIDEBAR */}
       <aside className="hidden md:flex flex-col w-64 bg-white shadow-lg border-r">
         <div className="p-6 border-b">
           <h1 className="text-2xl font-bold text-indigo-600">StudyFlow</h1>
@@ -218,17 +200,24 @@ export default function Dashboard() {
         </button>
       </aside>
 
-      {/* Main Content */}
+      {/* MAIN CONTENT */}
       <main className="flex-1 p-6 overflow-y-auto">
-        {/* ---------------- Overview ---------------- */}
+        {/* 🔙 Back to Home (Mobile Only) */}
+<button
+  onClick={() => (window.location.href = "/")}
+  className="md:hidden mb-4 flex items-center gap-2 text-gray-600 hover:text-indigo-600 transition"
+>
+  <span className="text-xl">←</span>
+  <span className="font-medium">Back</span>
+</button>
+
+        {/* OVERVIEW */}
         {activeTab === "overview" && (
           <section>
-            <h2 className="text-2xl font-semibold mb-6 text-gray-800">
-              Overview
-            </h2>
+            <h2 className="text-2xl font-semibold mb-6 text-gray-800">Overview</h2>
 
             <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
-              {[
+              {[ 
                 {
                   label: "Your Coins",
                   value: `🪙 ${coins}`,
@@ -271,7 +260,7 @@ export default function Dashboard() {
           </section>
         )}
 
-        {/* ---------------- Planner ---------------- */}
+        {/* PLANNER */}
         {activeTab === "planner" && (
           <section className="max-w-3xl mx-auto">
             <h2 className="text-3xl font-bold mb-6 text-indigo-700">
@@ -294,9 +283,7 @@ export default function Dashboard() {
                         <h3 className="text-xl font-semibold text-gray-800">
                           Class {p.class} —{" "}
                           <span className="text-indigo-600 font-medium">
-                            {Array.isArray(p.subjects)
-                              ? p.subjects.join(", ")
-                              : p.subjects}
+                            {Array.isArray(p.subjects) ? p.subjects.join(", ") : p.subjects}
                           </span>
                         </h3>
                         <span className="text-xs text-gray-400">
@@ -324,7 +311,6 @@ export default function Dashboard() {
                                 {item.activity}
                               </p>
                             </div>
-
                             <span className="text-xs mt-1 text-gray-500">
                               Planned
                             </span>
@@ -339,7 +325,7 @@ export default function Dashboard() {
           </section>
         )}
 
-        {/* ---------------- Quiz ---------------- */}
+        {/* QUIZ */}
         {activeTab === "quiz" && (
           <section>
             <h2 className="text-2xl font-semibold mb-6 text-gray-800">
@@ -422,27 +408,18 @@ export default function Dashboard() {
           </section>
         )}
 
-        {/* ---------------- Achievements ---------------- */}
+        {/* ⭐ ACHIEVEMENTS (Updated with Board Results) */}
         {activeTab === "achievements" && (
-          <section className="text-center py-20">
-            <div className="flex flex-col items-center justify-center">
-              <div className="w-20 h-20 bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center rounded-full shadow-inner mb-6">
-                <Trophy size={36} className="text-indigo-500" />
-              </div>
+          <section className="max-w-3xl mx-auto py-10">
+            <h2 className="text-3xl font-bold text-indigo-700 mb-6 text-center">
+              Achievements & Board Practice Results
+            </h2>
 
-              <h2 className="text-2xl font-semibold text-gray-800 mb-2">
-                Achievements Coming Soon!
-              </h2>
-
-              <p className="text-gray-600 max-w-md mx-auto text-sm">
-                We're working on adding exciting achievements and rewards to keep
-                you motivated. Stay tuned — they'll appear here soon! 🚀
-              </p>
-            </div>
+            <BoardResults />
           </section>
         )}
 
-        {/* ---------------- Profile ---------------- */}
+        {/* PROFILE */}
         {activeTab === "profile" && (
           <section className="max-w-3xl mx-auto">
             <h2 className="text-2xl font-semibold mb-6 text-gray-800">
@@ -499,7 +476,7 @@ export default function Dashboard() {
         )}
       </main>
 
-      {/* Mobile Bottom Nav */}
+      {/* MOBILE NAV */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t flex justify-around py-2 shadow-lg">
         {menuItems.map((item) => (
           <button
@@ -514,6 +491,75 @@ export default function Dashboard() {
           </button>
         ))}
       </nav>
+    </div>
+  );
+}
+
+/* -------------------------------
+   BoardResults Component
+-------------------------------- */
+function BoardResults() {
+  const [data, setData] = useState([]);
+  const { user } = useUser();
+
+  useEffect(() => {
+    if (!user) return;
+
+    supabase
+      .from("board_results")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("date", { ascending: false })
+      .then((res) => setData(res.data || []));
+  }, [user]);
+
+  // If no board tests attempted
+  if (!data.length) {
+    return (
+      <div className="bg-white border rounded-xl p-6 shadow text-center">
+        <p className="text-4xl mb-3">🎯</p>
+        <h3 className="text-xl font-semibold text-gray-800 mb-2">
+          No Board Tests Attempted Yet
+        </h3>
+        <p className="text-gray-600 mb-4">
+          Start your first board-style practice and unlock your achievements!
+        </p>
+
+        <button
+          onClick={() => (window.location.href = "/board-practice")}
+          className="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition"
+        >
+          Start Board Practice →
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      {data.map((item) => (
+        <div
+          key={item.id}
+          className="bg-white border rounded-xl p-5 shadow hover:shadow-md transition"
+        >
+          <div className="flex justify-between">
+            <h3 className="font-semibold text-gray-800">{item.test_name}</h3>
+            <p className="text-sm text-gray-500">
+              {new Date(item.date).toLocaleString()}
+            </p>
+          </div>
+
+          <p className="mt-2 text-indigo-700 font-semibold">
+            Score: {item.correct_answers} / {item.total_questions}
+          </p>
+
+          <p className="text-sm text-gray-600">Accuracy: {item.accuracy}%</p>
+
+          <p className="text-xs text-gray-500 mt-1">
+            Time: {Math.floor(item.time_taken / 60)}m {item.time_taken % 60}s
+          </p>
+        </div>
+      ))}
     </div>
   );
 }

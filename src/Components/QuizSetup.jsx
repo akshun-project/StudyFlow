@@ -67,7 +67,7 @@ export default function QuizSetup({
     setTimeout(() => {
       setMotivationStep(false);
       setShowMessage("");
-    }, 1200);
+    }, 1500);
   };
 
   // ------------------ STEP 1: Motivation screen ------------------
@@ -158,7 +158,7 @@ export default function QuizSetup({
       {studentClass && (
         <div className="mb-6">
           <label className="block text-sm font-medium mb-2 text-gray-700">
-            Select Subjects <span className="text-gray-400">(max 3)</span>
+            Select Subjects <span className="text-gray-400">(limit 3)</span>
           </label>
           <div className="flex flex-wrap gap-2">
             {classData[studentClass].subjects.map((s) => (

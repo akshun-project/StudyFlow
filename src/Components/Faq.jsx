@@ -8,65 +8,84 @@ const Faq = () => {
     {
       question: "What is StudyFlow?",
       answer:
-        "StudyFlow helps students plan their studies, take quizzes, and track progress in one place.",
+        "StudyFlow is a smart study companion that helps you plan your chapters, take AI quizzes, prepare for board exams, and track your progress in one place.",
     },
     {
-      question: "Is StudyFlow free to use?",
+      question: "Is StudyFlow free?",
       answer:
-        "Yes! Planning, Quizzes, Dashboard, and Streak features are all free to use.",
+        "Yes! Daily study planning, quizzes, dashboard analytics, and streak are free for all students.",
     },
     {
       question: "What are Coins and how do they work?",
       answer:
-        "Coins are earned by taking quizzes daily. You can use them to unlock quiz explanations.",
+        "You earn 5 Coins for completing quizzes. Use Coins to unlock premium quiz explanations and improve conceptual clarity.",
     },
     {
-      question: "Why does quiz explanation need Coins?",
+      question: "Why do quiz explanations require Coins?",
       answer:
-        "Coins prevent misuse and keep systems stable. It also motivates students to stay active.",
+        "To prevent misuse, ensure fair use, and manage server load. Coins also motivate you to stay active every day.",
     },
     {
-      question: "Why does creating a quiz or plan take 15–20 seconds?",
+      question: "What is the Board Practice Zone?",
       answer:
-        "StudyFlow generates accurate questions and plans, which need a few seconds to process.",
+        "It includes English passages, case-based questions, PYQs, and full-book tests — everything designed for Class 9–10 board exam preparation.",
     },
     {
-      question: "Why does quiz generation sometimes fail?",
+      question: "Why does generating a quiz or plan take 15–20 seconds?",
       answer:
-        "If traffic is high, quiz creation may fail once. Just retry — it usually works immediately.",
+        "StudyFlow creates high-quality content using AI. Accurate questions/plans take a few seconds to generate.",
     },
     {
-      question: "Is my data safe?",
+      question: "Why does quiz generation fail sometimes?",
       answer:
-        "Yes. Your Plans, Quizzes, Coins, and Progress are stored securely and only accessible to you.",
+        "When many students are using it at the same time. Simply retry — it usually works instantly on the second try.",
+    },
+    {
+      question: "Is my study data safe?",
+      answer:
+        "Yes. All your plans, quizzes, explanations, streak, and progress are stored securely and visible only to you.",
+    },
+    {
+      question: "Will StudyFlow add more features?",
+      answer:
+        "Yes! More board tests, AI revision notes, and a flashcard system are coming soon.",
     },
   ];
 
   return (
-    <section className="py-20 px-6 max-w-4xl mx-auto flex flex-col items-center text-center text-slate-800">
-      <p className="text-sm font-semibold uppercase text-indigo-600 tracking-wider">
-        FAQ
-      </p>
-      <h1 className="text-2xl md:text-5xl font-semibold mt-2 leading-tight">
-        Frequently Asked Questions
-      </h1>
-      <p className="text-sm text-slate-600 mt-3 max-w-sm">
-        Quick answers to help you understand StudyFlow better.
-      </p>
+    <section
+      id="faq"
+      className="min-h-screen py-24 px-6 bg-gradient-to-b from-indigo-50 to-white"
+    >
+      {/* Heading */}
+      <div className="text-center max-w-3xl mx-auto">
+        <p className="text-sm font-semibold uppercase text-indigo-600 tracking-wider">
+          FAQ
+        </p>
 
-      <div className="max-w-xl w-full mt-8 flex flex-col gap-4 items-start text-left">
+        <h1 className="text-4xl md:text-5xl font-bold mt-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">
+          Frequently Asked Questions
+        </h1>
+
+        <p className="text-sm text-slate-600 mt-3">
+          Clear answers to help you get the best out of StudyFlow.
+        </p>
+      </div>
+
+      {/* FAQ List */}
+      <div className="max-w-2xl mx-auto mt-12 flex flex-col gap-4">
         {faqsData.map((faq, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
+            transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="flex flex-col items-start w-full"
+            className="w-full"
           >
             <div
-              className="flex items-center justify-between w-full cursor-pointer bg-gradient-to-r from-indigo-50 to-white border border-indigo-100 p-4 rounded-lg hover:shadow-md hover:border-indigo-200 transition-all"
               onClick={() => setOpenIndex(openIndex === index ? null : index)}
+              className="flex items-center justify-between w-full cursor-pointer bg-white border border-indigo-100 p-5 rounded-xl shadow-sm hover:shadow-md hover:border-indigo-200 transition-all"
             >
               <h2 className="text-base font-medium text-slate-800">
                 {faq.question}
@@ -92,10 +111,11 @@ const Faq = () => {
               </svg>
             </div>
 
+            {/* Answer */}
             <p
-              className={`text-sm text-slate-500 px-4 transition-all duration-500 ease-in-out overflow-hidden ${
+              className={`text-sm text-slate-600 px-4 transition-all duration-500 ease-in-out overflow-hidden ${
                 openIndex === index
-                  ? "opacity-100 max-h-[300px] pt-4"
+                  ? "opacity-100 max-h-[300px] pt-3"
                   : "opacity-0 max-h-0"
               }`}
             >
