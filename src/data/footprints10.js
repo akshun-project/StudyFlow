@@ -8,266 +8,405 @@ export const footprints10 = {
   questions: [
 
     // ---------- 1. A TRIUMPH OF SURGERY ----------
-    {
-      id: 1,
-      question: "Who is the author of 'A Triumph of Surgery'?",
-      options: ["James Herriot", "H.G. Wells", "Ruskin Bond", "Eleanor Estes"],
-      correctIndex: 0,
-    },
-    {
-      id: 2,
-      question: "What was wrong with Tricki?",
-      options: ["He was injured", "He was overfed and lazy", "He was sick with fever", "He was missing"],
-      correctIndex: 1,
-    },
-    {
-      id: 3,
-      question: "Who took Tricki to the hospital?",
-      options: ["Mrs. Pumphrey", "James Herriot", "The gardener", "Vet assistant"],
-      correctIndex: 1,
-    },
-
-    // ---------- 2. THE THIEF’S STORY ----------
-    {
-      id: 4,
-      question: "Who wrote 'The Thief’s Story'?",
-      options: ["Ruskin Bond", "James Herriot", "O. Henry", "Anton Chekhov"],
-      correctIndex: 0,
-    },
-    {
-      id: 5,
-      question: "What is the thief’s name in the story?",
-      options: ["Ramesh", "Hari Singh", "Deepak", "Rahul"],
-      correctIndex: 1,
-    },
-    {
-      id: 6,
-      question: "Anil taught the thief to:",
-      options: ["Cook", "Drive", "Read and write", "Do business"],
-      correctIndex: 2,
-    },
-
-    // ---------- 3. THE MIDNIGHT VISITOR ----------
-    {
-      id: 7,
-      question: "Who is the author of 'The Midnight Visitor'?",
-      options: ["Robert Arthur", "O. Henry", "H.G. Wells", "Victor Canning"],
-      correctIndex: 0,
-    },
-    {
-      id: 8,
-      question: "Who was Ausable?",
-      options: ["Detective", "Government secret agent", "Waiter", "Journalist"],
-      correctIndex: 1,
-    },
-    {
-      id: 9,
-      question: "Max entered Ausable’s room through the:",
-      options: ["Window", "Door", "Balcony", "Ventilator"],
-      correctIndex: 1,
-    },
-
-    // ---------- 4. A QUESTION OF TRUST ----------
-    {
-      id: 10,
-      question: "Who wrote 'A Question of Trust'?",
-      options: ["Victor Canning", "Ruskin Bond", "James Herriot", "O. Henry"],
-      correctIndex: 0,
-    },
-    {
-      id: 11,
-      question: "Horace Danby was a:",
-      options: ["Doctor", "Locksmith", "Thief", "Teacher"],
-      correctIndex: 2,
-    },
-    {
-      id: 12,
-      question: "Horace Danby loved collecting:",
-      options: ["Books", "Jewels", "Dogs", "Clocks"],
-      correctIndex: 0,
-    },
-
-    // ---------- 5. FOOTPRINTS WITHOUT FEET ----------
-    {
-      id: 13,
-      question: "The author of 'Footprints Without Feet' is:",
-      options: ["H.G. Wells", "Victor Canning", "Robert Arthur", "James Herriot"],
-      correctIndex: 0,
-    },
-    {
-      id: 14,
-      question: "Who was Griffin?",
-      options: ["Scientist", "Thief", "Detective", "Writer"],
-      correctIndex: 0,
-    },
-    {
-      id: 15,
-      question: "Why were the footprints visible?",
-      options: ["Snow on the ground", "Griffin was barefoot and muddy", "Invisible mud", "Invisible paint"],
-      correctIndex: 0,
-    },
-
-    // ---------- 6. THE MAKING OF A SCIENTIST ----------
-    {
-      id: 16,
-      question: "Who wrote 'The Making of a Scientist'?",
-      options: ["Robert W. Peterson", "H.G. Wells", "James Herriot", "Ruskin Bond"],
-      correctIndex: 0,
-    },
-    {
-      id: 17,
-      question: "Richard Ebright’s first hobby was:",
-      options: ["Writing stories", "Collecting butterflies", "Playing chess", "Collecting rocks"],
-      correctIndex: 1,
-    },
-    {
-      id: 18,
-      question: "Ebright worked on which disease?",
-      options: ["Cancer", "Covid", "HIV-AIDS", "Cholera"],
-      correctIndex: 2,
-    },
-
-    // ---------- 7. THE NECKLACE ----------
-    {
-      id: 19,
-      question: "Who wrote 'The Necklace'?",
-      options: ["Guy de Maupassant", "Anton Chekhov", "O. Henry", "Robert Arthur"],
-      correctIndex: 0,
-    },
-    {
-      id: 20,
-      question: "What did Matilda borrow for the party?",
-      options: ["Dress", "Money", "Diamond necklace", "Shoes"],
-      correctIndex: 2,
-    },
-    {
-      id: 21,
-      question: "The necklace Matilda lost was:",
-      options: ["Real diamond", "Fake", "Gold", "Ruby"],
-      correctIndex: 1,
-    },
-
-    // ---------- 8. THE HACK DRIVER ----------
-    {
-      id: 22,
-      question: "Who wrote 'The Hack Driver'?",
-      options: ["Sinclair Lewis", "O. Henry", "Anton Chekhov", "H.G. Wells"],
-      correctIndex: 0,
-    },
-    {
-      id: 23,
-      question: "Who was Bill Magnuson actually?",
-      options: ["A driver", "A farmer", "Oliver Lutkins", "A clerk"],
-      correctIndex: 2,
-    },
-    {
-      id: 24,
-      question: "Where did Lutkins hide?",
-      options: ["At the station", "At a hotel", "At his mother’s farm", "In the church"],
-      correctIndex: 2,
-    },
-
-    // ---------- 9. BHOLI ----------
-    {
-      id: 25,
-      question: "Who wrote 'Bholi'?",
-      options: ["K.A. Abbas", "R.K. Narayan", "Ruskin Bond", "Vallikkannan"],
-      correctIndex: 0,
-    },
-    {
-      id: 26,
-      question: "Why was Bholi called a simpleton?",
-      options: ["She forgot things", "She stammered and was slow", "She was weak", "She was lazy"],
-      correctIndex: 1,
-    },
-    {
-      id: 27,
-      question: "Bholi refused to marry Bishamber because:",
-      options: ["He asked for dowry", "He was old", "He was poor", "He was rude"],
-      correctIndex: 0,
-    },
-
-    // ---------- 10. THE BOOK THAT SAVED THE EARTH ----------
-    {
-      id: 28,
-      question: "Who wrote 'The Book that Saved the Earth'?",
-      options: ["Claire Boiko", "Robert Arthur", "H.G. Wells", "Victor Canning"],
-      correctIndex: 0,
-    },
-    {
-      id: 29,
-      question: "Which planet wanted to attack Earth?",
-      options: ["Venus", "Mars", "Pluto", "Mercury"],
-      correctIndex: 1,
-    },
-    {
-      id: 30,
-      question: "What confused Think-Tank?",
-      options: ["Library books", "Robots", "Insects", "Oceans"],
-      correctIndex: 0,
-    },
-
-    // ---------- MIXED IMPORTANT BOOK-WIDE MCQs ----------
-    {
-      id: 31,
-      question: "Who is the main character in ‘Footprints Without Feet’?",
-      options: ["Ausable", "Griffin", "Lutkins", "Ebright"],
-      correctIndex: 1,
-    },
-    {
-      id: 32,
-      question: "Which chapter shows a moral transformation?",
-      options: ["The Necklace", "The Thief’s Story", "Bholi", "The Hack Driver"],
-      correctIndex: 1,
-    },
-    {
-      id: 33,
-      question: "Who was the scientist who became invisible?",
-      options: ["Ebright", "Griffin", "Think-Tank", "Max"],
-      correctIndex: 1,
-    },
-    {
-      id: 34,
-      question: "Which story highlights the theme of honesty?",
-      options: ["The Necklace", "The Thief’s Story", "A Question of Trust", "Bholi"],
-      correctIndex: 3,
-    },
-    {
-      id: 35,
-      question: "Think-Tank believed books were:",
-      options: ["Weapons", "Magic tools", "Toys", "Earthling communication devices"],
-      correctIndex: 3,
-    },
-    {
-      id: 36,
-      question: "Which character taught compassion?",
-      options: ["Ausable", "Mrs. Pumphrey", "Anil", "Think-Tank"],
-      correctIndex: 2,
-    },
-    {
-      id: 37,
-      question: "Who was Oliver Lutkins?",
-      options: ["A pilot", "A driver", "A tricky villager", "A scientist"],
-      correctIndex: 2,
-    },
-    {
-      id: 38,
-      question: "Which story highlights superstition & misinformation?",
-      options: ["The Necklace", "A Triumph of Surgery", "Footprints Without Feet", "The Hack Driver"],
-      correctIndex: 2,
-    },
-    {
-      id: 39,
-      question: "Bholi’s real name was:",
-      options: ["Sulekha", "Kamla", "Anita", "Seema"],
-      correctIndex: 0,
-    },
-    {
-      id: 40,
-      question: "Which story teaches the lesson: 'Appearances can be deceptive'?",
-      options: ["The Thief’s Story", "The Hack Driver", "Footprints Without Feet", "The Necklace"],
-      correctIndex: 1,
-    },
-
+   {
+    id: 1,
+    question: "What was the name of the landlord whose house Griffin set fire to?",
+    options: ["Mr. Jaffers", "Mr. Hall", "Mr. Cuss", "Mr. Bicky"],
+    correctIndex: 3,
+  },
+  {
+    id: 2,
+    question: "Why were the boys surprised by the muddy footprints in London?",
+    options: [
+      "They were running towards them without a person.",
+      "They appeared in the middle of the street.",
+      "They were appearing from nowhere and fading quickly.",
+      "It was snowing heavily in January.",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 3,
+    question: "What was Horace Danby's respectable profession?",
+    options: ["Newspaper editor", "Antique dealer", "Jeweler", "Locksmith"],
+    correctIndex: 1,
+  },
+  {
+    id: 4,
+    question: "What hobby did Horace spend his stolen money on?",
+    options: [
+      "Collecting rare stamps",
+      "Buying old jewelry",
+      "Collecting rare and expensive books",
+      "Smoking expensive cigars",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 5,
+    question: "The young woman who tricked Horace claimed to be:",
+    options: [
+      "A close friend of the owner",
+      "A detective",
+      "The wife of the owner",
+      "A servant in charge of the manor",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 6,
+    question: "Mrs. Hall concluded the furniture was moving because:",
+    options: [
+      "Griffin was angry",
+      "It was haunted by spirits",
+      "There was a strong wind",
+      "The police had arrived",
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 7,
+    question: "What made Griffin's body transparent?",
+    options: [
+      "A mixture of sulfur and radium",
+      "A paste of rare herbs",
+      "A rare set of drugs making the body like glass",
+      "A foreign imported chemical",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 8,
+    question: "Why was Horace Danby arrested?",
+    options: [
+      "He failed to open the safe",
+      "He stole expensive books",
+      "He left fingerprints on the safe",
+      "He broke the window",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 9,
+    question: "Anil’s major flaw, according to the narrator, was:",
+    options: [
+      "He trusted people too easily",
+      "He spent money carelessly",
+      "He lacked ambition",
+      "He was forgetful",
+    ],
+    correctIndex: 0,
+  },
+  {
+    id: 10,
+    question: "Why did Hari Singh return to Anil?",
+    options: [
+      "He feared being arrested",
+      "He felt guilty",
+      "He wanted more money",
+      "He wanted education and respect",
+    ],
+    correctIndex: 3,
+  },
+  {
+    id: 11,
+    question: "What did Anil teach Hari Singh?",
+    options: ["Cooking", "Saving money", "Reading and writing", "Repairing locks"],
+    correctIndex: 2,
+  },
+  {
+    id: 12,
+    question: "The necklace Matilda wanted symbolized:",
+    options: [
+      "Her mother's love",
+      "Her desire for a wealthy, glamorous life",
+      "Her status in society",
+      "Real diamonds",
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 13,
+    question: "How did Matilda and her husband repay the necklace debt?",
+    options: [
+      "They received inheritance",
+      "They worked ten years in poverty",
+      "Mme Forestier forgave them",
+      "They sold their house",
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 14,
+    question: "What shocking truth did Mme Forestier reveal?",
+    options: [
+      "She forgot about the necklace",
+      "It was a cheap imitation",
+      "She lost it earlier",
+      "It was made of glass",
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 15,
+    question: "What did Anil give Hari Singh the next morning?",
+    options: ["New clothes", "A warning", "Fifty rupees and wages", "A ticket home"],
+    correctIndex: 2,
+  },
+  {
+    id: 16,
+    question: "The story 'The Necklace' is mainly about:",
+    options: [
+      "War and loss",
+      "Greed and social ambition",
+      "Education and growth",
+      "Family relationships",
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 17,
+    question: "What discovery did Ebright make about monarch butterflies?",
+    options: [
+      "They hibernate in mountains",
+      "They migrate to California",
+      "They migrate to Central America",
+      "They eat toxic milkweed",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 18,
+    question: "Which book inspired Ebright deeply?",
+    options: [
+      "The Origin of Species",
+      "The Travels of Monarch X",
+      "The Wonders of Butterflies",
+      "Genetics of Insects",
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 19,
+    question: "Ebright's cell experiment revealed:",
+    options: [
+      "The immune system structure",
+      "Bacterial growth pattern",
+      "The hormone controlling gold spots",
+      "The nerve cell structure",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 20,
+    question: "What quality did Ebright’s mother encourage?",
+    options: [
+      "Get the highest marks",
+      "Travel frequently",
+      "Be best at whatever he did",
+      "Focus on sports",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 21,
+    question: "Why was the lawyer sent to New Mullion?",
+    options: [
+      "To arrest a thief",
+      "To serve summons to Oliver Lutkins",
+      "To seize property",
+      "To collect taxes",
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 22,
+    question: "Who did the lawyer meet first in New Mullion?",
+    options: ["Postmaster", "Station master", "Hack driver", "Bill's wife"],
+    correctIndex: 2,
+  },
+  {
+    id: 23,
+    question: "Why didn’t the lawyer recognize Lutkins on the second visit?",
+    options: [
+      "Lutkins disguised himself",
+      "Lawyer was nearsighted",
+      "He saw him earlier only as hack driver",
+      "Lutkins dyed his hair",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 24,
+    question: "The theme of 'The Hack Driver' is:",
+    options: [
+      "Court complexity",
+      "Kindness of strangers",
+      "Deception and trust",
+      "Courage and bravery",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 25,
+    question: "Why did Ramlal’s wife oppose Bholi going to school?",
+    options: [
+      "Bholi was too dull",
+      "Educating girls ruined marriage prospects",
+      "They were poor",
+      "Bholi was sick",
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 26,
+    question: "Why did Bholi reject Bishamber Nath?",
+    options: [
+      "He was too old",
+      "He came from another village",
+      "He demanded a dowry after insulting her",
+      "She disliked him",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 27,
+    question: "What was Bholi’s real name?",
+    options: ["Sundri", "Mangla", "Sulekha", "Champa"],
+    correctIndex: 2,
+  },
+  {
+    id: 28,
+    question: "What helped Bholi overcome her challenges?",
+    options: [
+      "Moving cities",
+      "Her teacher’s love and encouragement",
+      "Medical treatment",
+      "Her brothers' support",
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 29,
+    question: "Who was the commander in 'The Book That Saved the Earth'?",
+    options: ["Omega", "Oop", "Think-Tank", "Martian Admiral"],
+    correctIndex: 2,
+  },
+  {
+    id: 30,
+    question: "Why did Martians mistake books?",
+    options: [
+      "They tried to wear them as hats",
+      "They believed they were building blocks",
+      "They thought books were communication devices",
+      "They thought books were food",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 31,
+    question: "Which book scared the Martians?",
+    options: [
+      "Book of Indian history",
+      "Human war strategies",
+      "Mother Goose nursery rhymes",
+      "Advanced chemistry book",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 32,
+    question: "Central theme of 'The Book That Saved the Earth'?",
+    options: [
+      "Power of reading and imagination",
+      "Strength of Martian science",
+      "Threat of invasion",
+      "Military superiority",
+    ],
+    correctIndex: 0,
+  },
+  {
+    id: 33,
+    question: "What danger scared the Martians?",
+    options: [
+      "Humans had superweapons",
+      "Humans immune to poison gas",
+      "Chemicals in 'Mistress Mary' rhyme",
+      "Humans planned Mars attack",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 34,
+    question: "What happened to Think-Tank after the failed invasion?",
+    options: [
+      "Promoted",
+      "Replaced as leader",
+      "Celebrated",
+      "Retired peacefully",
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 35,
+    question: "What did Ebright win for his gold-spot research?",
+    options: [
+      "Nobel Prize",
+      "State Science Fair",
+      "International Science Fair",
+      "Trip to Central America",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 36,
+    question: "Who was Ebright’s mentor?",
+    options: [
+      "Vice president of his college",
+      "A childhood doctor",
+      "His mother",
+      "His science teacher",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 37,
+    question: "Why did the lawyer need Lutkins?",
+    options: ["A job", "A debt", "Court case", "A business deal"],
+    correctIndex: 2,
+  },
+  {
+    id: 38,
+    question: "How did Mrs. Lutkins react when asked about Oliver?",
+    options: [
+      "Kindly offered tea",
+      "Was rude and shouted",
+      "Pretended not to hear",
+      "Gave wrong directions",
+    ],
+    correctIndex: 1,
+  },
+  {
+    id: 39,
+    question: "Where did the police find Horace Danby's stolen jewels?",
+    options: [
+      "In his safe",
+      "Inside a hollow book",
+      "Nowhere—he gave them to the woman",
+      "In his study",
+    ],
+    correctIndex: 2,
+  },
+  {
+    id: 40,
+    question: "After the Civil War, what changed in American policy?",
+    options: [
+      "Abolition of slavery and Reconstruction",
+      "Trade restrictions",
+      "Expansion of women’s voting rights",
+      "Nationalization of industries",
+    ],
+    correctIndex: 0,
+  },
   ],
 };

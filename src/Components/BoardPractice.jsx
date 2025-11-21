@@ -15,6 +15,16 @@ import { geography10Test1 } from "../data/geography10_test1";
 import { politicalScience10Test1 } from "../data/political10_test1";
 import { economics10Test1 } from "../data/economics10_test1";
 
+//class12
+
+// --- Class 12 tests ---
+import { physics12Test1 } from "../data/physics12_test1";
+import { chemistry12Test1 } from "../data/chemistry12_test1";
+import { math12Test1 } from "../data/math12_test1";
+import { biology12Test1 } from "../data/biology12_test1";
+import { english12Test1 } from "../data/english12_test1";
+
+
 import RealTimeQuiz from "./RealTimeQuiz";
 
 export default function BoardPractice() {
@@ -82,6 +92,29 @@ export default function BoardPractice() {
             break;
         }
       }
+
+      if (selectedClass === 12) {
+  switch (category) {
+    case "phy12":
+      quiz = physics12Test1;
+      break;
+    case "chem12":
+      quiz = chemistry12Test1;
+      break;
+    case "math12":
+      quiz = math12Test1;
+      break;
+    case "bio12":
+      quiz = biology12Test1;
+      break;
+    case "eng12":
+      quiz = english12Test1;
+      break;
+    default:
+      break;
+  }
+}
+
 
       setSelectedQuiz(quiz);
       setIsLoading(false);
@@ -191,7 +224,49 @@ export default function BoardPractice() {
     },
   ];
 
-  const subjectsAll = selectedClass === 10 ? class10Data : [];
+  const class12Data = [
+  {
+    id: "phy12",
+    label: "Physics",
+    emoji: "⚛",
+    desc: "40 MCQs • Electrostatics, Optics, EMI.",
+    badge: "40",
+  },
+  {
+    id: "chem12",
+    label: "Chemistry",
+    emoji: "🧪",
+    desc: "40 MCQs • Organic, Inorganic, Physical.",
+    badge: "40",
+  },
+  {
+    id: "math12",
+    label: "Maths",
+    emoji: "🧮",
+    desc: "40 MCQs • Calculus, Vectors, Probability.",
+    badge: "40",
+  },
+  {
+    id: "bio12",
+    label: "Biology",
+    emoji: "🧬",
+    desc: "40 MCQs • Genetics, Evolution, Human Physiology.",
+    badge: "40",
+  },
+  {
+    id: "eng12",
+    label: "English Core",
+    emoji: "📘",
+    desc: "40 MCQs • Flamingo + Vistas.",
+    badge: "40",
+  },
+];
+
+ // For bottom bar (Class 10 + Class 12)
+const subjectsAll = selectedClass === 10 ? class10Data : class12Data;
+
+const selectedSubject = subjectsAll.find((s) => s.id === category);
+
   const pageSize = 6;
   const pageCount =
     subjectsAll.length > 0 ? Math.ceil(subjectsAll.length / pageSize) : 1;
@@ -199,7 +274,7 @@ export default function BoardPractice() {
   const startIndex = safePage * pageSize;
   const currentSubjects = subjectsAll.slice(startIndex, startIndex + pageSize);
 
-  const selectedSubject = subjectsAll.find((s) => s.id === category);
+  
 
   return (
     <div className="min-h-screen w-full bg-slate-50 flex justify-center">
@@ -252,11 +327,12 @@ export default function BoardPractice() {
               );
             })}
           </div>
-          {selectedClass === 12 && (
-            <p className="mt-2 text-[11px] text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-2 py-1 inline-block">
-              Class 12 tests are coming soon. Right now only Class 10 is live.
-            </p>
-          )}
+         {selectedClass === 12 && (
+  <p className="mt-2 text-[11px] text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-2 py-1 inline-block">
+    Class 12 is live..
+  </p>
+)}
+
         </section>
 
         {/* Step 2: Subjects with pagination */}
@@ -336,6 +412,56 @@ export default function BoardPractice() {
             </div>
           </section>
         )}
+
+        {selectedClass === 12 && (
+  <>
+    <p className="text-xs font-semibold text-slate-500 mb-2">
+      STEP 2 • CHOOSE TEST
+    </p>
+
+    <div
+      className="
+        grid grid-cols-1 
+        sm:grid-cols-2 
+        lg:grid-cols-3 
+        gap-4
+      "
+    >
+      {class12Data.map((item) => {
+        const isActive = category === item.id;
+        return (
+          <button
+            key={item.id}
+            onClick={() => setCategory(item.id)}
+            className={`w-full h-full flex items-start gap-3 p-4 rounded-2xl border transition text-left active:scale-95 ${
+              isActive
+                ? "bg-indigo-50 border-indigo-500 shadow-md"
+                : "border-slate-200 bg-white hover:bg-slate-50 shadow-sm"
+            }`}
+          >
+            <div className="text-2xl md:text-3xl shrink-0">
+              {item.emoji}
+            </div>
+            <div className="flex-1">
+              <div className="flex flex-wrap gap-2 items-center">
+                <p className="text-sm md:text-base font-semibold text-slate-900">
+                  {item.label}
+                </p>
+                <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700 border border-emerald-300">
+                  {item.badge} MCQs
+                </span>
+              </div>
+              <p className="text-xs md:text-sm text-slate-600 mt-1">
+                {item.desc}
+              </p>
+            </div>
+          </button>
+        );
+      })}
+    </div>
+  </>
+)}
+
 
         {/* Loader card */}
         {isLoading && (

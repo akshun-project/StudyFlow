@@ -1,0 +1,385 @@
+ // src/data/english12_test1.js
+
+export const english12Test1 = {
+  id: "eng12-test1",
+  class: "12",
+  subject: "English",
+  title: "Class 12 English – Flamingo & Vistas (40 MCQs)",
+  questions: [
+
+    // ---------- FLAMINGO (1–25) ----------
+    {
+      id: 1,
+      question: "What was the central emotion Franz felt when he learned it was their last lesson?",
+      options: [
+        "Excitement",
+        "Regret for not learning his mother tongue",
+        "Indifference",
+        "Anger towards Prussian soldiers",
+      ],
+      correctIndex: 1,
+    },
+    {
+      id: 2,
+      question: "The children of Seemapuri in 'Lost Spring' are described as:",
+      options: [
+        "Well-fed and educated",
+        "Condemned to perpetual exploitation",
+        "Engaged in dignified labour",
+        "Dreaming of migrating abroad",
+      ],
+      correctIndex: 1,
+    },
+    {
+      id: 3,
+      question: "Mukesh’s family survived in Firozabad mainly by:",
+      options: ["Mining coal", "Making bangles", "Weaving textiles", "Selling fish"],
+      correctIndex: 1,
+    },
+    {
+      id: 4,
+      question: "Why did William Douglas hire a swimming instructor?",
+      options: [
+        "His mother forced him",
+        "He wanted to join a swim team",
+        "He was haunted by a deep terror of water",
+        "He wanted to win competitions",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 5,
+      question: "The phrase 'world of possessions' in 'Keeping Quiet' refers to:",
+      options: [
+        "Desire for spiritual purity",
+        "Beauty of material things",
+        "Greed and materialism",
+        "Importance of shared ownership",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 6,
+      question: "In 'Keeping Quiet', fishermen are metaphorically shown as people:",
+      options: [
+        "Strongest men",
+        "Messengers of peace",
+        "Hurting themselves while harming nature",
+        "Symbols of silence",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 7,
+      question: "Why did the servants refuse to eat food from the boys in 'The Rattrap'?",
+      options: ["Boys were rude", "They looked too dirty", "Suspected stealing", "Thought food was poorly cooked"],
+      correctIndex: 1,
+    },
+    {
+      id: 8,
+      question: "The peddler's transformation was due to:",
+      options: [
+        "Threat of jail",
+        "Kindness shown by Edla Willmansson",
+        "Gift of kronor",
+        "Seeing the rat trap",
+      ],
+      correctIndex: 1,
+    },
+    {
+      id: 9,
+      question: "The central theme of 'My Mother at Sixty-Six' is:",
+      options: [
+        "Joy of travelling",
+        "Fear of loss and aging",
+        "Beauty of aging parent",
+        "Need for fitness",
+      ],
+      correctIndex: 1,
+    },
+    {
+      id: 10,
+      question: "What did the poet do to reassure her mother before leaving?",
+      options: ["Sent a gift", "Promised to visit soon", "Smiled and said 'See you soon, Amma'", "Wrote a poem"],
+      correctIndex: 2,
+    },
+    {
+      id: 11,
+      question: "Why did Rajkumar Shukla want to meet Gandhi?",
+      options: [
+        "Discuss independence movement",
+        "Get a job",
+        "Seek help for sharecroppers in Champaran",
+        "Lead a protest in Lucknow",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 12,
+      question: "Why had landlords taken money from the sharecroppers?",
+      options: [
+        "To fund charities",
+        "To build a school",
+        "Because Germany developed synthetic indigo",
+        "To pay the British government",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 13,
+      question: "The literary device in 'As clear as a crystal fountain' is:",
+      options: ["Metaphor", "Alliteration", "Personification", "Simile"],
+      correctIndex: 3,
+    },
+    {
+      id: 14,
+      question: "According to Keats, a 'thing of beauty' gives us:",
+      options: ["Richness", "Melancholy", "Everlasting joy", "Realism"],
+      correctIndex: 2,
+    },
+    {
+      id: 15,
+      question: "Advantage of the General Manager in 'Poets and Pancakes' was:",
+      options: [
+        "Artistic skill",
+        "Fluency in English",
+        "He alone looked cheerful",
+        "Management skills",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 16,
+      question: "Which political reference appears in 'Poets and Pancakes'?",
+      options: [
+        "Communist influence (MRA visit)",
+        "Rise of fascism",
+        "Great Depression",
+        "Spread of socialism",
+      ],
+      correctIndex: 0,
+    },
+    {
+      id: 17,
+      question: "Central fear in 'Aunt Jennifer's Tigers' is:",
+      options: ["Old age", "Oppression of patriarchy", "Animals", "Creative failure"],
+      correctIndex: 1,
+    },
+    {
+      id: 18,
+      question: "Aunt Jennifer's tigers are depicted as:",
+      options: ["Slow & timid", "Fearless, bold & free", "Elegant but restrained", "Sad & domesticated"],
+      correctIndex: 1,
+    },
+    {
+      id: 19,
+      question: "Why did staff suspect Mr. Hari in 'Should Wizard Hit Mommy?'",
+      options: [
+        "He was poorly dressed",
+        "Paid in foreign currency",
+        "Unusual name and accent",
+        "Demanded special treatment",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 20,
+      question: "What moral conflict did Jo face?",
+      options: [
+        "Obey father or mother",
+        "Tell truth or lie",
+        "Should mother hit the wizard?",
+        "Smell like roses or original smell",
+      ],
+      correctIndex: 3,
+    },
+    {
+      id: 21,
+      question: "Why did Neruda advocate 'total inactivity'?",
+      options: [
+        "Promote laziness",
+        "Halt progress",
+        "For introspection and understanding",
+        "Conserve energy",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 22,
+      question: "Conflict in 'The Last Lesson' is between:",
+      options: ["England–France", "France–Prussia", "Germany–Poland", "Spain–Portugal"],
+      correctIndex: 1,
+    },
+    {
+      id: 23,
+      question: "What 'terror' haunted William Douglas?",
+      options: ["Forests", "Heights", "Fear of drowning", "Loneliness"],
+      correctIndex: 2,
+    },
+    {
+      id: 24,
+      question: "The poem 'My Mother at Sixty-Six' is written in:",
+      options: ["AABB", "ABAB", "Free verse", "ABC"],
+      correctIndex: 2,
+    },
+    {
+      id: 25,
+      question: "Why did bangle-makers often go blind?",
+      options: [
+        "Lack of nutrition",
+        "Working in dark furnaces",
+        "Long hours",
+        "Dust pollution",
+      ],
+      correctIndex: 1,
+    },
+
+    // ---------- VISTAS (26–40) ----------
+    {
+      id: 26,
+      question: "Why did the old man visit the boy’s planet?",
+      options: [
+        "Ordered by government",
+        "Searching for uranium",
+        "Meet the boy’s parents",
+        "Escape Earth’s population",
+      ],
+      correctIndex: 3,
+    },
+    {
+      id: 27,
+      question: "Dr. Sadao’s conflict was between:",
+      options: [
+        "Doctor’s duty vs patriotism",
+        "Love vs father’s devotion",
+        "Desire for fame",
+        "Science vs religion",
+      ],
+      correctIndex: 0,
+    },
+    {
+      id: 28,
+      question: "Why did Dr. Sadao wait a week before reporting the soldier?",
+      options: [
+        "Wait for recovery",
+        "Discuss with General",
+        "Hoped assassins arrive",
+        "Needed time to arrange escape",
+      ],
+      correctIndex: 3,
+    },
+    {
+      id: 29,
+      question: "What did Hannah learn about the American soldier?",
+      options: ["He was a spy", "He was wealthy", "He was a decent young man", "He was a doctor"],
+      correctIndex: 2,
+    },
+    {
+      id: 30,
+      question: "Why didn’t the General send assassins?",
+      options: [
+        "He forgot the plan",
+        "Wife stopped him",
+        "Preparing for war",
+        "He was ill and preoccupied",
+      ],
+      correctIndex: 3,
+    },
+    {
+      id: 31,
+      question: "What confirmed the past in the third level?",
+      options: [
+        "Old posters",
+        "Newspaper dated June 11, 1894",
+        "Gaslights & antique counter",
+        "Letter from grandfather",
+      ],
+      correctIndex: 1,
+    },
+    {
+      id: 32,
+      question: "Sam interpreted the third level as:",
+      options: [
+        "Collective hallucination",
+        "Mental illness",
+        "Waking-dream wish fulfillment",
+        "Railway tourist trap",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 33,
+      question: "What did the Maharaja swear when British killed a tiger?",
+      options: [
+        "Resign throne",
+        "Ban British from hunting",
+        "Declare war",
+        "Give compensation",
+      ],
+      correctIndex: 1,
+    },
+    {
+      id: 34,
+      question: "Cause of the Maharaja's death:",
+      options: ["Tiger attack", "Hunting accident", "Disease", "Splinter from toy tiger"],
+      correctIndex: 3,
+    },
+    {
+      id: 35,
+      question: "How did Derry react to Mr. Lamb’s advice?",
+      options: ["Angry", "Skeptical but listened", "Immediately agreed", "Laughed"],
+      correctIndex: 1,
+    },
+    {
+      id: 36,
+      question: "Derry was isolated because of:",
+      options: ["Missing limb", "Scarred face", "Acid-burnt face", "Hunched back"],
+      correctIndex: 2,
+    },
+    {
+      id: 37,
+      question: "Common link between Derry & Mr. Lamb:",
+      options: [
+        "Love gardening",
+        "Loneliness & physical handicap",
+        "Hate world",
+        "Enjoy poetry",
+      ],
+      correctIndex: 1,
+    },
+    {
+      id: 38,
+      question: "Central idea of 'The Enemy' is:",
+      options: [
+        "Need for war",
+        "Universal brotherhood & ethics",
+        "Superiority of Japan",
+        "Conflict of science & religion",
+      ],
+      correctIndex: 1,
+    },
+    {
+      id: 39,
+      question: "The third level symbolized:",
+      options: [
+        "Refuge from modern stress",
+        "Secret society",
+        "Path to fortune",
+        "Meet ancestors",
+      ],
+      correctIndex: 0,
+    },
+    {
+      id: 40,
+      question: "Why is the story titled 'Should Wizard Hit Mommy?'",
+      options: [
+        "Question power of magic",
+        "Highlight happiness",
+        "Explore child’s vs adult's perspective",
+        "Emphasize mother’s guidance",
+      ],
+      correctIndex: 2,
+    },
+
+  ],
+};
