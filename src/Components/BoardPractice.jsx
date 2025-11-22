@@ -329,7 +329,7 @@ const selectedSubject = subjectsAll.find((s) => s.id === category);
           </div>
          {selectedClass === 12 && (
   <p className="mt-2 text-[11px] text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-2 py-1 inline-block">
-    Class 12 is live..
+    Class 12 is live
   </p>
 )}
 

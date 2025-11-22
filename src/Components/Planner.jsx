@@ -1,4 +1,4 @@
- import { useState, useEffect } from "react";
+ import { useState, useEffect, useRef } from "react";
 import { useUser } from "@clerk/clerk-react";
 import { useNavigate } from "react-router-dom";
 import client from "../geminiClient/gemini";
@@ -19,6 +19,10 @@ export default function Planner() {
   const [plan, setPlan] = useState("");
   const [error, setError] = useState("");
   const [showSaved, setShowSaved] = useState(false);
+  const [subjectLimitHit, setSubjectLimitHit] = useState(false);
+  const [highlightPlan, setHighlightPlan] = useState(false);
+
+  const planRef = useRef(null);
 
   const messages = [
     "Analyzing your selected subjects...",
@@ -27,6 +31,7 @@ export default function Planner() {
     "Finalizing your personalized plan...",
   ];
 
+  // Loader message rotator
   useEffect(() => {
     if (loading) {
       const interval = setInterval(() => {
@@ -35,6 +40,16 @@ export default function Planner() {
       return () => clearInterval(interval);
     }
   }, [loading]);
+
+  // Scroll to plan when ready + highlight
+  useEffect(() => {
+    if (plan && plan.plan && planRef.current) {
+      planRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+      setHighlightPlan(true);
+      const t = setTimeout(() => setHighlightPlan(false), 2500);
+      return () => clearTimeout(t);
+    }
+  }, [plan]);
 
   const handleDurationChange = (e) => {
     let value = parseFloat(e.target.value);
@@ -52,8 +67,14 @@ export default function Planner() {
       delete newChapters[subject];
       setSubjects(updated);
       setChapters(newChapters);
+      setSubjectLimitHit(false);
     } else if (subjects.length < 3) {
       setSubjects([...subjects, subject]);
+      setSubjectLimitHit(false);
+    } else {
+      // hit max 3
+      setSubjectLimitHit(true);
+      setTimeout(() => setSubjectLimitHit(false), 1600);
     }
   };
 
@@ -80,6 +101,7 @@ export default function Planner() {
     setLoading(true);
     setPlan("");
     setError("");
+    setShowSaved(false);
 
     try {
       const prompt = `
@@ -167,25 +189,32 @@ Example JSON:
   };
 
   return (
-    <div className="min-h-screen w-full bg-gradient-to-b from-white via-indigo-50 to-purple-50 flex flex-col items-center py-10 px-4 transition-all duration-500">
-      <h1 className="text-3xl font-bold text-indigo-700 mb-1 text-center">
-        📘 Smart Study Planner
-      </h1>
-      <p className="text-gray-500 text-sm mb-8 text-center">
-        Your AI mentor will craft a personalized, effective study plan.
-      </p>
+    <div className="min-h-screen w-full bg-gradient-to-b from-white via-indigo-50 to-purple-50 flex flex-col items-center py-8 px-4">
+      {/* Page heading */}
+      <div className="w-full max-w-2xl mb-6 text-center">
+        <h1 className="text-3xl font-bold text-indigo-700 mb-1">
+          📘 Smart Study Planner
+        </h1>
+        <p className="text-gray-500 text-sm">
+          Tell StudyFlow what you’re studying — your AI mentor will design a
+          realistic timetable for today.
+        </p>
+      </div>
 
+      {/* Main card */}
       <form
         onSubmit={handleSubmit}
-        className="w-full max-w-2xl bg-white/90 backdrop-blur-xl border border-indigo-100 p-8 rounded-3xl shadow-lg hover:shadow-xl transition-all flex flex-col gap-6"
+        className="w-full max-w-2xl bg-white/95 backdrop-blur-xl border border-indigo-100 p-6 md:p-8 rounded-3xl shadow-lg flex flex-col gap-6"
       >
-        {/* Class Selection */}
-        <div>
-          <label className="font-medium text-gray-700 mb-2 block">
-            Select Class
-          </label>
+        {/* STEP 1: Class */}
+        <section>
+          <div className="flex items-center justify-between mb-2">
+            <label className="font-semibold text-gray-800 text-sm">
+              STEP 1 • Select Class
+            </label>
+          </div>
           <select
-            className="border border-gray-300 focus:border-indigo-500 outline-none p-2.5 rounded-lg w-full"
+            className="border border-gray-300 focus:border-indigo-500 outline-none p-2.5 rounded-lg w-full text-sm"
             value={studentClass}
             onChange={(e) => {
               setStudentClass(e.target.value);
@@ -200,21 +229,32 @@ Example JSON:
               </option>
             ))}
           </select>
-        </div>
+        </section>
 
-        {/* Subject Selection */}
+        {/* STEP 2: Subjects */}
         {studentClass && (
-          <div>
-            <label className="font-medium text-gray-700 mb-2 block">
-              Select up to 3 Subjects
-            </label>
-            <div className="flex flex-wrap gap-2">
+          <section>
+            <div className="flex items-center justify-between mb-1">
+              <label className="font-semibold text-gray-800 text-sm">
+                STEP 2 • Select Subjects (max 3)
+              </label>
+              <span className="text-xs text-gray-500">
+                {subjects.length}/3 selected
+              </span>
+            </div>
+            {subjectLimitHit && (
+              <p className="text-[11px] text-red-600 mb-1 animate-pulse">
+                You can select up to <span className="font-semibold">3</span>{" "}
+                subjects for one plan.
+              </p>
+            )}
+            <div className="flex flex-wrap gap-2 mt-1">
               {classData[studentClass].subjects.map((subject) => (
                 <button
                   type="button"
                   key={subject}
                   onClick={() => handleSubjectChange(subject)}
-                  className={`px-4 py-2 rounded-full text-sm border transition-all duration-300 ${
+                  className={`px-4 py-2 rounded-full text-xs sm:text-sm border transition-all duration-200 ${
                     subjects.includes(subject)
                       ? "bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-sm"
                       : "bg-white hover:bg-indigo-50 text-gray-800 border-gray-200"
@@ -224,36 +264,43 @@ Example JSON:
                 </button>
               ))}
             </div>
-          </div>
+          </section>
         )}
 
-        {/* Chapter Selection */}
-        {subjects.map((subject) => (
-          <div key={subject}>
-            <label className="font-semibold text-gray-700">
-              {subject} Chapter
-            </label>
-            <select
-              className="border border-gray-300 focus:border-indigo-500 outline-none p-2.5 rounded-lg w-full mt-1"
-              value={chapters[subject] || ""}
-              onChange={(e) => handleChapterChange(subject, e.target.value)}
-            >
-              <option value="">Select Chapter</option>
-              {classData[studentClass].chapters[subject].map((ch) => (
-                <option key={ch} value={ch}>
-                  {ch}
-                </option>
-              ))}
-            </select>
-          </div>
-        ))}
-
-        {/* Time Inputs */}
+        {/* STEP 3: Chapters */}
         {subjects.length > 0 && (
-          <>
+          <section className="space-y-3">
+            <p className="font-semibold text-gray-800 text-sm mb-1">
+              STEP 3 • Pick chapter for each subject
+            </p>
+            {subjects.map((subject) => (
+              <div key={subject}>
+                <label className="font-medium text-gray-700 text-xs sm:text-sm">
+                  {subject} chapter
+                </label>
+                <select
+                  className="border border-gray-300 focus:border-indigo-500 outline-none p-2.5 rounded-lg w-full mt-1 text-sm"
+                  value={chapters[subject] || ""}
+                  onChange={(e) => handleChapterChange(subject, e.target.value)}
+                >
+                  <option value="">Select chapter</option>
+                  {classData[studentClass].chapters[subject].map((ch) => (
+                    <option key={ch} value={ch}>
+                      {ch}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            ))}
+          </section>
+        )}
+
+        {/* STEP 4: Time inputs */}
+        {subjects.length > 0 && (
+          <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="font-medium text-gray-700 mb-2 block">
-                Total Study Time (max 8 hrs)
+              <label className="font-semibold text-gray-800 text-sm mb-1 block">
+                STEP 4 • Total study time (max 8 hrs)
               </label>
               <input
                 type="number"
@@ -261,30 +308,37 @@ Example JSON:
                 step="0.5"
                 value={totalTime}
                 onChange={handleDurationChange}
-                placeholder="Enter total hours"
-                className="border border-gray-300 focus:border-indigo-500 outline-none p-2.5 rounded-lg w-full"
+                placeholder="e.g. 2, 3.5, 5"
+                className="border border-gray-300 focus:border-indigo-500 outline-none p-2.5 rounded-lg w-full text-sm"
               />
+              <p className="text-[11px] text-gray-400 mt-1">
+                Tip: Start with 2–4 hours for deep focus.
+              </p>
             </div>
 
             <div>
-              <label className="font-medium text-gray-700 mb-2 block">
-                Start Time
+              <label className="font-semibold text-gray-800 text-sm mb-1 block">
+                Start time (optional)
               </label>
               <input
                 type="time"
                 value={startTime}
                 onChange={(e) => setStartTime(e.target.value)}
-                className="border border-gray-300 focus:border-indigo-500 outline-none p-2.5 rounded-lg w-full"
+                className="border border-gray-300 focus:border-indigo-500 outline-none p-2.5 rounded-lg w-full text-sm"
               />
+              <p className="text-[11px] text-gray-400 mt-1">
+                If empty, we’ll assume <span className="font-medium">9:00 AM</span>.
+              </p>
             </div>
-          </>
+          </section>
         )}
 
-        <div className="flex flex-col items-center gap-2 mt-6">
+        {/* STEP 5: Actions */}
+        <div className="flex flex-col items-center gap-2 mt-4">
           <button
             type="submit"
             disabled={loading}
-            className={`w-full md:w-auto px-8 py-3 rounded-lg font-medium text-white transition-all duration-300 ${
+            className={`w-full md:w-auto px-8 py-3 rounded-xl font-medium text-white text-sm sm:text-base transition-all duration-200 ${
               loading
                 ? "bg-indigo-400 cursor-not-allowed"
                 : "bg-gradient-to-r from-indigo-600 to-purple-600 hover:shadow-lg hover:scale-[1.02]"
@@ -296,58 +350,69 @@ Example JSON:
           <button
             onClick={() => navigate("/")}
             type="button"
-            className="text-sm text-indigo-500 hover:underline mt-2"
+            className="text-xs sm:text-sm text-indigo-500 hover:underline mt-1"
           >
             🏠 Back to Home
           </button>
         </div>
       </form>
 
-      {/* Loading UI */}
+      {/* Centered Loader Overlay */}
       {loading && (
-        <div className="mt-10 flex flex-col items-center justify-center text-center space-y-3">
-          <div className="h-12 w-12 border-4 border-indigo-100 border-t-indigo-500 rounded-full animate-spin"></div>
-          <p className="text-indigo-700 font-medium">{messages[loadingStep]}</p>
-          <p className="text-gray-500 text-sm">
-            This usually takes just a few seconds...
-          </p>
+        <div className="fixed inset-0 z-40 flex items-center justify-center bg-slate-900/30 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl px-6 py-5 shadow-xl max-w-sm w-[90%] text-center space-y-3 border border-indigo-100">
+            <div className="mx-auto h-10 w-10 border-4 border-indigo-100 border-t-indigo-500 rounded-full animate-spin" />
+            <p className="text-indigo-700 font-semibold text-sm">
+              {messages[loadingStep]}
+            </p>
+            <p className="text-gray-500 text-xs">
+              This usually takes just a few seconds...
+            </p>
+          </div>
         </div>
       )}
 
       {/* Error */}
       {error && (
-        <p className="mt-6 text-red-600 font-medium bg-red-50 border border-red-100 px-4 py-2 rounded-lg">
+        <p className="mt-6 text-red-600 font-medium bg-red-50 border border-red-100 px-4 py-2 rounded-lg max-w-2xl">
           {error}
         </p>
       )}
 
       {/* Saved Confirmation */}
       {showSaved && (
-        <div className="mt-8 bg-green-50 border border-green-200 text-green-800 px-5 py-3 rounded-xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3 animate-fadeIn">
-          <p className="font-medium">
-            ✅ Your study plan has been saved successfully!
+        <div className="mt-6 bg-green-50 border border-green-200 text-green-800 px-5 py-3 rounded-xl shadow-sm flex flex-col sm:flex-row items-center justify-between gap-3 max-w-2xl w-full">
+          <p className="text-sm font-medium">
+            ✅ Your study plan has been saved to your{" "}
+            <span className="font-semibold">Dashboard</span>.
           </p>
           <button
             onClick={() => navigate("/dashboard")}
-            className="text-sm font-medium text-green-700 hover:underline"
+            className="text-xs sm:text-sm font-semibold text-green-700 hover:underline"
           >
-            View Dashboard →
+            View in Dashboard →
           </button>
         </div>
       )}
 
       {/* Generated Plan */}
       {plan && plan.plan && (
-        <div className="animate-fadeIn mt-10 bg-white/95 backdrop-blur-xl border border-indigo-100 p-6 rounded-3xl shadow-xl w-full max-w-3xl">
+        <div
+          ref={planRef}
+          className={`mt-8 bg-white/95 backdrop-blur-xl border border-indigo-100 p-6 rounded-3xl shadow-xl w-full max-w-3xl transition-all ${
+            highlightPlan ? "ring-2 ring-emerald-400 ring-offset-2" : ""
+          }`}
+        >
           <h2 className="text-2xl font-semibold text-indigo-700 mb-2">
             🎯 Your Study Plan is Ready!
           </h2>
-          <p className="text-gray-500 text-sm mb-5">
-            Here’s your personalized schedule crafted by StudyFlow AI.
+          <p className="text-gray-500 text-sm mb-4">
+            Follow this schedule today. You can always find it later in your{" "}
+            <span className="font-semibold text-indigo-600">Dashboard → Planner</span>.
           </p>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left border-collapse text-sm sm:text-base">
+            <table className="w-full text-left border-collapse text-xs sm:text-sm">
               <thead>
                 <tr className="bg-indigo-50/60 text-gray-700">
                   <th className="p-3 border">Time</th>
@@ -374,9 +439,11 @@ Example JSON:
             </table>
           </div>
 
-          <p className="mt-4 text-gray-600 text-sm text-center italic">
-            💡 {plan.note}
-          </p>
+          {plan.note && (
+            <p className="mt-4 text-gray-600 text-xs sm:text-sm text-center italic">
+              💡 {plan.note}
+            </p>
+          )}
         </div>
       )}
     </div>
