@@ -4,60 +4,108 @@ export const englishCase10 = [
 
   // ---------------- CASE STUDY 1 ----------------
   {
-    id: "eng10-case1",
-    class: "10",
-    subject: "English",
-    title: "The Vanishing Art of Letter Writing",
-    scenario: `In a world of instant messages and quick chats, the old habit of writing letters is disappearing. Letters once carried emotions through handwriting, slow thinking, and meaningful words. Today, texts are short, rushed, and filled with emojis. Teachers say that letter writing taught patience and clarity, which many students now lack. Some schools have started “Letter Week” to bring back this simple but deep form of communication.`,
+  id: "eng10-case1",
+  class: "10",
+  subject: "English",
+  title: "The Global Rise of E-Waste",
+  scenario: `The disposal of electronic waste (e-waste), which includes discarded computers, mobile phones, and household appliances, has become a global environmental issue. The sheer volume is staggering: a UN report indicated that the world generated 53.6 million metric tonnes (Mt) of e-waste in 2019, a 21% increase in just five years. Worryingly, only 17.4% of this was officially documented as having been collected and properly recycled.
 
-    questions: [
-      {
-        id: 1,
-        question: "What is the central idea of the passage?",
-        options: [
-          "Digital communication is harmful",
-          "Letter writing is disappearing today",
-          "Students dislike writing letters",
-          "Teachers want to remove technology"
-        ],
-        correctIndex: 1
-      },
-      {
-        id: 2,
-        question: "Which skill was improved through letter writing?",
-        options: ["Fast typing", "Structured expression", "Drawing", "Math skills"],
-        correctIndex: 1
-      },
-      {
-        id: 3,
-        question: "Why are messages today often shallow?",
-        options: [
-          "They are written using expensive apps",
-          "They are typed quickly with shortcuts",
-          "Students forget grammar",
-          "Emojis are banned"
-        ],
-        correctIndex: 1
-      },
-      {
-        id: 4,
-        question: "What is the purpose of “Letter Week”?",
-        options: [
-          "Replace smartphones",
-          "Increase homework",
-          "Encourage handwritten letters",
-          "Start competitions"
-        ],
-        correctIndex: 2
-      },
-      { id: 5, question: "Synonym of 'fading'?", options: ["Disappearing", "Growing", "Brightening", "Creating"], correctIndex: 0 },
-      { id: 6, question: "Antonym of 'shallow'?", options: ["Deep", "Quick", "Light", "Small"], correctIndex: 0 },
-      { id: 7, question: "What does the passage say about handwriting?", options: ["Not important", "Helped express emotions", "Should be banned", "Hard to learn"], correctIndex: 1 },
-      { id: 8, question: "Tone of the passage?", options: ["Angry", "Neutral", "Reflective", "Humorous"], correctIndex: 2 },
-      { id: 9, question: "What has reduced student attention?", options: ["Reading books", "Quick messages", "Handwriting practice", "Teacher scolding"], correctIndex: 1 },
-      { id: 10, question: "Letter writing taught students:", options: ["Speed", "Patience", "Gaming", "Drawing"], correctIndex: 1 }
-    ]
-  },
+E-waste contains valuable materials like gold, silver, and copper, but also hazardous substances such as lead, mercury, and cadmium. When electronics are improperly disposed of in landfills, these toxic chemicals leach into the soil and water, posing serious health risks to humans and wildlife. The average modern smartphone contains around 60 different elements, making responsible recycling a complex, yet crucial, process to recover resources and prevent pollution. Countries must invest heavily in regulated recycling infrastructure, and consumers must adopt the 'Reduce, Reuse, Recycle' principle to slow this accelerating crisis.`,
+
+  questions: [
+    {
+      id: 1,
+      question: "Which of the following items is explicitly mentioned as NOT being considered e-waste?",
+      options: [
+        "Discarded mobile phones",
+        "Old computers",
+        "Household appliances",
+        "Paper packaging from a computer"
+      ],
+      correctIndex: 3
+    },
+    {
+      id: 2,
+      question: "The total global e-waste generated in 2019 was approximately:",
+      options: [
+        "21 million metric tonnes",
+        "53.6 million metric tonnes",
+        "17.4 million metric tonnes",
+        "60 million metric tonnes"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 3,
+      question: "The increase in e-waste generation over the five-year period leading up to 2019 was:",
+      options: ["17.4%", "21%", "53.6%", "60%"],
+      correctIndex: 1
+    },
+    {
+      id: 4,
+      question: "What fraction of the total e-waste generated in 2019 was officially recycled?",
+      options: ["Less than half", "Exactly one-third", "Less than one-fifth", "More than three-quarters"],
+      correctIndex: 2
+    },
+    {
+      id: 5,
+      question: "Which of the following is a valuable material found in e-waste?",
+      options: ["Lead", "Mercury", "Cadmium", "Gold"],
+      correctIndex: 3
+    },
+    {
+      id: 6,
+      question: "What is the primary risk posed by improper disposal of e-waste in landfills?",
+      options: [
+        "It takes up too much space",
+        "It discourages the creation of new technology",
+        "Toxic chemicals leach into the soil and water",
+        "It increases the cost of materials"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 7,
+      question: "Approximately how many different elements are found in an average modern smartphone?",
+      options: ["Five", "Seventeen", "Sixty", "Two hundred"],
+      correctIndex: 2
+    },
+    {
+      id: 8,
+      question: "The phrase 'accelerating crisis' implies that the e-waste problem is:",
+      options: [
+        "Stopping completely",
+        "Decreasing slowly",
+        "Getting worse at a faster rate",
+        "Being solved by technology"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 9,
+      question: "The passage suggests that consumers should adopt the 'Reduce, Reuse, Recycle' principle to:",
+      options: [
+        "Increase the sales of new electronics",
+        "Slow down the rate at which the crisis is growing",
+        "Make recycling infrastructure unnecessary",
+        "Focus only on recovering gold"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 10,
+      question: "The word 'leach' in the context of landfills means:",
+      options: [
+        "To burn up completely",
+        "To solidify and become harmless",
+        "To drain away or filter into the surrounding area",
+        "To be instantly recovered"
+      ],
+      correctIndex: 2
+    }
+  ]
+},
+
 
 
   // ---------------- CASE STUDY 2 ----------------
@@ -151,48 +199,245 @@ export const englishCase10 = [
   },
 
   // ---------------- CASE STUDY 6 ----------------
-  {
-    id: "eng10-case6",
-    class: "10",
-    subject: "English",
-    title: "The School Cleanliness Drive",
-    scenario: `To encourage hygiene, the school launched a Cleanliness Drive. Students cleaned classrooms, corridors and gardens. They learned about proper waste disposal and recycling. Many students realised how trash affects the environment.`,
+ {
+  id: "eng10-case6",
+  class: "10",
+  subject: "English",
+  title: "The Shift Toward Renewable Energy",
+  scenario: `The global reliance on fossil fuels for energy generation presents severe environmental challenges, primarily due to the emission of greenhouse gases. The urgent need to combat climate change has thrust renewable energy sources into the spotlight. Solar and wind power, in particular, offer virtually limitless, clean alternatives. Solar energy converts sunlight directly into electricity, while wind farms harness the kinetic energy of the air. While these sources are inherently intermittent—meaning they only produce power when the sun shines or the wind blows—advancements in battery technology are rapidly addressing the storage problem. Investing in renewables is not just an environmental imperative; it is an economic opportunity, creating green jobs and reducing dependence on volatile global oil markets. The transition requires significant initial investment but promises a sustainable and cleaner future for generations to come.`,
 
-    questions: [
-      { id: 1, question: "Purpose of the drive?", options: ["Help teachers", "Promote hygiene", "Collect money", "Grow plants"], correctIndex: 1 },
-      { id: 2, question: "Students cleaned:", options: ["Libraries only", "Entire school", "Canteen only", "Playground only"], correctIndex: 1 },
-      { id: 3, question: "What did students learn?", options: ["Sports rules", "Waste disposal", "Cooking", "History"], correctIndex: 1 },
-      { id: 4, question: "Synonym of 'hygiene'?", options: ["Cleanliness", "Food", "Strength", "Beauty"], correctIndex: 0 },
-      { id: 5, question: "Antonym of 'proper'?", options: ["Incorrect", "Correct", "Healthy", "Simple"], correctIndex: 0 },
-      { id: 6, question: "Waste affects:", options: ["Environment", "Marks", "Uniforms", "Fees"], correctIndex: 0 },
-      { id: 7, question: "Tone of passage?", options: ["Educational", "Angry", "Funny", "Fearful"], correctIndex: 0 },
-      { id: 8, question: "Recycling means:", options: ["Throwing", "Reusing", "Burning", "Buying"], correctIndex: 1 },
-      { id: 9, question: "Students worked on:", options: ["Cleanliness", "Sports", "Music", "Drama"], correctIndex: 0 },
-      { id: 10, question: "Main message:", options: ["Keep surroundings clean", "Stop studying", "Close school", "Plant more trees"], correctIndex: 0 }
-    ]
-  },
+  questions: [
+    {
+      id: 1,
+      question: "The primary challenge posed by reliance on fossil fuels is:",
+      options: [
+        "High cost of oil",
+        "Emission of greenhouse gases",
+        "Lack of oil reserves",
+        "Too much electricity"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 2,
+      question: "Which two renewable sources are highlighted as virtually limitless and clean alternatives?",
+      options: [
+        "Coal and natural gas",
+        "Solar and wind power",
+        "Nuclear and geothermal",
+        "Hydro and biomass"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 3,
+      question: "How does solar energy generate electricity?",
+      options: [
+        "By using heat from the ground",
+        "By burning solar panels",
+        "By converting sunlight directly into electricity",
+        "By harnessing the movement of water"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 4,
+      question: "What does the passage identify as the main weakness of solar and wind power?",
+      options: [
+        "They are too expensive",
+        "They damage the landscape",
+        "They are intermittent (not always producing power)",
+        "They require too much water"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 5,
+      question: "How is the problem of intermittency being solved?",
+      options: [
+        "By using more fossil fuels",
+        "Through advancements in battery technology",
+        "By shutting down power grids",
+        "By relying only on hydro power"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 6,
+      question: "What is an economic benefit of investing in renewable energy?",
+      options: [
+        "Increasing the price of oil",
+        "Creating green jobs",
+        "Increasing dependence on global oil",
+        "Decreasing government spending"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 7,
+      question: "The word 'volatile' in the context of global oil markets means:",
+      options: [
+        "Calm and predictable",
+        "Likely to change rapidly and unpredictably",
+        "Extremely safe",
+        "Highly regulated"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 8,
+      question: "The transition to renewables is described as requiring significant:",
+      options: [
+        "Regulatory relaxation",
+        "Initial investment",
+        "Global treaties",
+        "Decrease in energy demand"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 9,
+      question: "The ultimate promise of the transition to renewable energy is:",
+      options: [
+        "An immediate drop in energy prices",
+        "A sustainable and cleaner future",
+        "Total elimination of all power generation",
+        "Increased dependence on foreign nations"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 10,
+      question: "What is the central idea of this passage?",
+      options: [
+        "To warn against the use of all energy",
+        "To promote the oil industry",
+        "To argue for the necessity and benefits of renewable energy",
+        "To describe different types of batteries"
+      ],
+      correctIndex: 2
+    }
+  ]
+},
+
 
   // ---------------- CASE STUDY 7 ----------------
-  {
-    id: "eng10-case7",
-    class: "10",
-    subject: "English",
-    title: "Importance of Teamwork",
-    scenario: `During a group project, students realised that teamwork helps in sharing ideas and dividing tasks. Some students understood that working alone is harder and less effective. The teacher praised groups that cooperated well.`,
+ {
+  id: "eng10-case7",
+  class: "10",
+  subject: "English",
+  title: "The Importance of Urban Green Spaces",
+  scenario: `Urban green spaces, such as parks, gardens, and tree-lined streets, are vital components of healthy cities. Beyond their aesthetic appeal, they play a crucial role in improving residents' quality of life. Studies consistently show that access to green spaces reduces stress levels, boosts mental well-being, and encourages physical activity. Children, in particular, benefit from natural play environments, which foster creativity and social skills. Environmentally, these areas act as natural air purifiers, absorbing pollutants and producing oxygen. They also help manage stormwater runoff and reduce the "urban heat island" effect, where cities are significantly warmer than surrounding rural areas. Investing in and maintaining urban greenery is therefore not just an amenity, but a fundamental strategy for sustainable urban development and public health.`,
 
-    questions: [
-      { id: 1, question: "Main message?", options: ["Work alone", "Teamwork is helpful", "Avoid friends", "Submit no projects"], correctIndex: 1 },
-      { id: 2, question: "Teamwork helps in:", options: ["More fights", "Sharing ideas", "Less work", "Skipping tasks"], correctIndex: 1 },
-      { id: 3, question: "Teacher praised students who:", options: ["Fought", "Cooperated", "Came late", "Ignored tasks"], correctIndex: 1 },
-      { id: 4, question: "Synonym of 'project'?", options: ["Plan", "Exercise", "Game", "Movie"], correctIndex: 0 },
-      { id: 5, question: "Antonym of 'effective'?", options: ["Useful", "Weak", "Strong", "Active"], correctIndex: 1 },
-      { id: 6, question: "Working alone is:", options: ["Harder", "Better", "Easier", "Quick"], correctIndex: 0 },
-      { id: 7, question: "Tone of the passage?", options: ["Motivational", "Scary", "Negative", "Sad"], correctIndex: 0 },
-      { id: 8, question: "Teamwork teaches:", options: ["Selfishness", "Cooperation", "Anger", "Laziness"], correctIndex: 1 },
-      { id: 9, question: "Group project encourages:", options: ["Team spirit", "Noise", "Confusion", "Skipping"], correctIndex: 0 },
-      { id: 10, question: "Teamwork reduces:", options: ["Stress", "Support", "Ideas", "Sharing"], correctIndex: 0 }
-    ]
-  },
+  questions: [
+    {
+      id: 1,
+      question: "Which of the following is NOT listed as an urban green space?",
+      options: ["Parks", "Gardens", "Tree-lined streets", "Shopping malls"],
+      correctIndex: 3
+    },
+    {
+      id: 2,
+      question: "What is a primary benefit of green spaces for residents' well-being?",
+      options: [
+        "Increased traffic",
+        "Higher stress levels",
+        "Reduced stress levels and improved mental well-being",
+        "More indoor activities"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 3,
+      question: "Green spaces are particularly beneficial for children by fostering:",
+      options: [
+        "Academic pressure",
+        "Sedentary lifestyles",
+        "Creativity and social skills",
+        "Screen time"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 4,
+      question: "Environmentally, green spaces primarily act as:",
+      options: [
+        "Water reservoirs",
+        "Noise amplifiers",
+        "Natural air purifiers",
+        "Artificial light sources"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 5,
+      question: "The 'urban heat island' effect refers to:",
+      options: [
+        "Cities being too cold",
+        "Cities being significantly warmer than surrounding rural areas",
+        "Islands covered in concrete",
+        "Cities having too much water"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 6,
+      question: "Investing in urban greenery is described as a strategy for:",
+      options: [
+        "Economic growth only",
+        "Aesthetic improvement only",
+        "Sustainable urban development and public health",
+        "Reducing property values"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 7,
+      question: "The word 'amenity' in the last sentence refers to:",
+      options: [
+        "A basic necessity",
+        "A desirable or useful feature or facility",
+        "A problem or challenge",
+        "A financial investment"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 8,
+      question: "What is a benefit of green spaces related to water?",
+      options: [
+        "They increase flooding",
+        "They dry out the soil",
+        "They help manage stormwater runoff",
+        "They create artificial ponds"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 9,
+      question: "The passage emphasizes that green spaces go beyond their:",
+      options: [
+        "Environmental impact",
+        "Public health benefits",
+        "Aesthetic appeal",
+        "Economic contribution"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 10,
+      question: "A suitable title for this passage would be:",
+      options: [
+        "Gardening Tips for City Dwellers",
+        "The Multifaceted Benefits of Urban Green Spaces",
+        "How to Reduce Stress",
+        "The Problem of Urban Heat"
+      ],
+      correctIndex: 1
+    }
+  ]
+},
+
 
   // ---------------- CASE STUDY 8 ----------------
   {
@@ -240,24 +485,114 @@ export const englishCase10 = [
 
   // ---------------- CASE STUDY 10 ----------------
   {
-    id: "eng10-case10",
-    class: "10",
-    subject: "English",
-    title: "Time Management Workshop",
-    scenario: `A workshop was organised to help students manage time better. They learned to make to-do lists, avoid procrastination and study in short breaks. Many students said this reduced stress and improved exam preparation.`,
+  id: "eng10-case10",
+  class: "10",
+  subject: "English",
+  title: "The Art of Storytelling",
+  scenario: `Storytelling is humanity's oldest art form, a powerful tool for transmitting knowledge, culture, and values across generations. From ancient myths whispered around campfires to modern novels and films, stories shape our understanding of the world and ourselves. A compelling story does more than just entertain; it evokes empathy, allowing us to step into another's shoes and experience their emotions. It simplifies complex ideas, making them memorable and relatable. Think of how fables teach moral lessons or how historical narratives make the past come alive. Effective storytelling relies on a clear plot, vivid characters, and a central conflict or message. In an age dominated by information, stories provide context and meaning, connecting us on a deeply human level. They are, essentially, the threads that weave the fabric of human experience.`,
 
-    questions: [
-      { id: 1, question: "Purpose of workshop?", options: ["Teach sports", "Manage time", "Learn music", "Increase homework"], correctIndex: 1 },
-      { id: 2, question: "Students learned to:", options: ["Waste time", "Avoid procrastination", "Skip homework", "Sleep late"], correctIndex: 1 },
-      { id: 3, question: "Making to-do lists helps:", options: ["Confusion", "Planning", "Gaming", "Forgetting"], correctIndex: 1 },
-      { id: 4, question: "Tone of passage?", options: ["Helpful", "Angry", "Sad", "Confusing"], correctIndex: 0 },
-      { id: 5, question: "Synonym of 'improved'?", options: ["Developed", "Reduced", "Forgotten", "Ignored"], correctIndex: 0 },
-      { id: 6, question: "Antonym of 'stress'?", options: ["Calm", "Noise", "Fear", "Heat"], correctIndex: 0 },
-      { id: 7, question: "Short breaks help in:", options: ["Better focus", "More stress", "More confusion", "More laziness"], correctIndex: 0 },
-      { id: 8, question: "Procrastination means:", options: ["Delaying work", "Finishing early", "Studying fast", "Sleeping"], correctIndex: 0 },
-      { id: 9, question: "Workshop reduced:", options: ["Marks", "Stress", "Learning", "Games"], correctIndex: 1 },
-      { id: 10, question: "Students felt:", options: ["Nervous", "Improved", "Angry", "Confused"], correctIndex: 1 }
-    ]
-  }
+  questions: [
+    {
+      id: 1,
+      question: "Storytelling is referred to as humanity's:",
+      options: [
+        "Newest invention",
+        "Most complex science",
+        "Oldest art form",
+        "Fastest communication method"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 2,
+      question: "What are stories primarily used for across generations?",
+      options: [
+        "Selling products",
+        "Transmitting knowledge, culture, and values",
+        "Predicting the future",
+        "Creating silence"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 3,
+      question: "A compelling story does more than just entertain; it primarily evokes:",
+      options: ["Confusion", "Indifference", "Empathy", "Boredom"],
+      correctIndex: 2
+    },
+    {
+      id: 4,
+      question: "How do fables help in learning?",
+      options: [
+        "By providing factual data",
+        "By confusing the reader",
+        "By teaching moral lessons",
+        "By showing historical events"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 5,
+      question: "What makes complex ideas memorable and relatable in a story?",
+      options: [
+        "Their length",
+        "Their scientific accuracy",
+        "Their simplification and context",
+        "Their difficulty"
+      ],
+      correctIndex: 2
+    },
+    {
+      id: 6,
+      question: "Which of the following is NOT listed as a key element of effective storytelling?",
+      options: [
+        "Clear plot",
+        "Vivid characters",
+        "Central conflict/message",
+        "Extensive use of statistics"
+      ],
+      correctIndex: 3
+    },
+    {
+      id: 7,
+      question: "The passage suggests that stories connect us on a deeply human level by providing:",
+      options: [
+        "Distraction",
+        "Context and meaning",
+        "Technical instructions",
+        "Abstract theories"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 8,
+      question: "The phrase 'weaves the fabric of human experience' suggests stories:",
+      options: [
+        "Create literal fabric",
+        "Interconnect and define human life",
+        "Are limited to textile workers",
+        "Are fragile and easily broken"
+      ],
+      correctIndex: 1
+    },
+    {
+      id: 9,
+      question: "What kind of narratives make the past come alive?",
+      options: ["Scientific", "Historical", "Futuristic", "Abstract"],
+      correctIndex: 1
+    },
+    {
+      id: 10,
+      question: "The word 'transmitting' in the first sentence means:",
+      options: [
+        "Hiding or concealing",
+        "Conveying or communicating",
+        "Destroying or deleting",
+        "Storing securely"
+      ],
+      correctIndex: 1
+    }
+  ]
+}
 
 ];

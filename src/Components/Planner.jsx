@@ -406,16 +406,7 @@ Example JSON:
           <h2 className="text-2xl font-semibold text-indigo-700 mb-2">
             🎯 Your Study Plan is Ready!
           </h2>
-         <p className="text-gray-500 text-sm mb-4">
-  Follow this schedule today. You can always find it later in your{" "}
-  <button
-    onClick={() => navigate("/dashboard")}
-    className="font-semibold text-indigo-600 underline underline-offset-2 hover:text-indigo-800 transition"
-  >
-    Dashboard → Planner
-  </button>
-</p>
-
+         
 
           <div className="overflow-x-auto">
             <table className="w-full text-left border-collapse text-xs sm:text-sm">
