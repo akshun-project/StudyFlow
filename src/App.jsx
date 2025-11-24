@@ -4,6 +4,7 @@ import Planner from "./Components/Planner";
 import Quiz from "./Components/Quiz";
 import Dashboard from "./Components/Dashboard";
 import ProtectedRoute from "./Components/ProtectedRoute";
+import Testimonials from "./Components/Testimonials";
 
 // Landing page sections
 import Features from "./Components/Features";
@@ -16,7 +17,7 @@ import SyncUserToSupabase from "./Clerk/SyncUserToSupabase";
 // Add this
 import QuizExplain from "./Components/QuizExplain";
 
-// ⭐ Add Board Practice
+// ⭐ Board Practice
 import BoardPractice from "./Components/BoardPractice";
 
 function App() {
@@ -32,14 +33,12 @@ function App() {
             <>
               <Hero />
               <Features />
+              <Testimonials />
               <Faq />
               <Footer />
             </>
           }
         />
-65
-        
-        
 
         <Route
           path="/planner"
@@ -50,7 +49,6 @@ function App() {
           }
         />
 
-       
         <Route
           path="/quiz"
           element={
@@ -78,7 +76,7 @@ function App() {
           }
         />
 
-        {/* ⭐ Board Practice Route (Case-Based Study, PYQs, Passages, etc.) */}
+        {/* ⭐ Board Practice Route */}
         <Route
           path="/board-practice"
           element={

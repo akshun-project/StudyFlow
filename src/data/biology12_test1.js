@@ -10,255 +10,236 @@ export const biology12Test1 = {
     // ---------- REPRODUCTION & GENETICS (1–14) ----------
      // ---------------------- REPRODUCTION & GENETICS ----------------------
 
-{
-  id: 1,
-  question: "The primary function of the corpus luteum is to produce:",
-  options: ["Luteinizing Hormone (LH)", "Follicle-Stimulating Hormone (FSH)", "Progesterone", "Estrogen"],
-  correctIndex: 2,
-},
-{
-  id: 2,
-  question: "Which part of the flower develops into the fruit after fertilization?",
-  options: ["Petal", "Stamen", "Ovule", "Ovary"],
-  correctIndex: 3,
-},
-{
-  id: 3,
-  question: "Cleistogamous flowers are characterized by:",
-  options: ["Always being self-pollinated", "Being brightly coloured", "Having exposed anthers and stigmas", "Being pollinated by bats"],
-  correctIndex: 0,
-},
-{
-  id: 4,
-  question: "The inheritance pattern resulting in an F2 ratio of 1:2:1 is:",
-  options: ["Co-dominance", "Multiple allelism", "Incomplete dominance", "Pleiotropy"],
-  correctIndex: 2,
-},
-{
-  id: 5,
-  question: "In a DNA molecule, the purine bases are:",
-  options: ["Cytosine and Thymine", "Adenine and Guanine", "Uracil and Cytosine", "Guanine and Thymine"],
-  correctIndex: 1,
-},
-{
-  id: 6,
-  question: "The process of transferring genetic information from DNA to mRNA is:",
-  options: ["Translation", "Replication", "Transduction", "Transcription"],
-  correctIndex: 3,
-},
-{
-  id: 7,
-  question: "A test cross involves crossing an individual with an unknown genotype with a:",
-  options: ["Homozygous dominant", "Heterozygous", "Homozygous recessive", "Hybrid"],
-  correctIndex: 2,
-},
-{
-  id: 8,
-  question: "Which structure prevents the entry of more than one sperm into the ovum?",
-  options: ["Vitelline membrane", "Zona pellucida", "Fertilization membrane", "Corona radiata"],
-  correctIndex: 2,
-},
-{
-  id: 9,
-  question: "The total number of chromosomes in a human gamete is:",
-  options: ["46", "23", "24", "48"],
-  correctIndex: 1,
-},
-{
-  id: 10,
-  question: "A single gene influencing multiple phenotypic traits is called:",
-  options: ["Epistasis", "Multiple allelism", "Pleiotropy", "Polygenic inheritance"],
-  correctIndex: 2,
-},
-{
-  id: 11,
-  question: "The site of protein synthesis in a eukaryotic cell is:",
-  options: ["Nucleus", "Mitochondria", "Ribosome", "Golgi apparatus"],
-  correctIndex: 2,
-},
-{
-  id: 12,
-  question: "The stage where homologous chromosomes separate is:",
-  options: ["Mitosis - Anaphase", "Meiosis I - Anaphase I", "Meiosis II - Anaphase II", "Meiosis I - Prophase I"],
-  correctIndex: 1,
-},
-{
-  id: 13,
-  question: "The technique used to identify paternity or criminal suspects is:",
-  options: ["Gene sequencing", "PCR", "DNA fingerprinting", "Gel electrophoresis"],
-  correctIndex: 2,
-},
-{
-  id: 14,
-  question: "In angiosperms, fusion of one male gamete with egg and the other with polar nuclei is:",
-  options: ["Syngamy", "Triple fusion", "Parthenogenesis", "Double fertilization"],
-  correctIndex: 3,
-},
+  {
+      id: 1,
+      question: "Which structure in the ovule corresponds to the female gametophyte in angiosperms?",
+      options: ["Nucellus", "Integuments", "Embryo sac", "Pollen grain"],
+      correctIndex: 2,
+    },
+    {
+      id: 2,
+      question: "A secondary oocyte is arrested at which stage prior to ovulation?",
+      options: ["Prophase I", "Metaphase I", "Prophase II", "Metaphase II"],
+      correctIndex: 3,
+    },
+    {
+      id: 3,
+      question: "Which combination of sex chromosomes represents Klinefelter's syndrome?",
+      options: ["XO", "XYY", "XXX", "XXY"],
+      correctIndex: 3,
+    },
+    {
+      id: 4,
+      question: "If the distance between two genes on a chromosome is 20 cM, what does this indicate?",
+      options: [
+        "The genes are linked and rarely separate",
+        "The genes are on different chromosomes",
+        "The genes are moderately linked and crossover occurs frequently",
+        "The genes will always segregate independently",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 5,
+      question: "In lac operon, the repressor protein binds to the:",
+      options: ["Operator gene", "Promoter gene", "Regulator gene", "Structural gene"],
+      correctIndex: 0,
+    },
+    {
+      id: 6,
+      question: "The final output of oogenesis, excluding polar bodies, is:",
+      options: ["Two ova", "One secondary oocyte", "One ovum", "Four ova"],
+      correctIndex: 2,
+    },
+    {
+      id: 7,
+      question: "A cross between pure tall (TT) and pure dwarf (tt) plants giving all tall plants shows:",
+      options: ["Segregation", "Independent Assortment", "Dominance", "Co-dominance"],
+      correctIndex: 2,
+    },
+    {
+      id: 8,
+      question: "In angiosperms, the generative cell in a pollen grain divides to form:",
+      options: ["One male gamete", "One tube nucleus", "One microspore mother cell", "Two male gametes"],
+      correctIndex: 3,
+    },
+    {
+      id: 9,
+      question: "The process of DNA replication is:",
+      options: ["Conservative", "Non-conservative", "Semi-conservative", "Dispersive"],
+      correctIndex: 2,
+    },
+    {
+      id: 10,
+      question: "Fusion of male and female gametes is technically called:",
+      options: ["Gametogenesis", "Embryogenesis", "Parturition", "Syngamy"],
+      correctIndex: 3,
+    },
+    {
+      id: 11,
+      question: "Transfer of genetic material between bacteria via bacteriophages is:",
+      options: ["Conjugation", "Transformation", "Transduction", "Translation"],
+      correctIndex: 2,
+    },
+    {
+      id: 12,
+      question: "The structure that provides nourishment to developing pollen grains is:",
+      options: ["Epidermis", "Endothecium", "Tapetum", "Middle layers"],
+      correctIndex: 2,
+    },
+    {
+      id: 13,
+      question: "Which event marks the beginning of the proliferative phase in females?",
+      options: ["Ovulation", "Menstruation", "Implantation", "Fertilization"],
+      correctIndex: 1,
+    },
+    {
+      id: 14,
+      question: "If DNA coding strand has TAC, the tRNA anticodon will be:",
+      options: ["AUG", "UAC", "UAG", "GTC"],
+      correctIndex: 1,
+    },
+    {
+      id: 15,
+      question: "Which contraceptive method prevents sperm transport by surgical means?",
+      options: ["Chemical barrier", "Hormonal barrier", "Surgical barrier", "Natural method"],
+      correctIndex: 2,
+    },
 
+    // ------------ EVOLUTION, HUMAN WELFARE & BIOTECH (16–30) ------------
+    {
+      id: 16,
+      question: "Forelimbs of humans, bats and cheetahs sharing the same basic structure show:",
+      options: ["Analogous organs", "Convergent evolution", "Homologous organs", "Stabilizing selection"],
+      correctIndex: 2,
+    },
+    {
+      id: 17,
+      question: "Which compound is released by mast cells during an allergic reaction?",
+      options: ["Interferon", "Antibodies", "Prostaglandin", "Histamine"],
+      correctIndex: 3,
+    },
+    {
+      id: 18,
+      question: "Antibiotic resistance arises due to:",
+      options: ["Acquired immunity", "Natural selection on bacteria", "Antigenic shift", "Passive immunity"],
+      correctIndex: 1,
+    },
+    {
+      id: 19,
+      question: "Which product is obtained by Saccharomyces cerevisiae fermentation?",
+      options: ["Antibiotics", "Ethanol", "Acetic acid", "Lactic acid"],
+      correctIndex: 1,
+    },
+    {
+      id: 20,
+      question: "Which feature is essential for a plasmid to act as a cloning vector?",
+      options: ["Large size", "Selectable marker", "Multiple restriction sites", "Linear DNA"],
+      correctIndex: 1,
+    },
+    {
+      id: 21,
+      question: "A common target of anti-HIV drugs is:",
+      options: ["HIV protease", "DNA ligase", "RNA polymerase", "Reverse transcriptase"],
+      correctIndex: 3,
+    },
+    {
+      id: 22,
+      question: "A major concern with Bt toxin usage is:",
+      options: [
+        "Higher water requirement",
+        "Loss of butterflies",
+        "Pest resistance development",
+        "Reduced yield stability",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 23,
+      question: "Antibodies passed from mother to foetus via placenta represent:",
+      options: ["Active natural immunity", "Active artificial immunity", "Passive natural immunity", "Passive artificial immunity"],
+      correctIndex: 2,
+    },
+    {
+      id: 24,
+      question: "Immunoglobulins function to:",
+      options: ["Destroy T-cells", "Transport oxygen", "Bind to antigens", "Produce histamine"],
+      correctIndex: 2,
+    },
+    {
+      id: 25,
+      question: "Which enzyme removes the 5′ phosphate in cloning?",
+      options: ["DNA ligase", "Restriction enzyme", "Alkaline phosphatase", "Polynucleotide kinase"],
+      correctIndex: 2,
+    },
+    {
+      id: 26,
+      question: "The early Earth's atmosphere was mainly:",
+      options: ["Oxidizing", "Neutral", "Reducing", "Highly acidic"],
+      correctIndex: 2,
+    },
+    {
+      id: 27,
+      question: "The technique to amplify DNA for diagnostics is:",
+      options: ["DNA sequencing", "Gel electrophoresis", "PCR", "Gene cloning"],
+      correctIndex: 2,
+    },
+    {
+      id: 28,
+      question: "Malignant tumors are characterized by:",
+      options: ["Localized growth", "No recurrence", "Metastasis", "No tissue damage"],
+      correctIndex: 2,
+    },
+    {
+      id: 29,
+      question: "The key finding of Miller-Urey experiment was formation of:",
+      options: ["DNA", "Sugars", "Amino acids", "Lipids"],
+      correctIndex: 2,
+    },
+    {
+      id: 30,
+      question: "Using microorganisms to produce industrial enzymes is:",
+      options: ["Genomics", "Proteomics", "Biotechnology", "Bioinformatics"],
+      correctIndex: 2,
+    },
 
-// ----------- EVOLUTION, HUMAN WELFARE & BIOTECHNOLOGY ----------------
-
-{
-  id: 15,
-  question: "The Hardy–Weinberg Principle describes a population that is:",
-  options: ["Rapidly evolving", "Showing genetic drift", "Not undergoing evolutionary change", "Experiencing natural selection"],
-  correctIndex: 2,
-},
-{
-  id: 16,
-  question: "'Survival of the Fittest' was proposed by:",
-  options: ["Jean-Baptiste Lamarck", "Herbert Spencer", "Charles Darwin", "Alfred Wallace"],
-  correctIndex: 1,
-},
-{
-  id: 17,
-  question: "Which is a vestigial organ in humans?",
-  options: ["Tonsils", "Pancreas", "Vermiform appendix", "Thyroid gland"],
-  correctIndex: 2,
-},
-{
-  id: 18,
-  question: "The disease caused by HIV is:",
-  options: ["Cancer", "Tuberculosis", "AIDS", "Typhoid"],
-  correctIndex: 2,
-},
-{
-  id: 19,
-  question: "Which molecule joins DNA fragments in genetic engineering?",
-  options: ["Restriction endonuclease", "Reverse transcriptase", "DNA ligase", "Taq polymerase"],
-  correctIndex: 2,
-},
-{
-  id: 20,
-  question: "The primary purpose of bioreactors is:",
-  options: [
-    "To purify products",
-    "To perform gel electrophoresis",
-    "To culture large volumes of cells for product synthesis",
-    "To cut DNA at specific sites"
-  ],
-  correctIndex: 2,
-},
-{
-  id: 21,
-  question: "The first transgenic cow to produce human protein-enriched milk was:",
-  options: ["Dolly", "Polly", "Rosie", "Tracey"],
-  correctIndex: 2,
-},
-{
-  id: 22,
-  question: "Which method is used to transfer genes into monocot plants?",
-  options: ["Agrobacterium tumefaciens", "E. coli", "Gene gun/Biolistics", "Saccharomyces cerevisiae"],
-  correctIndex: 2,
-},
-{
-  id: 23,
-  question: "The active drug obtained from Papaver somniferum is:",
-  options: ["Nicotine", "Cocaine", "Caffeine", "Morphine"],
-  correctIndex: 3,
-},
-{
-  id: 24,
-  question: "The principle of vaccination is based on:",
-  options: ["Tolerance", "Inflammation", "Memory", "Allergy"],
-  correctIndex: 2,
-},
-{
-  id: 25,
-  question: "Which disease involves uncontrolled cell division?",
-  options: ["AIDS", "Typhoid", "Cancer", "Malaria"],
-  correctIndex: 2,
-},
-{
-  id: 26,
-  question: "Introduction of alien DNA that results in many copies is called:",
-  options: ["Elution", "Insertion", "Cloning", "Screening"],
-  correctIndex: 2,
-},
-{
-  id: 27,
-  question: "The first clinical gene therapy treated:",
-  options: ["Phenylketonuria", "Cystic Fibrosis", "ADA deficiency", "Haemophilia"],
-  correctIndex: 2,
-},
-{
-  id: 28,
-  question: "Benign tumors are:",
-  options: [
-    "Rapidly spreading",
-    "Always fatal",
-    "Localized and non-spreading",
-    "Convert normal cells to cancerous ones"
-  ],
-  correctIndex: 2,
-},
-{
-  id: 29,
-  question: "Using biological agents to control pests is called:",
-  options: ["Chemical control", "Biocontrol", "IPM", "Biopiracy"],
-  correctIndex: 1,
-},
-{
-  id: 30,
-  question: "The source of Taq polymerase used in PCR is:",
-  options: [
-    "Escherichia coli",
-    "Agrobacterium",
-    "Thermus aquaticus",
-    "Saccharomyces cerevisiae"
-  ],
-  correctIndex: 2,
-},
-{
-  id: 31,
-  question: "The initial step in translation is:",
-  options: [
-    "Transcription",
-    "Termination",
-    "Activation of amino acids",
-    "Pairing of codons with anticodons"
-  ],
-  correctIndex: 2,
-},
-{
-  id: 32,
-  question: "The concept of 'Use and Disuse' was proposed by:",
-  options: ["Charles Darwin", "Jean-Baptiste Lamarck", "Hugo de Vries", "Ernst Haeckel"],
-  correctIndex: 1,
-},
-
-
-// ------------------------------- ECOLOGY ------------------------------
-
-{
-  id: 33,
-  question: "The total amount of living material at any trophic level is called:",
-  options: ["Pyramid of energy", "Productivity", "Standing crop", "Standing state"],
-  correctIndex: 2,
-},
-{
-  id: 34,
-  question: "In an ecosystem, the pyramid of energy is always:",
-  options: ["Inverted", "Upright", "Spindle-shaped", "Fluctuating"],
-  correctIndex: 1,
-},
-{
-  id: 35,
-  question: "Ozone depletion is primarily caused by:",
-  options: ["CO₂", "SO₂", "Methane", "CFCs"],
-  correctIndex: 3,
-},
-{
-  id: 36,
-  question: "Sacred Groves are:",
-  options: [
-    "Managed by forest departments",
-    "Protected by tribal communities",
-    "Used for commercial forestry",
-    "Used for scientific research"
-  ],
-  correctIndex: 1,
-},
+    // ------------ ECOLOGY & ENVIRONMENT (31–40) ------------
+    {
+      id: 31,
+      question: "The primary cause of species loss is:",
+      options: ["Co-extinctions", "Over-exploitation", "Alien species", "Habitat loss"],
+      correctIndex: 3,
+    },
+    {
+      id: 32,
+      question: "Mass of living material at a time in an ecosystem is:",
+      options: ["Productivity", "Standing state", "Standing crop", "Succession"],
+      correctIndex: 2,
+    },
+    {
+      id: 33,
+      question: "(+,−) interaction between species represents:",
+      options: ["Mutualism", "Competition", "Commensalism", "Predation"],
+      correctIndex: 3,
+    },
+    {
+      id: 34,
+      question: "Pioneer communities on new lava form due to:",
+      options: ["Secondary succession", "Climax community", "Primary succession", "Ecological pyramid"],
+      correctIndex: 2,
+    },
+    {
+      id: 35,
+      question: "Biodiversity hotspots have:",
+      options: ["Low endemism", "High richness & low threat", "High endemism & high threat", "Large areas"],
+      correctIndex: 2,
+    },
+    {
+      id: 36,
+      question: "Increase in pollutant concentration at higher trophic levels is:",
+      options: ["Eutrophication", "Biomagnification", "Thermal pollution", "Acid rain"],
+      correctIndex: 1,
+    },
 {
   id: 37,
   question: "A characteristic of r-selected species is:",
