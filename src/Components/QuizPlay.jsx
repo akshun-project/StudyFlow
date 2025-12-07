@@ -78,7 +78,8 @@ export default function QuizPlay({
             >
               <div className="flex items-center gap-3">
                 <span className="font-semibold text-indigo-700">{letter}.</span>
-                <span>{opt}</span>
+                <span>{opt.replace(/^[A-D][\).]\s*/i, "").trim()}</span>
+
               </div>
             </button>
           );

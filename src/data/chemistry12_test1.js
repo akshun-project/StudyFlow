@@ -8,335 +8,246 @@ export const chemistry12Test1 = {
   questions: [
 
     // ---------- SOLUTIONS, ELECTROCHEMISTRY & KINETICS (1–14) ----------
-     {
-      id: 1,
-      question: "Which solution will exhibit the lowest freezing point? (Assuming complete dissociation)",
-      options: [
-        "0.1 M Glucose",
-        "0.1 M BaCl₂",
-        "0.1 M NaCl",
-        "0.1 M Al₂(SO₄)₃"
-      ],
-      correctIndex: 3,
-    },
-    {
-      id: 2,
-      question: "Which expression correctly relates the molar conductivity (Λm) and degree of dissociation (α) for a weak electrolyte?",
-      options: [
-        "α = Λm / Λm°",
-        "α = Λm × Λm°",
-        "α = Λm° / Λm",
-        "α = Λm / Λm°"
-      ],
-      correctIndex: 0,
-    },
-    {
-      id: 3,
-      question: "In the formula π = iCRT, the term 'i' represents:",
-      options: [
-        "Van't Hoff coefficient",
-        "Molality",
-        "Molar volume",
-        "Van't Hoff factor"
-      ],
-      correctIndex: 3,
-    },
-    {
-      id: 4,
-      question: "The reaction 2Ag⁺ + Cu → 2Ag + Cu²⁺ is used in which type of cell?",
-      options: ["Daniell cell", "Dry cell", "Leclanché cell", "Fuel cell"],
-      correctIndex: 0,
-    },
-    {
-      id: 5,
-      question: "How many Faradays are required to produce 18 g of Aluminium from Al³⁺ ions?",
-      options: ["1 F", "3 F", "2 F", "6 F"],
-      correctIndex: 2,
-    },
-    {
-      id: 6,
-      question: "Which statement is true regarding the effect of a catalyst on a reaction?",
-      options: [
-        "It changes ΔH",
-        "It changes the equilibrium constant",
-        "It provides an alternate pathway with lower activation energy",
-        "It increases the collision frequency"
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 7,
-      question: "Rate constant k = 2.0 × 10⁻² s⁻¹ suggests the reaction is:",
-      options: ["Zero order", "Second order", "Third order", "First order"],
-      correctIndex: 3,
-    },
-    {
-      id: 8,
-      question: "Slope of log[R] vs time (t) for a first-order reaction is:",
-      options: ["−k/2.303", "k/2.303", "−Ea/R", "k"],
-      correctIndex: 0,
-    },
-    {
-      id: 9,
-      question: "The limiting molar conductivity (Λm°) increases with:",
-      options: [
-        "Increase in concentration",
-        "Increase in temperature",
-        "Decrease in concentration (towards infinite dilution)",
-        "Decrease in temperature"
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 10,
-      question: "At the anode in an electrochemical cell:",
-      options: ["Reduction", "Oxidation", "Neutralisation", "Polymerization"],
-      correctIndex: 1,
-    },
-    {
-      id: 11,
-      question: "Elevation of boiling point is known as:",
-      options: ["Osmosis", "Ebullioscopic effect", "Cryoscopic effect", "Henry's Law"],
-      correctIndex: 1,
-    },
-    {
-      id: 12,
-      question: "For a zero-order reaction with t½ = 100 s and [R]0 = 1 M, the rate constant k is:",
-      options: [
-        "0.02 mol L⁻¹ s⁻¹",
-        "0.005 mol L⁻¹ s⁻¹",
-        "0.005 mol L⁻¹ s⁻¹",
-        "0.01 mol L⁻¹ s⁻¹"
-      ],
-      correctIndex: 1,
-    },
-    {
-      id: 13,
-      question: "A solution obeying Raoult's Law over the entire range of concentration is:",
-      options: ["Positive deviation", "Negative deviation", "Ideal solution", "Azeotrope"],
-      correctIndex: 2,
-    },
-    {
-      id: 14,
-      question: "Which factor affects the initial reaction rate but not the rate constant (k)?",
-      options: ["Catalyst", "Temperature", "Reactant concentration", "Activation energy"],
-      correctIndex: 2,
-    },
-    {
-      id: 15,
-      question: "If standard cell potential (E°cell) is positive, the reaction is:",
-      options: ["Non-spontaneous", "At equilibrium", "Spontaneous", "Endothermic"],
-      correctIndex: 2,
-    },
-
-    // ----------------- d & f BLOCK + COORDINATION COMPOUNDS (16–25) -----------------
-    {
-      id: 16,
-      question: "Which 3d-series element shows the highest number of oxidation states?",
-      options: ["Fe", "Cr", "V", "Mn"],
-      correctIndex: 3,
-    },
-    {
-      id: 17,
-      question: "General configuration of d-block elements:",
-      options: [
-        "(n−1)d¹⁻¹⁰ ns⁰",
-        "(n−1)d¹⁻¹⁰ ns²",
-        "(n−1)d¹⁻¹⁰ ns¹⁻²",
-        "n d¹⁻¹⁰ ns¹⁻²"
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 18,
-      question: "Lanthanoid contraction is due to:",
-      options: [
-        "Poor shielding of 5d electrons",
-        "Increase in nuclear charge",
-        "Poor shielding of 4f electrons",
-        "Relativistic effects"
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 19,
-      question: "Which ion is diamagnetic?",
-      options: ["Ti³⁺", "V³⁺", "Cr³⁺", "Sc³⁺"],
-      correctIndex: 3,
-    },
-    {
-      id: 20,
-      question: "K₂Cr₂O₇ is a strong oxidizing agent in:",
-      options: ["Basic medium", "Neutral medium", "Acidic medium", "All media"],
-      correctIndex: 2,
-    },
-    {
-      id: 21,
-      question: "IUPAC name of K₃[Fe(CN)₆] is:",
-      options: [
-        "Potassium Hexacyanoiron(II)",
-        "Potassium Hexacyanoferrate(II)",
-        "Potassium Hexacyanoferrate(III)",
-        "Tripotassium Hexacyanoiron(III)"
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 22,
-      question: "Which is a π-acceptor ligand?",
-      options: ["NH₃", "H₂O", "CO", "Cl⁻"],
-      correctIndex: 2,
-    },
-    {
-      id: 23,
-      question: "Oxidation state of Ni in [Ni(CO)₄] is:",
-      options: ["+4", "+2", "−4", "0"],
-      correctIndex: 3,
-    },
-    {
-      id: 24,
-      question: "Isomerism between [Co(NH₃)₅Cl]SO₄ and [Co(NH₃)₅SO₄]Cl is:",
-      options: ["Geometrical", "Optical", "Ionisation", "Linkage"],
-      correctIndex: 2,
-    },
-    {
-      id: 25,
-      question: "Secondary valencies of metal ions correspond to:",
-      options: [
-        "Double coordination number",
-        "Equal to coordination number",
-        "Half coordination number",
-        "Equal to primary valencies"
-      ],
-      correctIndex: 1,
-    },
-
-    // ----------------- ORGANIC CHEMISTRY (26–40) -----------------
-    {
-      id: 26,
-      question: "Chlorination of Toluene with FeCl₃ gives:",
-      options: [
-        "Benzyl chloride",
-        "o- and p-Chlorotoluene",
-        "m-Chlorotoluene",
-        "p-Chlorobenzoic acid"
-      ],
-      correctIndex: 1,
-    },
-    {
-      id: 27,
-      question: "Propene reacts with HBr in presence of peroxide to give:",
-      options: [
-        "1-Bromopropane",
-        "2-Bromopropane",
-        "1,2-Dibromopropane",
-        "1-Bromopropane"
-      ],
-      correctIndex: 0,
-    },
-    {
-      id: 28,
-      question: "Alkyl halide → alcohol conversion uses:",
-      options: ["aq. KOH", "alc. KOH", "Wurtz reaction", "Friedel–Crafts reaction"],
-      correctIndex: 0,
-    },
-    {
-      id: 29,
-      question: "Phenol + Br₂ water gives:",
-      options: [
-        "o-Bromophenol",
-        "p-Bromophenol",
-        "2,4,6-Tribromophenol",
-        "Bromobenzene"
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 30,
-      question: "PCC oxidation of primary alcohol yields:",
-      options: ["Carboxylic acid", "Aldehyde", "Ether", "Alkene"],
-      correctIndex: 1,
-    },
-    {
-      id: 31,
-      question: "Positive Iodoform test is given by:",
-      options: ["Propanal", "Ethanol", "Methanol", "Pentan-3-one"],
-      correctIndex: 1,
-    },
-    {
-      id: 32,
-      question: "Conversion of aldehyde to hydrocarbon using Zn(Hg)/HCl is:",
-      options: [
-        "Clemmensen reduction",
-        "Wolf-Kishner reduction",
-        "Both",
-        "Rosenmund reduction"
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 33,
-      question: "Benzonitrile + DIBAL-H (then hydrolysis) gives:",
-      options: ["Benzoic acid", "Benzyl alcohol", "Benzene", "Benzaldehyde"],
-      correctIndex: 3,
-    },
-    {
-      id: 34,
-      question: "Strongest acid is:",
-      options: ["Phenol", "Ethanol", "p-Nitrophenol", "p-Nitrophenol"],
-      correctIndex: 2,
-    },
-    {
-      id: 35,
-      question: "Aniline + NaNO₂ + HCl (0–5°C) forms:",
-      options: [
-        "Phenyl diazonium chloride",
-        "p-Nitroaniline",
-        "Benzene diazonium chloride",
-        "Anilinium chloride"
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 36,
-      question: "Hofmann bromamide reaction forms:",
-      options: [
-        "Secondary amines",
-        "Tertiary amines",
-        "Primary amines with one less carbon",
-        "Alcohols"
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 37,
-      question: "Which compound hydrolyses fastest with aq. KOH?",
-      options: ["Chlorobenzene", "Vinyl chloride", "tert-Butyl chloride", "Bromobenzene"],
-      correctIndex: 2,
-    },
-    {
-      id: 38,
-      question: "Alkyl chloride → alkyl fluoride using AgF is:",
-      options: ["Finkelstein rxn", "Grignard rxn", "Swarts reaction", "Wurtz reaction"],
-      correctIndex: 2,
-    },
-    {
-      id: 39,
-      question: "Ethanol over Al₂O₃ at 653 K forms:",
-      options: ["Diethyl ether", "Ethane", "Ethanal", "Ethene"],
-      correctIndex: 3,
-    },
-    {
-      id: 40,
-      question: "Carboxylic acids are stronger than phenols because:",
-      options: [
-        "Carboxylate ion has two equivalent resonance structures",
-        "Phenoxide ion is more stable",
-        "Phenol has one acidic hydrogen",
-        "Carboxylic acids are heavier"
-      ],
-      correctIndex: 0,
-    },
+  {
+    "id": 1,
+    "question": "An electric dipole is placed in a uniform electric field experiences:",
+    "options": ["Zero net force", "Zero torque", "Variable force", "Variable potential"],
+    "correctIndex": 0
+  },
+  {
+    "id": 2,
+    "question": "Electric flux through a closed surface enclosing charge $q$ is:",
+    "options": ["$q/2\\epsilon_0$", "$q\\epsilon_0$", "0", "$q/\\epsilon_0$"],
+    "correctIndex": 3
+  },
+  {
+    "id": 3,
+    "question": "Work done in moving a charge on an equipotential surface is:",
+    "options": ["Positive", "Negative", "Zero", "Depends on charge"],
+    "correctIndex": 2
+  },
+  {
+    "id": 4,
+    "question": "If the distance between two charges is doubled, the potential energy of the system will be:",
+    "options": ["Doubled", "Halved", "Quartered", "Remain the same"],
+    "correctIndex": 1
+  },
+  {
+    "id": 5,
+    "question": "The electric potential inside a hollow charged metallic sphere is:",
+    "options": ["Zero", "Same as on the surface", "Varies linearly with distance", "Varies inversely with distance"],
+    "correctIndex": 1
+  },
+  {
+    "id": 6,
+    "question": "The capacitance of a parallel plate capacitor increases with:",
+    "options": ["Decrease in plate area", "Increase in plate distance", "Introduction of a dielectric", "Increase in voltage"],
+    "correctIndex": 2
+  },
+  {
+    "id": 7,
+    "question": "If the temperature of a metallic conductor increases, its resistivity ($\rho$) increases primarily because:",
+    "options": ["Number density of electrons decreases", "Relaxation time ($\\tau$) decreases", "Electron mass increases", "Charge of electron decreases"],
+    "correctIndex": 1
+  },
+  {
+    "id": 8,
+    "question": "Kirchhoff's Junction Rule ($\\Sigma I = 0$) is based on the conservation of:",
+    "options": ["Energy", "Momentum", "Charge", "Mass"],
+    "correctIndex": 2
+  },
+  {
+    "id": 9,
+    "question": "A wire of resistance $R$ is cut into four equal parts and joined in parallel. The new equivalent resistance is:",
+    "options": ["$R/4$", "$4R$", "$R/16$", "$16R$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 10,
+    "question": "The terminal voltage ($V$) of a cell is equal to its $\\text{EMF}$ ($E$) when:",
+    "options": ["A large current is drawn", "The cell is being charged", "The cell is supplying power", "The cell is in an open circuit"],
+    "correctIndex": 3
+  },
+  {
+    "id": 11,
+    "question": "The power dissipated in a resistor $R$ is $P$. If the current is doubled, the new power dissipated will be:",
+    "options": ["$P/2$", "$2P$", "$4P$", "$P^2$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 12,
+    "question": "For which material is the temperature coefficient of resistivity nearly zero, making it suitable for standard resistors?",
+    "options": ["Copper", "Nichrome", "Germanium", "Silicon"],
+    "correctIndex": 1
+  },
+  {
+    "id": 13,
+    "question": "A charged particle enters a uniform magnetic field perpendicularly. The quantity that remains constant is:",
+    "options": ["Velocity", "Momentum", "Kinetic Energy", "Force"],
+    "correctIndex": 2
+  },
+  {
+    "id": 14,
+    "question": "The force per unit length between two parallel current-carrying wires is **attractive** when the currents are:",
+    "options": ["Flowing in opposite directions", "Flowing in the same direction", "Unequal in magnitude", "Flowing perpendicularly"],
+    "correctIndex": 1
+  },
+  {
+    "id": 15,
+    "question": "The torque experienced by a current loop in a uniform magnetic field is maximum when the normal to the loop is:",
+    "options": ["Parallel to $\\vec{B}$", "Perpendicular to $\\vec{B}$", "At $45^\\circ$ to $\\vec{B}$", "Zero"],
+    "correctIndex": 1
+  },
+  {
+    "id": 16,
+    "question": "The conversion of a galvanometer into a voltmeter requires the connection of a:",
+    "options": ["Low resistance in parallel", "High resistance in parallel", "Low resistance in series", "High resistance in series"],
+    "correctIndex": 3
+  },
+  {
+    "id": 17,
+    "question": "Above the Curie temperature, a ferromagnetic material behaves as a:",
+    "options": ["Diamagnetic substance", "Paramagnetic substance", "Superconductor", "Insulator"],
+    "correctIndex": 1
+  },
+  {
+    "id": 18,
+    "question": "The magnetic field lines due to a straight current-carrying wire are:",
+    "options": ["Straight lines parallel to the wire", "Concentric circles perpendicular to the wire", "Radial lines originating from the wire", "Closed loops passing through the wire"],
+    "correctIndex": 1
+  },
+  {
+    "id": 19,
+    "question": "According to **Faraday's Law** of Electromagnetic Induction, the induced $\\text{EMF}$ is proportional to:",
+    "options": ["Magnetic field magnitude", "Total magnetic flux", "Rate of change of magnetic flux", "Change in resistance"],
+    "correctIndex": 2
+  },
+  {
+    "id": 20,
+    "question": "**Lenz's Law** is a direct consequence of the conservation of:",
+    "options": ["Momentum", "Charge", "Energy", "Magnetic flux"],
+    "correctIndex": 2
+  },
+  {
+    "id": 21,
+    "question": "The phenomenon of **self-induction** is the property of a coil by which it opposes a change in:",
+    "options": ["Current flowing through it", "Voltage across it", "Magnetic field around it", "Magnetic flux linking it"],
+    "correctIndex": 0
+  },
+  {
+    "id": 22,
+    "question": "The **RMS value** of an $\\text{AC}$ voltage $V_0$ is:",
+    "options": ["$V_0 / 2$", "$V_0 \\cdot \\sqrt{2}$", "$V_0 / \\sqrt{2}$", "$2 V_0$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 23,
+    "question": "In a series $\\text{LCR circuit}$, the circuit behaves like a purely resistive circuit at:",
+    "options": ["Maximum inductance", "Resonance", "Maximum current", "Zero frequency"],
+    "correctIndex": 1
+  },
+  {
+    "id": 24,
+    "question": "A **step-down transformer** is designed to:",
+    "options": ["Increase $\\text{AC}$ voltage", "Decrease $\\text{AC}$ voltage", "Convert $\\text{AC}$ to $\\text{DC}$", "Increase $\\text{AC}$ frequency"],
+    "correctIndex": 1
+  },
+  {
+    "id": 25,
+    "question": "Which part of the electromagnetic spectrum has the **highest frequency**?",
+    "options": ["X-rays", "Radio waves", "Infrared rays", "Gamma rays ($\\gamma$)"],
+    "correctIndex": 3
+  },
+  {
+    "id": 26,
+    "question": "The speed of all electromagnetic waves in vacuum is equal to:",
+    "options": ["$c^2$", "$1/\\mu_0 \\epsilon_0$", "$1/\\sqrt{\\mu_0 \\epsilon_0}$", "$v\\lambda$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 27,
+    "question": "When light travels from a denser medium to a rarer medium, the angle of refraction is:",
+    "options": ["Equal to the angle of incidence", "Less than the angle of incidence", "Greater than the angle of incidence", "Always $90^\\circ$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 28,
+    "question": "A convex lens of focal length $f$ is cut into two equal halves along its principal axis. The focal length of each half is:",
+    "options": ["$f$", "$f/2$", "$2f$", "$4f$"],
+    "correctIndex": 0
+  },
+  {
+    "id": 29,
+    "question": "The final image formed by a **compound microscope** is:",
+    "options": ["Real and inverted", "Virtual and erect", "Real and magnified", "Virtual and inverted"],
+    "correctIndex": 3
+  },
+  {
+    "id": 30,
+    "question": "In $\\text{YDSE}$, if the intensity ratio of the two sources is $4:1$, the ratio of intensity at maxima to minima is:",
+    "options": ["$9:1$", "$3:1$", "$5:3$", "$4:1$"],
+    "correctIndex": 0
+  },
+  {
+    "id": 31,
+    "question": "Diffraction of light is easily observed when the obstacle size is comparable to the:",
+    "options": ["Distance to the screen", "Frequency of light", "Amplitude of light", "Wavelength of light"],
+    "correctIndex": 3
+  },
+  {
+    "id": 32,
+    "question": "Which phenomenon confirms the **transverse** nature of light waves?",
+    "options": ["Interference", "Diffraction", "Polarization", "Refraction"],
+    "correctIndex": 2
+  },
+  {
+    "id": 33,
+    "question": "The lens formula relating object distance ($u$), image distance ($v$), and focal length ($f$) is:",
+    "options": ["$1/u + 1/v = 1/f$", "$1/v - 1/u = 1/f$", "$1/u - 1/v = 1/f$", "$1/v + 1/u = f$"],
+    "correctIndex": 1
+  },
+  {
+    "id": 34,
+    "question": "According to **Einstein's Photoelectric Equation**, $K_{\\text{max}}$ is related to work function $\\phi_0$ and frequency $\\nu$ as:",
+    "options": ["$K_{\\text{max}} = \\phi_0 - h\\nu$", "$K_{\\text{max}} = h\\nu + \\phi_0$", "$K_{\\text{max}} = h\\nu - \\phi_0$", "$K_{\\text{max}} = h\\nu \\cdot \\phi_0$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 35,
+    "question": "The **de Broglie wavelength** ($\\lambda$) associated with a particle of mass $m$ and velocity $v$ is given by:",
+    "options": ["$\\lambda = mv/h$", "$\\lambda = h/(m^2v)$", "$\\lambda = h/(mv)$", "$\\lambda = h^2/(mv)$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 36,
+    "question": "In **Bohr's model**, the radius of the $n$-th orbit ($r_n$) is proportional to:",
+    "options": ["$n$", "$1/n$", "$n^2$", "$1/n^2$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 37,
+    "question": "The **binding energy** ($E_b$) of a nucleus is related to the mass defect ($\\Delta m$) by:",
+    "options": ["$E_b = \\Delta m / c^2$", "$E_b = \\Delta m \\cdot c$", "$E_b = \\Delta m \\cdot c^2$", "$E_b = c^2 / \\Delta m$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 38,
+    "question": "The process used to generate energy in the Sun is:",
+    "options": ["Nuclear Fission", "Nuclear Chain Reaction", "Alpha Decay", "Nuclear Fusion"],
+    "correctIndex": 3
+  },
+  {
+    "id": 39,
+    "question": "The current in a $p-n$ junction diode is very large when the diode is:",
+    "options": ["Reverse-biased", "Unbiased", "Forward-biased", "In breakdown region"],
+    "correctIndex": 2
+  },
+  {
+    "id": 40,
+    "question": "A $p-n$ junction diode as a **half-wave rectifier** converts:",
+    "options": ["Pure DC to AC", "AC to pure DC", "AC to pulsating DC", "DC to pulsating AC"],
+    "correctIndex": 2
+  }
 
 
   ],

@@ -5,276 +5,246 @@ export const biology12Test1 = {
   class: "12",
   subject: "Biology",
   title: "Class 12 Biology — Full Test (40 MCQs)",
-  questions: [
-
-    // ---------- REPRODUCTION & GENETICS (1–14) ----------
-     // ---------------------- REPRODUCTION & GENETICS ----------------------
-
+  questions:  [
   {
-      id: 1,
-      question: "Which structure in the ovule corresponds to the female gametophyte in angiosperms?",
-      options: ["Nucellus", "Integuments", "Embryo sac", "Pollen grain"],
-      correctIndex: 2,
-    },
-    {
-      id: 2,
-      question: "A secondary oocyte is arrested at which stage prior to ovulation?",
-      options: ["Prophase I", "Metaphase I", "Prophase II", "Metaphase II"],
-      correctIndex: 3,
-    },
-    {
-      id: 3,
-      question: "Which combination of sex chromosomes represents Klinefelter's syndrome?",
-      options: ["XO", "XYY", "XXX", "XXY"],
-      correctIndex: 3,
-    },
-    {
-      id: 4,
-      question: "If the distance between two genes on a chromosome is 20 cM, what does this indicate?",
-      options: [
-        "The genes are linked and rarely separate",
-        "The genes are on different chromosomes",
-        "The genes are moderately linked and crossover occurs frequently",
-        "The genes will always segregate independently",
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 5,
-      question: "In lac operon, the repressor protein binds to the:",
-      options: ["Operator gene", "Promoter gene", "Regulator gene", "Structural gene"],
-      correctIndex: 0,
-    },
-    {
-      id: 6,
-      question: "The final output of oogenesis, excluding polar bodies, is:",
-      options: ["Two ova", "One secondary oocyte", "One ovum", "Four ova"],
-      correctIndex: 2,
-    },
-    {
-      id: 7,
-      question: "A cross between pure tall (TT) and pure dwarf (tt) plants giving all tall plants shows:",
-      options: ["Segregation", "Independent Assortment", "Dominance", "Co-dominance"],
-      correctIndex: 2,
-    },
-    {
-      id: 8,
-      question: "In angiosperms, the generative cell in a pollen grain divides to form:",
-      options: ["One male gamete", "One tube nucleus", "One microspore mother cell", "Two male gametes"],
-      correctIndex: 3,
-    },
-    {
-      id: 9,
-      question: "The process of DNA replication is:",
-      options: ["Conservative", "Non-conservative", "Semi-conservative", "Dispersive"],
-      correctIndex: 2,
-    },
-    {
-      id: 10,
-      question: "Fusion of male and female gametes is technically called:",
-      options: ["Gametogenesis", "Embryogenesis", "Parturition", "Syngamy"],
-      correctIndex: 3,
-    },
-    {
-      id: 11,
-      question: "Transfer of genetic material between bacteria via bacteriophages is:",
-      options: ["Conjugation", "Transformation", "Transduction", "Translation"],
-      correctIndex: 2,
-    },
-    {
-      id: 12,
-      question: "The structure that provides nourishment to developing pollen grains is:",
-      options: ["Epidermis", "Endothecium", "Tapetum", "Middle layers"],
-      correctIndex: 2,
-    },
-    {
-      id: 13,
-      question: "Which event marks the beginning of the proliferative phase in females?",
-      options: ["Ovulation", "Menstruation", "Implantation", "Fertilization"],
-      correctIndex: 1,
-    },
-    {
-      id: 14,
-      question: "If DNA coding strand has TAC, the tRNA anticodon will be:",
-      options: ["AUG", "UAC", "UAG", "GTC"],
-      correctIndex: 1,
-    },
-    {
-      id: 15,
-      question: "Which contraceptive method prevents sperm transport by surgical means?",
-      options: ["Chemical barrier", "Hormonal barrier", "Surgical barrier", "Natural method"],
-      correctIndex: 2,
-    },
-
-    // ------------ EVOLUTION, HUMAN WELFARE & BIOTECH (16–30) ------------
-    {
-      id: 16,
-      question: "Forelimbs of humans, bats and cheetahs sharing the same basic structure show:",
-      options: ["Analogous organs", "Convergent evolution", "Homologous organs", "Stabilizing selection"],
-      correctIndex: 2,
-    },
-    {
-      id: 17,
-      question: "Which compound is released by mast cells during an allergic reaction?",
-      options: ["Interferon", "Antibodies", "Prostaglandin", "Histamine"],
-      correctIndex: 3,
-    },
-    {
-      id: 18,
-      question: "Antibiotic resistance arises due to:",
-      options: ["Acquired immunity", "Natural selection on bacteria", "Antigenic shift", "Passive immunity"],
-      correctIndex: 1,
-    },
-    {
-      id: 19,
-      question: "Which product is obtained by Saccharomyces cerevisiae fermentation?",
-      options: ["Antibiotics", "Ethanol", "Acetic acid", "Lactic acid"],
-      correctIndex: 1,
-    },
-    {
-      id: 20,
-      question: "Which feature is essential for a plasmid to act as a cloning vector?",
-      options: ["Large size", "Selectable marker", "Multiple restriction sites", "Linear DNA"],
-      correctIndex: 1,
-    },
-    {
-      id: 21,
-      question: "A common target of anti-HIV drugs is:",
-      options: ["HIV protease", "DNA ligase", "RNA polymerase", "Reverse transcriptase"],
-      correctIndex: 3,
-    },
-    {
-      id: 22,
-      question: "A major concern with Bt toxin usage is:",
-      options: [
-        "Higher water requirement",
-        "Loss of butterflies",
-        "Pest resistance development",
-        "Reduced yield stability",
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 23,
-      question: "Antibodies passed from mother to foetus via placenta represent:",
-      options: ["Active natural immunity", "Active artificial immunity", "Passive natural immunity", "Passive artificial immunity"],
-      correctIndex: 2,
-    },
-    {
-      id: 24,
-      question: "Immunoglobulins function to:",
-      options: ["Destroy T-cells", "Transport oxygen", "Bind to antigens", "Produce histamine"],
-      correctIndex: 2,
-    },
-    {
-      id: 25,
-      question: "Which enzyme removes the 5′ phosphate in cloning?",
-      options: ["DNA ligase", "Restriction enzyme", "Alkaline phosphatase", "Polynucleotide kinase"],
-      correctIndex: 2,
-    },
-    {
-      id: 26,
-      question: "The early Earth's atmosphere was mainly:",
-      options: ["Oxidizing", "Neutral", "Reducing", "Highly acidic"],
-      correctIndex: 2,
-    },
-    {
-      id: 27,
-      question: "The technique to amplify DNA for diagnostics is:",
-      options: ["DNA sequencing", "Gel electrophoresis", "PCR", "Gene cloning"],
-      correctIndex: 2,
-    },
-    {
-      id: 28,
-      question: "Malignant tumors are characterized by:",
-      options: ["Localized growth", "No recurrence", "Metastasis", "No tissue damage"],
-      correctIndex: 2,
-    },
-    {
-      id: 29,
-      question: "The key finding of Miller-Urey experiment was formation of:",
-      options: ["DNA", "Sugars", "Amino acids", "Lipids"],
-      correctIndex: 2,
-    },
-    {
-      id: 30,
-      question: "Using microorganisms to produce industrial enzymes is:",
-      options: ["Genomics", "Proteomics", "Biotechnology", "Bioinformatics"],
-      correctIndex: 2,
-    },
-
-    // ------------ ECOLOGY & ENVIRONMENT (31–40) ------------
-    {
-      id: 31,
-      question: "The primary cause of species loss is:",
-      options: ["Co-extinctions", "Over-exploitation", "Alien species", "Habitat loss"],
-      correctIndex: 3,
-    },
-    {
-      id: 32,
-      question: "Mass of living material at a time in an ecosystem is:",
-      options: ["Productivity", "Standing state", "Standing crop", "Succession"],
-      correctIndex: 2,
-    },
-    {
-      id: 33,
-      question: "(+,−) interaction between species represents:",
-      options: ["Mutualism", "Competition", "Commensalism", "Predation"],
-      correctIndex: 3,
-    },
-    {
-      id: 34,
-      question: "Pioneer communities on new lava form due to:",
-      options: ["Secondary succession", "Climax community", "Primary succession", "Ecological pyramid"],
-      correctIndex: 2,
-    },
-    {
-      id: 35,
-      question: "Biodiversity hotspots have:",
-      options: ["Low endemism", "High richness & low threat", "High endemism & high threat", "Large areas"],
-      correctIndex: 2,
-    },
-    {
-      id: 36,
-      question: "Increase in pollutant concentration at higher trophic levels is:",
-      options: ["Eutrophication", "Biomagnification", "Thermal pollution", "Acid rain"],
-      correctIndex: 1,
-    },
-{
-  id: 37,
-  question: "A characteristic of r-selected species is:",
-  options: ["Large body size", "Long lifespan", "High reproductive rate", "Delayed maturity"],
-  correctIndex: 2,
-},
-{
-  id: 38,
-  question: "The difference between GPP and NPP is:",
-  options: [
-    "Energy lost through decomposition",
-    "Energy stored in biomass",
-    "Energy lost during respiration",
-    "Energy received from sunlight"
-  ],
-  correctIndex: 2,
-},
-{
-  id: 39,
-  question: "The most effective way to control noise pollution is:",
-  options: [
-    "Using earplugs",
-    "Reducing the noise at the source",
-    "Planting trees",
-    "Banning traffic"
-  ],
-  correctIndex: 1,
-},
-{
-  id: 40,
-  question: "A sudden reduction in population size due to a catastrophe is:",
-  options: ["Genetic drift", "Bottleneck effect", "Founder effect", "Gene flow"],
-  correctIndex: 1,
-},
-
-
-  ],
+    "id": 1,
+    "question": "The primary function of the **filiform apparatus** in the embryo sac is to:",
+    "options": ["Guide the pollen tube into the synergid", "Produce nucellar cells", "Nourish the egg cell", "Protect the polar nuclei"],
+    "correctIndex": 0
+  },
+  {
+    "id": 2,
+    "question": "Which layer of the flower wall provides **protection** to the microsporangium?",
+    "options": ["Endothecium", "Middle layers", "Tapetum", "Epidermis"],
+    "correctIndex": 3
+  },
+  {
+    "id": 3,
+    "question": "In angiosperms, the fusion of one male gamete with the egg cell and the other with the polar nuclei is termed:",
+    "options": ["Fertilization", "Triple fusion", "Double fertilization", "Syngamy"],
+    "correctIndex": 2
+  },
+  {
+    "id": 4,
+    "question": "The development of the embryo from the zygote occurs at the **micropylar** end of the embryo sac because:",
+    "options": ["The egg cell is located there", "The antipodals provide nutrients", "The synergids degenerate", "The polar nuclei are present"],
+    "correctIndex": 0
+  },
+  {
+    "id": 5,
+    "question": "The process of **oogenesis** is initiated during the:",
+    "options": ["Puberty", "Embryonic development stage", "Birth", "Menopause"],
+    "correctIndex": 1
+  },
+  {
+    "id": 6,
+    "question": "The fluid-filled cavity in the Graafian follicle is called the:",
+    "options": ["Corpus luteum", "Corpus albicans", "Antrum", "Primary follicle"],
+    "correctIndex": 2
+  },
+  {
+    "id": 7,
+    "question": "Which structure prevents the entry of more than one sperm into the egg during human fertilization?",
+    "options": ["Zona pellucida", "Corona radiata", "Perivitelline space", "Plasma membrane"],
+    "correctIndex": 0
+  },
+  {
+    "id": 8,
+    "question": "The maximum growth of the corpus luteum occurs during which phase of the menstrual cycle?",
+    "options": ["Menstrual phase", "Follicular phase", "Luteal phase", "Ovulatory phase"],
+    "correctIndex": 2
+  },
+  {
+    "id": 9,
+    "question": "According to Mendel's Law of Segregation, the two alleles of a character separate during:",
+    "options": ["Fertilization", "Meiosis", "Mitosis", "Gamete transfer"],
+    "correctIndex": 1
+  },
+  {
+    "id": 10,
+    "question": "A cross between a $\\text{F}_1$ hybrid and the recessive parent is known as a:",
+    "options": ["Back cross", "Monohybrid cross", "Test cross", "Dihybrid cross"],
+    "correctIndex": 2
+  },
+  {
+    "id": 11,
+    "question": "In a dihybrid cross, the phenotypic ratio in the $\\text{F}_2$ generation is:",
+    "options": ["$3:1$", "$1:2:1$", "$9:3:3:1$", "$1:1$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 12,
+    "question": "The phenomenon where a single gene exhibits multiple phenotypic effects is called:",
+    "options": ["Codominance", "Incomplete dominance", "Pleiotropy", "Polygenic inheritance"],
+    "correctIndex": 2
+  },
+  {
+    "id": 13,
+    "question": "The chromosomal disorder caused by the presence of an additional copy of the X-chromosome ($\\text{XXY}$) is:",
+    "options": ["Turner's syndrome", "Klinefelter's syndrome", "Down's syndrome", "Thalassemia"],
+    "correctIndex": 1
+  },
+  {
+    "id": 14,
+    "question": "The enzyme responsible for separating the two strands of the $\\text{DNA}$ helix during replication is:",
+    "options": ["DNA polymerase", "DNA ligase", "Helicase", "Primase"],
+    "correctIndex": 2
+  },
+  {
+    "id": 15,
+    "question": "The process of copying genetic information from one strand of the $\\text{DNA}$ into $\\text{RNA}$ is called:",
+    "options": ["Replication", "Translation", "Transcription", "Transformation"],
+    "correctIndex": 2
+  },
+  {
+    "id": 16,
+    "question": "The $\\text{start codon}$ for protein synthesis in most organisms is:",
+    "options": ["$\text{UAG}$", "$\text{AUG}$", "$\text{UAA}$", "$\text{UGA}$"],
+    "correctIndex": 1
+  },
+  {
+    "id": 17,
+    "question": "The enzyme that joins the discontinuously synthesized $\\text{DNA}$ fragments on the lagging strand is:",
+    "options": ["DNA polymerase I", "DNA ligase", "Reverse transcriptase", "DNA gyrase"],
+    "correctIndex": 1
+  },
+  {
+    "id": 18,
+    "question": "The $\\text{operon}$ concept for gene regulation was proposed by:",
+    "options": ["Watson and Crick", "Hershey and Chase", "Jacob and Monod", "Miescher"],
+    "correctIndex": 2
+  },
+  {
+    "id": 19,
+    "question": "The scientist who proposed the 'use and disuse' theory to explain evolution was:",
+    "options": ["Charles Darwin", "Alfred Wallace", "Jean Baptiste Lamarck", "Hugo de Vries"],
+    "correctIndex": 2
+  },
+  {
+    "id": 20,
+    "question": "The correct sequence of evolutionary origin of life based on $\\text{NCERT}$ is:",
+    "options": ["$\text{Invertebrates} \\to \\text{Fish} \\to \\text{Amphibians} \\to \\text{Reptiles}$", "$\text{Invertebrates} \\to \\text{Amphibians} \\to \\text{Fish} \\to \\text{Reptiles}$", "$\text{Fish} \\to \\text{Amphibians} \\to \\text{Reptiles} \\to \\text{Invertebrates}$", "$\text{Reptiles} \\to \\text{Amphibians} \\to \\text{Fish} \\to \\text{Invertebrates}$"],
+    "correctIndex": 0
+  },
+  {
+    "id": 21,
+    "question": "Which type of selection leads to the formation of two peaks in the distribution curve?",
+    "options": ["Directional selection", "Stabilizing selection", "Disruptive selection", "Artificial selection"],
+    "correctIndex": 2
+  },
+  {
+    "id": 22,
+    "question": "Analogous structures are a result of:",
+    "options": ["Divergent evolution", "Convergent evolution", "Homology", "Mutation"],
+    "correctIndex": 1
+  },
+  {
+    "id": 23,
+    "question": "The substance which gives a characteristic blue colour to $\\text{CuSO}_4$ solution and is used as an $\\text{anti-malarial}$ drug is:",
+    "options": ["Morphine", "Quinine", "Cocaine", "Nicotine"],
+    "correctIndex": 1
+  },
+  {
+    "id": 24,
+    "question": "The primary cause of **Acquired Immuno Deficiency Syndrome (AIDS)** is the reduction in the number of:",
+    "options": ["B-lymphocytes", "Plasma cells", "Helper T-lymphocytes", "Killer T-cells"],
+    "correctIndex": 2
+  },
+  {
+    "id": 25,
+    "question": "Which of the following is an example of an **autoimmune disease**?",
+    "options": ["Typhoid", "Rheumatoid arthritis", "Dengue", "Pneumonia"],
+    "correctIndex": 1
+  },
+  {
+    "id": 26,
+    "question": "The chemical nature of antibodies is:",
+    "options": ["Carbohydrates", "Lipids", "Proteins", "Nucleic acids"],
+    "correctIndex": 2
+  },
+  {
+    "id": 27,
+    "question": "The technology of producing $\\text{monoclonal antibodies}$ was invented by:",
+    "options": ["Pasteur", "Edward Jenner", "Kohler and Milstein", "Salk"],
+    "correctIndex": 2
+  },
+  {
+    "id": 28,
+    "question": "The first $\\text{transgenic}$ cow which produced human protein-enriched milk was:",
+    "options": ["Dolly", "Rosie", "Polly", "Tracy"],
+    "correctIndex": 1
+  },
+  {
+    "id": 29,
+    "question": "The bacterium widely used in genetic engineering for gene transfer in plants is:",
+    "options": ["Bacillus thuringiensis", "Escherichia coli", "Agrobacterium tumefaciens", "Rhizobium leguminosarum"],
+    "correctIndex": 2
+  },
+  {
+    "id": 30,
+    "question": "Which enzyme is essential for synthesizing complementary $\\text{DNA}$ ($\text{cDNA}$) from an $\\text{mRNA}$ template?",
+    "options": ["DNA polymerase", "Reverse transcriptase", "RNA polymerase", "DNA ligase"],
+    "correctIndex": 1
+  },
+  {
+    "id": 31,
+    "question": "The most widely used and accepted technique for diagnosing $\\text{AIDS}$ is:",
+    "options": ["PCR", "ELISA", "Tissue culture", "Northern blotting"],
+    "correctIndex": 1
+  },
+  {
+    "id": 32,
+    "question": "The toxin produced by $\\text{Bacillus thuringiensis}$ ($\text{Bt}$ toxin) is activated by:",
+    "options": ["Acidic $\\text{pH}$ in the plant cell", "Alkaline $\\text{pH}$ in the insect gut", "Moisture in the soil", "High temperature"],
+    "correctIndex": 1
+  },
+  {
+    "id": 33,
+    "question": "A group of organisms of the same species occupying a particular geographical area is called a:",
+    "options": ["Community", "Ecosystem", "Biome", "Population"],
+    "correctIndex": 3
+  },
+  {
+    "id": 34,
+    "question": "In a logistic growth curve, the phase where the population stabilizes around the carrying capacity ($K$) is known as:",
+    "options": ["Lag phase", "Log phase", "Asymptote phase", "Exponential phase"],
+    "correctIndex": 2
+  },
+  {
+    "id": 35,
+    "question": "A relationship between two species where one species is benefited and the other is neither benefited nor harmed is called:",
+    "options": ["Mutualism", "Commensalism", "Parasitism", "Competition"],
+    "correctIndex": 1
+  },
+  {
+    "id": 36,
+    "question": "The amount of biomass or organic matter produced per unit area over a time period by plants during photosynthesis is called:",
+    "options": ["Secondary productivity", "Gross primary productivity (GPP)", "Net primary productivity (NPP)", "Standing crop"],
+    "correctIndex": 1
+  },
+  {
+    "id": 37,
+    "question": "Which pyramid is always **upright** and cannot be inverted in a natural ecosystem?",
+    "options": ["Pyramid of biomass", "Pyramid of numbers", "Pyramid of energy", "Pyramid of standing crop"],
+    "correctIndex": 2
+  },
+  {
+    "id": 38,
+    "question": "The process of decomposition is fastest under which conditions?",
+    "options": ["Low temperature and anaerobic", "High temperature and anaerobic", "High temperature and aerobic", "Low temperature and aerobic"],
+    "correctIndex": 2
+  },
+  {
+    "id": 39,
+    "question": "The term **'Biodiversity Hotspot'** was coined by:",
+    "options": ["E. O. Wilson", "Robert May", "Norman Myers", "Paul Ehrlich"],
+    "correctIndex": 2
+  },
+  {
+    "id": 40,
+    "question": "Which of the following is an example of an **ex-situ** conservation strategy?",
+    "options": ["National Parks", "Wildlife Sanctuaries", "Botanical Gardens", "Biosphere Reserves"],
+    "correctIndex": 2
+  }
+]
 };

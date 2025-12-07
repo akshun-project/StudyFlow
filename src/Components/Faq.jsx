@@ -29,7 +29,7 @@ const Faq = () => {
     {
       question: "What is the Board Practice Zone?",
       answer:
-        "It includes English passages, case-based questions, PYQs, and full-book tests for Class 9–10 board prep.",
+        "It includes English passages, case-based questions, PYQs, and full-book tests for Class 10-12 board preparation.",
     },
     {
       question: "Why does quiz generation take a few seconds?",

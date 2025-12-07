@@ -6,274 +6,245 @@ export const physics12Test1 = {
   subject: "Physics",
   title: "Class 12 Physics — Full Test (40 MCQs)",
   questions: [
-
-    // -------- ELECTROSTATICS & CURRENT ELECTRICITY (1–10) --------
-    {
-      id: 1,
-      question: "The electric potential due to a point charge q at a distance r is proportional to:",
-      options: ["r", "r²", "1/r²", "1/r"],
-      correctIndex: 3,
-    },
-    {
-      id: 2,
-      question: "Which law is based on the conservation of charge?",
-      options: ["Kirchhoff’s Voltage Law", "Ohm's Law", "Kirchhoff’s Current Law", "Gauss's Law"],
-      correctIndex: 2,
-    },
-    {
-      id: 3,
-      question: "If the distance between two charges is doubled, the electrostatic force between them:",
-      options: ["Doubles", "Halves", "Becomes one-fourth", "Quadruples"],
-      correctIndex: 2,
-    },
-    {
-      id: 4,
-      question: "A dielectric slab is introduced between the plates of a charged capacitor. The energy stored:",
-      options: ["Increases", "Remains the same", "Decreases", "Becomes zero"],
-      correctIndex: 2,
-    },
-    {
-      id: 5,
-      question: "Equivalent resistance of two resistors in parallel is:",
-      options: [
-        "Greater than both resistors",
-        "Less than R1 but greater than R2",
-        "Always less than the smaller resistance",
-        "Equal to arithmetic mean",
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 6,
-      question: "The drift velocity of electrons in a conductor is independent of:",
-      options: ["Current", "Relaxation time", "Electric field", "Number density of electrons"],
-      correctIndex: 0,
-    },
-    {
-      id: 7,
-      question: "A potentiometer is preferred over a voltmeter because:",
-      options: ["It is cheap", "It draws no current", "It has high resistance", "It has a long wire"],
-      correctIndex: 1,
-    },
-    {
-      id: 8,
-      question: "The force per unit charge is known as:",
-      options: ["Electric potential", "Electric flux", "Electric field intensity", "Dipole moment"],
-      correctIndex: 2,
-    },
-    {
-      id: 9,
-      question: "The unit of electric flux is:",
-      options: ["Volt/meter", "Joule/Coulomb", "Newton meter²/Coulomb", "Volt meter"],
-      correctIndex: 2,
-    },
-    {
-      id: 10,
-      question: "An equipotential surface is one where:",
-      options: [
-        "Electric field is zero",
-        "Charge is uniform",
-        "No work is done in moving a test charge",
-        "Charge is positive",
-      ],
-      correctIndex: 2,
-    },
-
-    // -------- MAGNETISM, EMI & AC (11–20) --------
-    {
-      id: 11,
-      question: "Magnetic field at the center of a circular loop is proportional to:",
-      options: ["R", "R²", "I/R", "I/R²"],
-      correctIndex: 2,
-    },
-    {
-      id: 12,
-      question: "A charge enters a uniform magnetic field at 90°. Its path will be:",
-      options: ["Straight line", "Ellipse", "Circle", "Helix"],
-      correctIndex: 2,
-    },
-    {
-      id: 13,
-      question: "A transformer is used to change:",
-      options: ["Power", "Frequency", "Voltage", "Resistance"],
-      correctIndex: 2,
-    },
-    {
-      id: 14,
-      question: "Lenz's Law is a consequence of conservation of:",
-      options: ["Momentum", "Charge", "Energy", "Mass"],
-      correctIndex: 2,
-    },
-    {
-      id: 15,
-      question: "Self-inductance of a coil is independent of:",
-      options: ["Number of turns", "Area", "Core material", "Current"],
-      correctIndex: 3,
-    },
-    {
-      id: 16,
-      question: "Impedance in an LCR series circuit at resonance equals:",
-      options: ["√(R² + (XL + XC)²)", "√(R² + (XL − XC)²)", "XL − XC", "R"],
-      correctIndex: 3,
-    },
-    {
-      id: 17,
-      question: "Ratio of velocity of sound waves to EM waves in vacuum is:",
-      options: ["Greater than 1", "Equal to 1", "Less than 1", "Zero"],
-      correctIndex: 3,
-    },
-    {
-      id: 18,
-      question: "Magnetic field lines:",
-      options: [
-        "Do not exist inside a magnet",
-        "Form closed loops",
-        "Originate from South pole",
-        "Cross each other",
-      ],
-      correctIndex: 1,
-    },
-    {
-      id: 19,
-      question: "A cyclotron is used to accelerate:",
-      options: ["Electrons", "Neutrons", "Positive ions", "Neutral atoms"],
-      correctIndex: 2,
-    },
-    {
-      id: 20,
-      question: "Average power consumed is zero if the circuit contains:",
-      options: ["Only resistance", "Only inductance", "Only capacitance", "Only inductance or capacitance"],
-      correctIndex: 3,
-    },
-
-    // -------- OPTICS & EM WAVES (21–30) --------
-    {
-      id: 21,
-      question: "Wavelength in a medium (μ) is related to vacuum wavelength λ by:",
-      options: ["λ/μ²", "λμ", "λμ²", "λ/μ"],
-      correctIndex: 3,
-    },
-    {
-      id: 22,
-      question: "Which phenomenon proves EM waves are transverse?",
-      options: ["Reflection", "Refraction", "Interference", "Polarization"],
-      correctIndex: 3,
-    },
-    {
-      id: 23,
-      question: "A convex lens dipped in a liquid of identical refractive index acts as:",
-      options: ["Converging lens", "Diverging lens", "Plane glass plate", "Prism"],
-      correctIndex: 2,
-    },
-    {
-      id: 24,
-      question: "Magnifying power of a microscope is:",
-      options: ["1 + f/D", "f/D", "1 + D/f", "1 + f/D"],
-      correctIndex: 0,
-    },
-    {
-      id: 25,
-      question: "Angular fringe width in YDSE is independent of:",
-      options: ["Wavelength", "Distance between slits", "Screen distance", "Medium's refractive index"],
-      correctIndex: 2,
-    },
-    {
-      id: 26,
-      question: "Splitting of white light through a prism is due to:",
-      options: ["Reflection", "Dispersion", "Scattering", "Diffraction"],
-      correctIndex: 1,
-    },
-    {
-      id: 27,
-      question: "Ratio of E/B in an EM wave equals:",
-      options: ["Frequency", "Wavelength", "Speed of light in vacuum", "Speed of light in medium"],
-      correctIndex: 2,
-    },
-    {
-      id: 28,
-      question: "Images formed by a convex mirror are always:",
-      options: ["Real & inverted", "Real & magnified", "Virtual & inverted", "Virtual & diminished"],
-      correctIndex: 3,
-    },
-    {
-      id: 29,
-      question: "Phase difference between points on a wavefront is:",
-      options: ["π", "2π", "π/2", "Zero"],
-      correctIndex: 3,
-    },
-    {
-      id: 30,
-      question: "Resolving power increases with:",
-      options: ["Decrease in wavelength", "Decrease in aperture", "Decrease in μ", "Decrease in λ and Increase in aperture"],
-      correctIndex: 3,
-    },
-
-    // -------- MODERN PHYSICS & ELECTRONICS (31–40) --------
-    {
-      id: 31,
-      question: "Binding energy per nucleon is a measure of:",
-      options: ["Total energy", "Size", "Stability", "Radioactivity"],
-      correctIndex: 2,
-    },
-    {
-      id: 32,
-      question: "Minimum energy needed to release an electron is called:",
-      options: ["Ionisation energy", "Threshold frequency", "Stopping potential", "Work function"],
-      correctIndex: 3,
-    },
-    {
-      id: 33,
-      question: "De Broglie wavelength is given by:",
-      options: ["λ = ph", "λ = p/h", "λ = h/p²", "λ = h/p"],
-      correctIndex: 3,
-    },
-    {
-      id: 34,
-      question: "Radius of the nth Bohr orbit is proportional to:",
-      options: ["n", "1/n", "n²", "1/n²"],
-      correctIndex: 2,
-    },
-    {
-      id: 35,
-      question: "Photoelectrons are emitted due to:",
-      options: ["Interference", "Diffraction", "Photoelectric effect", "Compton effect"],
-      correctIndex: 2,
-    },
-    {
-      id: 36,
-      question: "Output frequency of a full-wave rectifier with 50 Hz input is:",
-      options: ["50 Hz", "75 Hz", "25 Hz", "100 Hz"],
-      correctIndex: 3,
-    },
-    {
-      id: 37,
-      question: "Conductors differ from insulators due to:",
-      options: [
-        "Small band gap",
-        "Overlapping conduction & valence bands",
-        "Large band gap",
-        "Wide valence band",
-      ],
-      correctIndex: 1,
-    },
-    {
-      id: 38,
-      question: "Adding impurity to an intrinsic semiconductor is called:",
-      options: ["Rectification", "Amplification", "Doping", "Quenching"],
-      correctIndex: 2,
-    },
-    {
-      id: 39,
-      question: "Fraction of radioactive sample remaining after 2T (two half-lives) is:",
-      options: ["1/2", "1/8", "1/4", "3/4"],
-      correctIndex: 2,
-    },
-    {
-      id: 40,
-      question: "Force that binds nucleons inside the nucleus is the:",
-      options: ["Electromagnetic force", "Gravitational force", "Nuclear force", "Weak force"],
-      correctIndex: 2,
-    },
-
-  ],
+  {
+    "id": 1,
+    "question": "An electric dipole in a uniform electric field experiences:",
+    "options": ["Zero net force", "Zero torque", "Variable force", "Variable potential"],
+    "correctIndex": 0
+  },
+  {
+    "id": 2,
+    "question": "Electric flux through a closed surface enclosing charge $q$ is:",
+    "options": ["$q/2\\epsilon_0$", "$q\\epsilon_0$", "0", "$q/\\epsilon_0$"],
+    "correctIndex": 3
+  },
+  {
+    "id": 3,
+    "question": "Work done in moving a charge on an equipotential surface is:",
+    "options": ["Positive", "Negative", "Zero", "Depends on charge"],
+    "correctIndex": 2
+  },
+  {
+    "id": 4,
+    "question": "If the distance between two charges is doubled, the potential energy of the system will be:",
+    "options": ["Doubled", "Halved", "Quartered", "Remain the same"],
+    "correctIndex": 1
+  },
+  {
+    "id": 5,
+    "question": "The electric potential inside a hollow charged metallic sphere is:",
+    "options": ["Zero", "Same as on the surface", "Varies linearly with distance", "Varies inversely with distance"],
+    "correctIndex": 1
+  },
+  {
+    "id": 6,
+    "question": "The capacitance of a parallel plate capacitor increases with:",
+    "options": ["Decrease in plate area", "Increase in plate distance", "Introduction of a dielectric", "Increase in voltage"],
+    "correctIndex": 2
+  },
+  {
+    "id": 7,
+    "question": "If the temperature of a metallic conductor increases, its resistivity ($\rho$) increases primarily because:",
+    "options": ["Number density of electrons decreases", "Relaxation time ($\\tau$) decreases", "Electron mass increases", "Charge of electron decreases"],
+    "correctIndex": 1
+  },
+  {
+    "id": 8,
+    "question": "Kirchhoff's Junction Rule ($\\Sigma I = 0$) is based on the conservation of:",
+    "options": ["Energy", "Momentum", "Charge", "Mass"],
+    "correctIndex": 2
+  },
+  {
+    "id": 9,
+    "question": "A wire of resistance $R$ is cut into four equal parts and joined in parallel. The new equivalent resistance is:",
+    "options": ["$R/4$", "$4R$", "$R/16$", "$16R$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 10,
+    "question": "The terminal voltage ($V$) of a cell is equal to its $\\text{EMF}$ ($E$) when:",
+    "options": ["A large current is drawn", "The cell is being charged", "The cell is supplying power", "The cell is in an open circuit"],
+    "correctIndex": 3
+  },
+  {
+    "id": 11,
+    "question": "The power dissipated in a resistor $R$ is $P$. If the current is doubled, the new power dissipated will be:",
+    "options": ["$P/2$", "$2P$", "$4P$", "$P^2$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 12,
+    "question": "For which material is the temperature coefficient of resistivity nearly zero, making it suitable for standard resistors?",
+    "options": ["Copper", "Nichrome", "Germanium", "Silicon"],
+    "correctIndex": 1
+  },
+  {
+    "id": 13,
+    "question": "A charged particle enters a uniform magnetic field perpendicularly. The quantity that remains constant is:",
+    "options": ["Velocity", "Momentum", "Kinetic Energy", "Force"],
+    "correctIndex": 2
+  },
+  {
+    "id": 14,
+    "question": "The force per unit length between two parallel current-carrying wires is **attractive** when the currents are:",
+    "options": ["Flowing in opposite directions", "Flowing in the same direction", "Unequal in magnitude", "Flowing perpendicularly"],
+    "correctIndex": 1
+  },
+  {
+    "id": 15,
+    "question": "The torque experienced by a current loop in a uniform magnetic field is maximum when the normal to the loop is:",
+    "options": ["Parallel to $\\vec{B}$", "Perpendicular to $\\vec{B}$", "At $45^\\circ$ to $\\vec{B}$", "Zero"],
+    "correctIndex": 1
+  },
+  {
+    "id": 16,
+    "question": "The conversion of a galvanometer into a voltmeter requires the connection of a:",
+    "options": ["Low resistance in parallel", "High resistance in parallel", "Low resistance in series", "High resistance in series"],
+    "correctIndex": 3
+  },
+  {
+    "id": 17,
+    "question": "Above the Curie temperature, a ferromagnetic material behaves as a:",
+    "options": ["Diamagnetic substance", "Paramagnetic substance", "Superconductor", "Insulator"],
+    "correctIndex": 1
+  },
+  {
+    "id": 18,
+    "question": "The magnetic field lines due to a straight current-carrying wire are:",
+    "options": ["Straight lines parallel to the wire", "Concentric circles perpendicular to the wire", "Radial lines originating from the wire", "Closed loops passing through the wire"],
+    "correctIndex": 1
+  },
+  {
+    "id": 19,
+    "question": "According to **Faraday's Law** of Electromagnetic Induction, the induced $\\text{EMF}$ is proportional to:",
+    "options": ["Magnetic field magnitude", "Total magnetic flux", "Rate of change of magnetic flux", "Change in resistance"],
+    "correctIndex": 2
+  },
+  {
+    "id": 20,
+    "question": "**Lenz's Law** is a direct consequence of the conservation of:",
+    "options": ["Momentum", "Charge", "Energy", "Magnetic flux"],
+    "correctIndex": 2
+  },
+  {
+    "id": 21,
+    "question": "The phenomenon of **self-induction** is the property of a coil by which it opposes a change in:",
+    "options": ["Current flowing through it", "Voltage across it", "Magnetic field around it", "Magnetic flux linking it"],
+    "correctIndex": 0
+  },
+  {
+    "id": 22,
+    "question": "The **RMS value** of an $\\text{AC}$ voltage $V_0$ is:",
+    "options": ["$V_0 / 2$", "$V_0 \\cdot \\sqrt{2}$", "$V_0 / \\sqrt{2}$", "$2 V_0$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 23,
+    "question": "In a series $\\text{LCR circuit}$, the circuit behaves like a purely resistive circuit at:",
+    "options": ["Maximum inductance", "Resonance", "Maximum current", "Zero frequency"],
+    "correctIndex": 1
+  },
+  {
+    "id": 24,
+    "question": "A **step-down transformer** is designed to:",
+    "options": ["Increase $\\text{AC}$ voltage", "Decrease $\\text{AC}$ voltage", "Convert $\\text{AC}$ to $\\text{DC}$", "Increase $\\text{AC}$ frequency"],
+    "correctIndex": 1
+  },
+  {
+    "id": 25,
+    "question": "Which part of the electromagnetic spectrum has the **highest frequency**?",
+    "options": ["X-rays", "Radio waves", "Infrared rays", "Gamma rays ($\\gamma$)"],
+    "correctIndex": 3
+  },
+  {
+    "id": 26,
+    "question": "The speed of all electromagnetic waves in vacuum is equal to:",
+    "options": ["$c^2$", "$1/\\mu_0 \\epsilon_0$", "$1/\\sqrt{\\mu_0 \\epsilon_0}$", "$v\\lambda$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 27,
+    "question": "When light travels from a denser medium to a rarer medium, the angle of refraction is:",
+    "options": ["Equal to the angle of incidence", "Less than the angle of incidence", "Greater than the angle of incidence", "Always $90^\\circ$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 28,
+    "question": "A convex lens of focal length $f$ is cut into two equal halves along its principal axis. The focal length of each half is:",
+    "options": ["$f$", "$f/2$", "$2f$", "$4f$"],
+    "correctIndex": 0
+  },
+  {
+    "id": 29,
+    "question": "The final image formed by a **compound microscope** is:",
+    "options": ["Real and inverted", "Virtual and erect", "Real and magnified", "Virtual and inverted"],
+    "correctIndex": 3
+  },
+  {
+    "id": 30,
+    "question": "In $\\text{YDSE}$, if the intensity ratio of the two sources is $4:1$, the ratio of intensity at maxima to minima is:",
+    "options": ["$9:1$", "$3:1$", "$5:3$", "$4:1$"],
+    "correctIndex": 0
+  },
+  {
+    "id": 31,
+    "question": "Diffraction of light is easily observed when the obstacle size is comparable to the:",
+    "options": ["Distance to the screen", "Frequency of light", "Amplitude of light", "Wavelength of light"],
+    "correctIndex": 3
+  },
+  {
+    "id": 32,
+    "question": "Which phenomenon confirms the **transverse** nature of light waves?",
+    "options": ["Interference", "Diffraction", "Polarization", "Refraction"],
+    "correctIndex": 2
+  },
+  {
+    "id": 33,
+    "question": "The lens formula relating object distance ($u$), image distance ($v$), and focal length ($f$) is:",
+    "options": ["$1/u + 1/v = 1/f$", "$1/v - 1/u = 1/f$", "$1/u - 1/v = 1/f$", "$1/v + 1/u = f$"],
+    "correctIndex": 1
+  },
+  {
+    "id": 34,
+    "question": "According to **Einstein's Photoelectric Equation**, $K_{\\text{max}}$ is related to work function $\\phi_0$ and frequency $\\nu$ as:",
+    "options": ["$K_{\\text{max}} = \\phi_0 - h\\nu$", "$K_{\\text{max}} = h\\nu + \\phi_0$", "$K_{\\text{max}} = h\\nu - \\phi_0$", "$K_{\\text{max}} = h\\nu \\cdot \\phi_0$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 35,
+    "question": "The **de Broglie wavelength** ($\\lambda$) associated with a particle of mass $m$ and velocity $v$ is given by:",
+    "options": ["$\\lambda = mv/h$", "$\\lambda = h/(m^2v)$", "$\\lambda = h/(mv)$", "$\\lambda = h^2/(mv)$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 36,
+    "question": "In **Bohr's model**, the radius of the $n$-th orbit ($r_n$) is proportional to:",
+    "options": ["$n$", "$1/n$", "$n^2$", "$1/n^2$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 37,
+    "question": "The **binding energy** ($E_b$) of a nucleus is related to the mass defect ($\\Delta m$) by:",
+    "options": ["$E_b = \\Delta m / c^2$", "$E_b = \\Delta m \\cdot c$", "$E_b = \\Delta m \\cdot c^2$", "$E_b = c^2 / \\Delta m$"],
+    "correctIndex": 2
+  },
+  {
+    "id": 38,
+    "question": "The process used to generate energy in the Sun is:",
+    "options": ["Nuclear Fission", "Nuclear Chain Reaction", "Alpha Decay", "Nuclear Fusion"],
+    "correctIndex": 3
+  },
+  {
+    "id": 39,
+    "question": "The current in a $p-n$ junction diode is very large when the diode is:",
+    "options": ["Reverse-biased", "Unbiased", "Forward-biased", "In breakdown region"],
+    "correctIndex": 2
+  },
+  {
+    "id": 40,
+    "question": "A $p-n$ junction diode as a **half-wave rectifier** converts:",
+    "options": ["Pure DC to AC", "AC to pure DC", "AC to pulsating DC", "DC to pulsating AC"],
+    "correctIndex": 2
+  }
+],
 };
