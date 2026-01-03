@@ -6,36 +6,40 @@ export const math10 = {
   subject: "Mathematics",
   title: "Class 10 Mathematics – Full NCERT Test (40 MCQs)",
   questions: [
-
     // ---------- REAL NUMBERS ----------
-      // ---------- 1–8 ----------
+    // ---------- 1–8 ----------
     {
       id: 1,
-      question: "The largest number that divides 70 and 125, leaving remainders 5 and 8 respectively, is:",
-      options: ["17", "13", "875", "45"],
-      correctIndex: 1,
-    },
-    {
-      id: 2,
-      question: "The value which occurs most frequently in a set of observations is called:",
-      options: ["Mean", "Median", "Mode", "Range"],
+      question:
+        "If p = ab² and q = a³b, where a and b are prime numbers, then LCM(p, q) is:",
+      options: ["ab", "a²b²", "a³b²", "a³b³"],
       correctIndex: 2,
     },
     {
+      id: 2,
+      question:
+        "The value of k for which the system of equations x + 2y = 3 and 5x + ky + 7 = 0 has no solution is:",
+      options: ["10", "6", "3", "1"],
+      correctIndex: 0,
+    },
+    {
       id: 3,
-      question: "The sum of the roots of the quadratic equation 3x² − 5x + 2 = 0 is:",
+      question:
+        "The sum of the roots of the quadratic equation 3x² − 5x + 2 = 0 is:",
       options: ["−5/3", "5/3", "3/5", "−2/3"],
       correctIndex: 1,
     },
     {
       id: 4,
-      question: "The product of a non-zero rational number and an irrational number is always:",
+      question:
+        "The product of a non-zero rational number and an irrational number is always:",
       options: ["Rational", "Irrational", "1", "0"],
       correctIndex: 1,
     },
     {
       id: 5,
-      question: "Ratio of volume of a cone to a cylinder with same base radius & height is:",
+      question:
+        "Ratio of volume of a cone to a cylinder with same base radius & height is:",
       options: ["1:2", "1:3", "2:3", "3:1"],
       correctIndex: 1,
     },
@@ -47,23 +51,25 @@ export const math10 = {
     },
     {
       id: 7,
-      question: "If P(E) = 0.05, then P(not E) is:",
-      options: ["0.05", "1", "0.95", "0"],
-      correctIndex: 2,
+      question:
+        "In ΔABC, DE ∥ BC, AD = 3 cm, DB = 5 cm and AC = 5.6 cm. AE is:",
+      options: ["2.1 cm", "3.1 cm", "1.5 cm", "2.8 cm"],
+      correctIndex: 0,
     },
     {
       id: 8,
-      question: "For what value of k are the lines 3x − y + 8 = 0 and 6x − ky + 16 = 0 coincident?",
-      options: ["−1/2", "1", "2", "−2"],
-      correctIndex: 2,
+      question:
+        "If P(k, 0) divides A(2, −2) and B(−7, 4) in the ratio 1:2, then k is:",
+      options: ["1", "2", "−2", "−1"],
+      correctIndex: 3,
     },
-
     // ---------- 9–16 ----------
     {
       id: 9,
-      question: "The 10th term of the AP: 2, 7, 12, ... is:",
-      options: ["57", "47", "45", "67"],
-      correctIndex: 1,
+      question:
+        "The discriminant of the quadratic equation 2x² − 4x + 3 = 0 is:",
+      options: ["−8", "8", "4", "−4"],
+      correctIndex: 0,
     },
     {
       id: 10,
@@ -80,13 +86,19 @@ export const math10 = {
     {
       id: 12,
       question: "Nature of roots of equation 2x² − 4x + 3 = 0:",
-      options: ["Real & equal", "Real & unequal", "No real roots", "Cannot determine"],
+      options: [
+        "Real & equal",
+        "Real & unequal",
+        "No real roots",
+        "Cannot determine",
+      ],
       correctIndex: 2,
     },
     {
       id: 13,
-      question: "Area of sector of radius 4 cm and angle 30° is:",
-      options: ["2π/3", "8π/3", "4π/3", "4π/12"],
+      question:
+        "If the angle between two radii of a circle is 130°, the angle between the tangents is:",
+      options: ["90°", "50°", "70°", "40°"],
       correctIndex: 2,
     },
     {
@@ -129,7 +141,8 @@ export const math10 = {
     },
     {
       id: 20,
-      question: "Sphere of radius r melted to form cone of height r. Radius of cone =",
+      question:
+        "Sphere of radius r melted to form cone of height r. Radius of cone =",
       options: ["r", "3r", "4r", "2r"],
       correctIndex: 3,
     },
@@ -153,13 +166,9 @@ export const math10 = {
     },
     {
       id: 24,
-      question: "If difference between two numbers is 26 & one is thrice the other:",
-      options: [
-        "x+y=26, x=3y",
-        "x−y=26, x=3y",
-        "x−y=26, y=3x",
-        "x+y=26, y=3x"
-      ],
+      question:
+        "If difference between two numbers is 26 & one is thrice the other:",
+      options: ["x+y=26, x=3y", "x−y=26, x=3y", "x−y=26, y=3x", "x+y=26, y=3x"],
       correctIndex: 1,
     },
 
@@ -178,21 +187,23 @@ export const math10 = {
     },
     {
       id: 27,
-      question: "Length of tangent from point 10 cm away from centre of radius 6 cm:",
+      question:
+        "Length of tangent from point 10 cm away from centre of radius 6 cm:",
       options: ["16 cm", "4 cm", "8 cm", "12 cm"],
       correctIndex: 2,
     },
     {
       id: 28,
-      question: "Decimal expansion of 14587/1250 terminates after:",
-      options: ["1 d.p.", "2 d.p.", "3 d.p.", "4 d.p."],
-      correctIndex: 3,
+      question:
+        "From a point Q, the tangent to a circle is 24 cm and Q is 25 cm from centre. Radius is:",
+      options: ["7 cm", "12 cm", "15 cm", "24.5 cm"],
+      correctIndex: 0,
     },
     {
       id: 29,
-      question: "cos A / sin(90° − A) equals:",
-      options: ["tan A", "0", "sin A", "1"],
-      correctIndex: 3,
+      question: "The volume of a sphere of radius 3 cm is:",
+      options: ["9π cm³", "18π cm³", "36π cm³", "27π cm³"],
+      correctIndex: 2,
     },
     {
       id: 30,
@@ -201,13 +212,14 @@ export const math10 = {
         "Mode = 2 Median − 3 Mean",
         "Mode = 3 Median − 2 Mean",
         "Mode = 3 Mean − 2 Median",
-        "Mode = 2 Mean − 3 Median"
+        "Mode = 2 Mean − 3 Median",
       ],
       correctIndex: 1,
     },
     {
       id: 31,
-      question: "Area of largest triangle inscribed in semicircle of radius r is:",
+      question:
+        "Area of largest triangle inscribed in semicircle of radius r is:",
       options: ["2r²", "1/2 r²", "1/2 r", "r²"],
       correctIndex: 3,
     },
@@ -233,19 +245,19 @@ export const math10 = {
     },
     {
       id: 35,
-      question: "A line intersecting a circle at two distinct points is called:",
-      options: ["Tangent", "Radius", "Diameter", "Secant"],
-      correctIndex: 3,
+      question: "The nature of roots of x² + x − 5 = 0 is:",
+      options: [
+        "Real and equal",
+        "Real and distinct",
+        "Not real",
+        "None of these",
+      ],
+      correctIndex: 1,
     },
     {
       id: 36,
-      question: "Quadratic equation from speed condition of train 360 km:",
-      options: [
-        "x² + 5x + 1800 = 0",
-        "x² − 5x + 1800 = 0",
-        "x² − 5x − 1800 = 0",
-        "x² + 5x − 1800 = 0"
-      ],
+      question: "Which term of the A.P. 21, 18, 15, … is −81?",
+      options: ["34", "35", "36", "33"],
       correctIndex: 3,
     },
     {
@@ -262,20 +274,21 @@ export const math10 = {
     },
     {
       id: 39,
-      question: "TSA of toy = cone + hemisphere is:",
-      options: [
-        "πr(l + r)",
-        "πrl + πr²",
-        "πrl + 2πr²",
-        "2πr(l + r)"
-      ],
-      correctIndex: 2,
+      question: "If 3 cotθ = 4, then (1 − tan²θ)/(1 + tan²θ) is:",
+      options: ["7/25", "24/25", "1", "0"],
+      correctIndex: 1,
     },
     {
       id: 40,
-      question: "If 2x+3y=7 and (k−1)x+(k+2)y=3k have infinite solutions, k =",
-      options: ["1", "5", "7", "-5"],
-      correctIndex: 2,
+      question:
+        "A cylindrical pencil sharpened at one end is a combination of:",
+      options: [
+        "a cone and a cylinder",
+        "frustum of a cone and a cylinder",
+        "a hemisphere and a cylinder",
+        "two cylinders",
+      ],
+      correctIndex: 0,
     },
   ],
 };
