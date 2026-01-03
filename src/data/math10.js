@@ -215,14 +215,13 @@ export const math10 = {
         "Mode = 2 Mean − 3 Median",
       ],
       correctIndex: 1,
-    },
+    },  
     {
-      id: 31,
-      question:
-        "Area of largest triangle inscribed in semicircle of radius r is:",
-      options: ["2r²", "1/2 r²", "1/2 r", "r²"],
-      correctIndex: 3,
-    },
+    "id": 31,
+    "question": "Probability of getting a face card from a deck of 52 cards is:",
+    "options": ["1/13", "3/13", "4/13", "1/4"],
+    "correctIndex": 1
+  },
     {
       id: 32,
       question: "Capacity of cylinder = 1100 cm³, radius = 5 cm. Height =",
@@ -237,12 +236,17 @@ export const math10 = {
       options: ["(1,3)", "(0,0)", "(3,1)", "(3,1)"],
       correctIndex: 2,
     },
-    {
-      id: 34,
-      question: "Area of circle doubled. Ratio new area : original area =",
-      options: ["1:2", "2:1", "1:4", "4:1"],
-      correctIndex: 3,
-    },
+     {
+    "id": 34,
+    "question": "The area of the triangle formed by x = 3, y = 4 and x = y is:",
+    "options": [
+      "1/2 sq unit",
+      "1 sq unit",
+      "2 sq units",
+      "6 sq units"
+    ],
+    "correctIndex": 2
+  },
     {
       id: 35,
       question: "The nature of roots of x² + x − 5 = 0 is:",
