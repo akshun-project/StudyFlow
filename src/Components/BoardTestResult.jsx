@@ -1,4 +1,4 @@
-// src/Components/BoardTestResult.jsx
+ // src/Components/BoardTestResult.jsx
 import React from "react";
 
 export default function BoardTestResult({
@@ -11,97 +11,174 @@ export default function BoardTestResult({
   const percentage = Math.round((score / total) * 100);
 
   const formatTime = (secs) => {
-    const m = Math.floor(secs / 60)
-      .toString()
-      .padStart(2, "0");
-    const s = (secs % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
+    const m = Math.floor(secs / 60);
+    const s = secs % 60;
+    return `${m}m ${s}s`;
   };
 
-  const getFeedback = () => {
-    if (percentage === 100) return "🌟 Outstanding! Board level mastery!";
-    if (percentage >= 90) return "🔥 Brilliant! You’re exam-ready!";
-    if (percentage >= 75) return "💪 Great performance! Keep polishing.";
-    if (percentage >= 50) return "✨ Good try — continue practicing for perfection.";
-    return "📘 Don’t worry. Review concepts & try again — progress begins here!";
+  const getBand = () => {
+    if (percentage >= 85)
+      return {
+        title: "Top Performance Band",
+        color: "bg-green-50 border-green-300 text-green-800",
+        remark:
+          "Your preparation aligns with board toppers. Maintain consistency.",
+      };
+    if (percentage >= 65)
+      return {
+        title: "Above Average Band",
+        color: "bg-blue-50 border-blue-300 text-blue-800",
+        remark:
+          "Good board readiness. Improve accuracy for higher scores.",
+      };
+    if (percentage >= 45)
+      return {
+        title: "Average Band",
+        color: "bg-yellow-50 border-yellow-300 text-yellow-800",
+        remark:
+          "Concepts are forming. Regular practice will boost performance.",
+      };
+    return {
+      title: "Foundation Band",
+      color: "bg-red-50 border-red-300 text-red-800",
+      remark:
+        "Strong concept revision required before full-length tests.",
+    };
   };
+
+  const band = getBand();
+
+  const speedLevel =
+    timeSeconds < total * 30
+      ? "Fast"
+      : timeSeconds < total * 45
+      ? "Moderate"
+      : "Slow";
+
+  const accuracyLevel =
+    percentage >= 75 ? "High" : percentage >= 50 ? "Medium" : "Low";
 
   return (
-    <div className="max-w-md mx-auto px-4 pt-20 pb-10">
-      <div className="relative bg-white rounded-2xl shadow-xl border border-slate-200 p-7 text-center animate-fadeIn">
+    <div className="max-w-3xl mx-auto px-4 pt-16 pb-12">
+      <div className="bg-white rounded-3xl shadow-xl border border-slate-200 p-6 sm:p-8">
 
-        <h2 className="text-2xl font-bold text-slate-900 mb-4">
-          🎉 Test Completed!
-        </h2>
-
-        {/* Score Circle */}
-        <div className="relative inline-flex items-center justify-center w-32 h-32 mb-6">
-          <svg className="absolute inset-0 w-full h-full" viewBox="0 0 100 100">
-            <circle 
-              cx="50" cy="50" r="45" 
-              stroke="#E5E7EB" strokeWidth="10" fill="none"
-            />
-            <circle
-              cx="50" cy="50" r="45"
-              stroke="url(#grad)"
-              strokeWidth="10"
-              fill="none"
-              strokeDasharray="283"
-              strokeDashoffset={283 - (283 * percentage) / 100}
-              strokeLinecap="round"
-              style={{ transition: "1s ease" }}
-            />
-            <defs>
-              <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stopColor="#6366F1" />
-                <stop offset="100%" stopColor="#A855F7" />
-              </linearGradient>
-            </defs>
-          </svg>
-          <span className="text-2xl font-semibold text-indigo-700">
-            {percentage}%
-          </span>
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold text-slate-900">
+            Board Practice Result
+          </h1>
+          <div className="h-1 w-20 bg-gradient-to-r from-indigo-500 to-purple-500 rounded-full mt-2" />
+          <p className="text-sm text-slate-500 mt-3">
+            Performance analysis based on board exam standards
+          </p>
         </div>
 
-        {/* Score + Time */}
-        <p className="text-slate-700 mb-1">
-          Score: <span className="font-semibold">{score}</span> / {total}
-        </p>
-        <p className="text-slate-500 text-sm mb-4">
-          ⏱ Time Taken: <span className="font-medium">{formatTime(timeSeconds)}</span>
-        </p>
+        {/* Top Stats */}
+        <div className="grid gap-5 sm:grid-cols-3 mb-8">
 
-        {/* Feedback */}
-        <p className="text-slate-600 text-sm mb-6 leading-relaxed">
-          {getFeedback()}
-        </p>
+          {/* Score */}
+          <div className="rounded-2xl border p-5 text-center bg-indigo-50/50">
+            <p className="text-sm text-slate-500 mb-1">Overall Score</p>
+            <p className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              {percentage}%
+            </p>
+            <p className="text-sm text-slate-600">
+              {score} / {total} marks
+            </p>
+          </div>
 
-        {/* Saved message */}
-        <p className="text-green-600 text-sm font-medium mb-4">
-          ✔ Your result has been saved.
-        </p>
+          {/* Time */}
+          <div className="rounded-2xl border p-5 text-center bg-sky-50/60">
+            <p className="text-sm text-slate-500 mb-1">Time Taken</p>
+            <p className="text-3xl font-semibold text-slate-800">
+              {formatTime(timeSeconds)}
+            </p>
+            <p className="text-xs text-slate-500">
+              Speed & time management
+            </p>
+          </div>
 
-        {/* Buttons */}
-        <div className="flex flex-col gap-3">
+          {/* Band */}
+          <div
+            className={`rounded-2xl border p-5 ${band.color}`}
+          >
+            <p className="text-sm font-semibold">{band.title}</p>
+            <p className="text-sm mt-2 leading-relaxed">
+              {band.remark}
+            </p>
+          </div>
+        </div>
+
+        {/* Insights */}
+        <div className="mb-8">
+          <h3 className="text-sm font-semibold text-slate-700 mb-4">
+            Performance Insights
+          </h3>
+
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Insight
+              title="Accuracy Level"
+              value={accuracyLevel}
+              color="border-indigo-400"
+              hint="Correct answer ratio"
+            />
+            <Insight
+              title="Speed Efficiency"
+              value={speedLevel}
+              color="border-sky-400"
+              hint="Time per question"
+            />
+            <Insight
+              title="Conceptual Strength"
+              value={
+                percentage >= 60 ? "Satisfactory" : "Needs Improvement"
+              }
+              color="border-amber-400"
+              hint="Concept clarity assessment"
+            />
+            <Insight
+              title="Board Readiness"
+              value={percentage >= 75 ? "Nearly Ready" : "Not Ready Yet"}
+              color="border-rose-400"
+              hint="Exam preparedness"
+            />
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="flex flex-col sm:flex-row gap-4">
           <button
             onClick={onBack}
-            className="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow"
+            className="flex-1 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold hover:opacity-90"
           >
-            Take Another Test
+            Practice Another Paper
           </button>
 
           <button
             onClick={onHome}
-            className="w-full py-3 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium"
+            className="flex-1 py-3 rounded-xl border border-slate-300 text-slate-700 hover:bg-slate-50 font-medium"
           >
-            ← Back to Home
+            Back to Home 
           </button>
         </div>
 
-        <p className="text-[11px] text-gray-400 mt-6 italic">
-          “Every test you take sharpens your confidence.”
+        <p className="text-xs text-slate-400 text-center mt-8 italic">
+          Improvement comes from understanding, not just attempting.
         </p>
       </div>
+    </div>
+  );
+}
+
+/* ---------- Insight Card ---------- */
+function Insight({ title, value, hint, color }) {
+  return (
+    <div className={`rounded-xl border-l-4 ${color} border p-4 bg-white`}>
+      <p className="text-xs text-slate-500">{title}</p>
+      <p className="text-lg font-semibold text-slate-900 mt-1">
+        {value}
+      </p>
+      <p className="text-xs text-slate-400 mt-1">{hint}</p>
     </div>
   );
 }
