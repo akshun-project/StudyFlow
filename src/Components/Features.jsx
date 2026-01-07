@@ -14,20 +14,20 @@ export default function Features() {
       desc: "Create chapter-wise schedules for up to 3 subjects using smart AI planning.",
       link: "/planner",
       btn: "Start Planning →",
-    },
-    {
-      emoji: "⚡",
-      title: "Smart AI Quizzes",
-      desc: "Take instant chapterwise AI quizzes, unlock explanations using coins, and track accuracy.",
-      link: "/quiz",
-      btn: "Take Quiz →",
-    },
+    },  
     {
       emoji: "🎯",
       title: "Board Practice Zone",
       desc: "English passage, PYQs quiz, full-book tests — everything for board preparation in one place.",
       link: "/board-practice",
       btn: "Start Practice →",
+    },
+     {
+      emoji: "⚡",
+      title: "Smart AI Quizzes",
+      desc: "Take instant chapterwise AI quizzes, unlock explanations using coins, and track accuracy.",
+      link: "/quiz",
+      btn: "Take Quiz →",
     },
     {
       emoji: "🧩",
