@@ -1,4 +1,4 @@
- // src/Components/RealTimeQuiz.jsx
+// src/Components/RealTimeQuiz.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { supabase } from "../Supabase/supabaseClient";
 import { useUser } from "@clerk/clerk-react";
@@ -21,11 +21,11 @@ export default function RealTimeQuiz({ quiz, onExit }) {
   const [selected, setSelected] = useState(null);
   const [score, setScore] = useState(0);
   const [seconds, setSeconds] = useState(0);
+  const [tabWarnings, setTabWarnings] = useState(0);
+  const [showWarning, setShowWarning] = useState(false);
 
   /* ✅ SHUFFLED QUESTIONS (ONCE PER TEST) */
-  const [shuffledQuestions] = useState(() =>
-    shuffleArray(quiz.questions)
-  );
+  const [shuffledQuestions] = useState(() => shuffleArray(quiz.questions));
 
   const timerRef = useRef(null);
   const savedRef = useRef(false);
@@ -39,6 +39,27 @@ export default function RealTimeQuiz({ quiz, onExit }) {
       setSeconds((s) => s + 1);
     }, 1000);
     return () => clearInterval(timerRef.current);
+  }, []);
+
+  // Tab switch warning
+
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        setTabWarnings((w) => w + 1);
+        setShowWarning(true);
+
+        setTimeout(() => {
+          setShowWarning(false);
+        }, 6000);
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
+    };
   }, []);
 
   // Option click (UNCHANGED)
@@ -91,7 +112,7 @@ export default function RealTimeQuiz({ quiz, onExit }) {
   /* 🔽 UI BELOW IS 100% UNTOUCHED 🔽 */
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pb-24">
+    <div className="min-h-screen select-none bg-gradient-to-b from-slate-50 to-white pb-24">
       {/* Sticky top bar */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur shadow-sm border-b border-slate-200">
         <div className="max-w-xl mx-auto px-4 py-3 flex justify-between items-center">
@@ -104,6 +125,11 @@ export default function RealTimeQuiz({ quiz, onExit }) {
 
           <p className="font-semibold text-slate-800 text-sm">
             Q {index + 1}/{quiz.questions.length}
+            {tabWarnings > 0 && (
+              <span className="ml-2 text-[11px] text-red-600 font-semibold">
+                ⚠️ {tabWarnings}
+              </span>
+            )}
           </p>
 
           <div className="px-3 py-1.5 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold shadow-sm">
@@ -112,10 +138,21 @@ export default function RealTimeQuiz({ quiz, onExit }) {
           </div>
         </div>
       </div>
+      {showWarning && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[999]">
+          <div className="flex items-center gap-2 px-4 py-2 rounded-xl bg-red-50 border border-red-300 text-red-700 shadow-lg">
+            <span className="text-lg">⚠️</span>
+            <p className="text-sm font-semibold text-red-700">
+              {tabWarnings < 2
+                ? "🚫 Tab switch detected. This activity is monitored and recorded."
+                : "🚫 Repeated tab switching detected. Further violations may lead to −1 mark penalty."}
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="max-w-xl mx-auto px-4 pt-24">
         <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 space-y-5 animate-fadeIn">
-
           {quiz.scenario && (
             <div className="p-4 bg-indigo-50/70 border border-indigo-200 rounded-xl shadow-sm">
               <h3 className="font-semibold text-indigo-700 mb-2 text-sm">
@@ -160,7 +197,6 @@ export default function RealTimeQuiz({ quiz, onExit }) {
               );
             })}
           </div>
-
         </div>
       </div>
     </div>
