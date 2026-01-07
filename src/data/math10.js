@@ -18,8 +18,8 @@ export const math10 = {
     {
       id: 2,
       question:
-        "The value of k for which the system of equations x + 2y = 3 and 5x + ky + 7 = 0 has no solution is:",
-      options: ["10", "6", "3", "1"],
+        "The pair of linear equations 2x − 3y = 1 and kx + 5y = 7 has a unique solution if:",
+      options: ["k ≠ −10/3", "k ≠ 10/3", "k = −10/3", "k = 10/3"],
       correctIndex: 0,
     },
     {
@@ -32,8 +32,8 @@ export const math10 = {
     {
       id: 4,
       question:
-        "The product of a non-zero rational number and an irrational number is always:",
-      options: ["Rational", "Irrational", "1", "0"],
+        "If α and β are the zeroes of the polynomial f(x) = px² − 2x + 3p and α + β = αβ, then the value of p is:",
+      options: ["-2/3", "2/3", "1/3", "-1/3"],
       correctIndex: 1,
     },
     {
@@ -123,8 +123,9 @@ export const math10 = {
     // ---------- 17–24 ----------
     {
       id: 17,
-      question: "If ΔABC ∼ ΔPQR with areas 81 & 49 and BC = 9, then QR is:",
-      options: ["9 cm", "8 cm", "7 cm", "10 cm"],
+      question:
+        "A ladder 15 m long just reaches the top of a vertical wall. If the ladder makes an angle of 60° with the wall, then the height of the wall is:",
+      options: ["15 m", "15√3 m", "7.5 m", "7.5√3 m"],
       correctIndex: 2,
     },
     {
@@ -201,9 +202,10 @@ export const math10 = {
     },
     {
       id: 29,
-      question: "The volume of a sphere of radius 3 cm is:",
-      options: ["9π cm³", "18π cm³", "36π cm³", "27π cm³"],
-      correctIndex: 2,
+      question:
+        "If the 17th term of an A.P. exceeds its 10th term by 7, then the common difference is:",
+      options: ["1", "2", "3", "0"],
+      correctIndex: 0,
     },
     {
       id: 30,
@@ -215,13 +217,14 @@ export const math10 = {
         "Mode = 2 Mean − 3 Median",
       ],
       correctIndex: 1,
-    },  
+    },
     {
-    "id": 31,
-    "question": "Probability of getting a face card from a deck of 52 cards is:",
-    "options": ["1/13", "3/13", "4/13", "1/4"],
-    "correctIndex": 1
-  },
+      id: 31,
+      question:
+        "Probability of getting a face card from a deck of 52 cards is:",
+      options: ["1/13", "3/13", "4/13", "1/4"],
+      correctIndex: 1,
+    },
     {
       id: 32,
       question: "Capacity of cylinder = 1100 cm³, radius = 5 cm. Height =",
@@ -236,17 +239,13 @@ export const math10 = {
       options: ["(1,3)", "(0,0)", "(3,1)", "(3,1)"],
       correctIndex: 2,
     },
-     {
-    "id": 34,
-    "question": "The area of the triangle formed by x = 3, y = 4 and x = y is:",
-    "options": [
-      "1/2 sq unit",
-      "1 sq unit",
-      "2 sq units",
-      "6 sq units"
-    ],
-    "correctIndex": 2
-  },
+    {
+      id: 34,
+      question:
+        "In ΔABC, DE ∥ BC. If AD = x, DB = x − 2, AE = x + 2 and EC = x − 1, then the value of x is:",
+      options: ["3", "4", "5", "3.5"],
+      correctIndex: 1,
+    },
     {
       id: 35,
       question: "The nature of roots of x² + x − 5 = 0 is:",
