@@ -79,7 +79,7 @@ export default function BoardTestResult({
           {/* Score */}
           <div className="rounded-2xl border p-5 text-center bg-indigo-50/50">
             <p className="text-sm text-slate-500 mb-1">Overall Score</p>
-            <p className="text-4xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            <p className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-700 bg-clip-text text-transparent">
               {percentage}%
             </p>
             <p className="text-sm text-slate-600">
@@ -137,7 +137,7 @@ export default function BoardTestResult({
               hint="Concept clarity assessment"
             />
             <Insight
-              title="Board Readiness"
+              title="Exam Readiness"
               value={percentage >= 75 ? "Nearly Ready" : "Not Ready Yet"}
               color="border-rose-400"
               hint="Exam preparedness"
@@ -151,7 +151,7 @@ export default function BoardTestResult({
             onClick={onBack}
             className="flex-1 py-3 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold hover:opacity-90"
           >
-            Practice Another Paper
+            Practice Another Test
           </button>
 
           <button
@@ -162,7 +162,7 @@ export default function BoardTestResult({
           </button>
         </div>
 
-        <p className="text-xs text-slate-400 text-center mt-8 italic">
+        <p className="text-xs text-slate-500 text-center mt-8 italic">
           Improvement comes from understanding, not just attempting.
         </p>
       </div>

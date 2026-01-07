@@ -15,6 +15,13 @@ import { geography10Test1 } from "../data/geography10_test1";
 import { politicalScience10Test1 } from "../data/political10_test1";
 import { economics10Test1 } from "../data/economics10_test1";
 
+ // --- Class 11 tests ---
+import { physics11Test1 } from "../data/physics11_test1";
+import { chemistry11Test1 } from "../data/chemistry11_test1";
+import { biology11Test1 } from "../data/biology11_test1";
+import { math11Test1 } from "../data/math11_test1";
+
+
 //class12
 
 // --- Class 12 tests ---
@@ -92,6 +99,26 @@ export default function BoardPractice() {
             break;
         }
       }
+   
+      if (selectedClass === 11) {
+  switch (category) {
+    case "phy11":
+      quiz = physics11Test1;
+      break;
+    case "chem11":
+      quiz = chemistry11Test1;
+      break;
+    case "math11":
+      quiz = math11Test1;
+      break;
+    case "bio11":
+      quiz = biology11Test1;
+      break;
+    default:
+      break;
+  }
+}
+
 
       if (selectedClass === 12) {
   switch (category) {
@@ -224,6 +251,38 @@ export default function BoardPractice() {
     },
   ];
 
+  const class11Data = [
+  {
+    id: "phy11",
+    label: "Physics",
+    emoji: "⚛",
+    desc: "40 MCQs • Mechanics, Kinematics, Laws of Motion.",
+    badge: "40",
+  },
+  {
+    id: "chem11",
+    label: "Chemistry",
+    emoji: "🧪",
+    desc: "40 MCQs • Organic, Inorganic, Physical.",
+    badge: "40",
+  },
+  {
+    id: "math11",
+    label: "Maths",
+    emoji: "🧮",
+    desc: "40 MCQs • Sets, Trigonometry, Limits.",
+    badge: "40",
+  },
+  {
+    id: "bio11",
+    label: "Biology",
+    emoji: "🧬",
+    desc: "40 MCQs • Cell, Biomolecules, Plant Physiology.",
+    badge: "40",
+  },
+];
+
+
   const class12Data = [
   {
     id: "phy12",
@@ -263,7 +322,13 @@ export default function BoardPractice() {
 ];
 
  // For bottom bar (Class 10 + Class 12)
-const subjectsAll = selectedClass === 10 ? class10Data : class12Data;
+ const subjectsAll =
+  selectedClass === 10
+    ? class10Data
+    : selectedClass === 11
+    ? class11Data
+    : class12Data;
+
 
 const selectedSubject = subjectsAll.find((s) => s.id === category);
 
@@ -306,7 +371,7 @@ const selectedSubject = subjectsAll.find((s) => s.id === category);
             STEP 1 • SELECT CLASS
           </p>
           <div className="flex gap-2">
-            {[10, 12].map((cls) => {
+            {[10, 11 , 12].map((cls) => {
               const active = selectedClass === cls;
               return (
                 <button
@@ -413,21 +478,14 @@ const selectedSubject = subjectsAll.find((s) => s.id === category);
           </section>
         )}
 
-        {selectedClass === 12 && (
+   {(selectedClass === 11 || selectedClass === 12) && (
   <>
     <p className="text-xs font-semibold text-slate-500 mb-2">
       STEP 2 • CHOOSE TEST
     </p>
 
-    <div
-      className="
-        grid grid-cols-1 
-        sm:grid-cols-2 
-        lg:grid-cols-3 
-        gap-4
-      "
-    >
-      {class12Data.map((item) => {
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+      {(selectedClass === 11 ? class11Data : class12Data).map((item) => {
         const isActive = category === item.id;
         return (
           <button
@@ -461,6 +519,7 @@ const selectedSubject = subjectsAll.find((s) => s.id === category);
     </div>
   </>
 )}
+
 
 
         {/* Loader card */}

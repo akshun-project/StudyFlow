@@ -1,8 +1,18 @@
-  // src/Components/RealTimeQuiz.jsx
+ // src/Components/RealTimeQuiz.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { supabase } from "../Supabase/supabaseClient";
 import { useUser } from "@clerk/clerk-react";
 import BoardTestResult from "./BoardTestResult";
+
+/* 🔀 shuffle helper (PURE, SAFE) */
+const shuffleArray = (array) => {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+};
 
 export default function RealTimeQuiz({ quiz, onExit }) {
   const { user } = useUser();
@@ -12,12 +22,18 @@ export default function RealTimeQuiz({ quiz, onExit }) {
   const [score, setScore] = useState(0);
   const [seconds, setSeconds] = useState(0);
 
+  /* ✅ SHUFFLED QUESTIONS (ONCE PER TEST) */
+  const [shuffledQuestions] = useState(() =>
+    shuffleArray(quiz.questions)
+  );
+
   const timerRef = useRef(null);
   const savedRef = useRef(false);
 
-  const q = quiz.questions[index];
+  /* ✅ USE SHUFFLED QUESTIONS HERE */
+  const q = shuffledQuestions[index];
 
-  // Timer
+  // Timer (UNCHANGED)
   useEffect(() => {
     timerRef.current = setInterval(() => {
       setSeconds((s) => s + 1);
@@ -25,7 +41,7 @@ export default function RealTimeQuiz({ quiz, onExit }) {
     return () => clearInterval(timerRef.current);
   }, []);
 
-  // Option click
+  // Option click (UNCHANGED)
   const handleSelect = (optIndex) => {
     setSelected(optIndex);
 
@@ -39,7 +55,7 @@ export default function RealTimeQuiz({ quiz, onExit }) {
     }, 850);
   };
 
-  // Save once
+  // Save once (UNCHANGED)
   const saveResult = async () => {
     if (!user || savedRef.current) return;
 
@@ -57,7 +73,7 @@ export default function RealTimeQuiz({ quiz, onExit }) {
     });
   };
 
-  // End test
+  // End test (UNCHANGED)
   if (!q) {
     clearInterval(timerRef.current);
     saveResult();
@@ -72,14 +88,13 @@ export default function RealTimeQuiz({ quiz, onExit }) {
     );
   }
 
+  /* 🔽 UI BELOW IS 100% UNTOUCHED 🔽 */
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white pb-24">
-
       {/* Sticky top bar */}
       <div className="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur shadow-sm border-b border-slate-200">
         <div className="max-w-xl mx-auto px-4 py-3 flex justify-between items-center">
-
-          {/* Exit */}
           <button
             onClick={onExit}
             className="text-slate-600 text-sm font-semibold px-3 py-1.5 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 transition"
@@ -87,12 +102,10 @@ export default function RealTimeQuiz({ quiz, onExit }) {
             ← Exit
           </button>
 
-          {/* Title */}
           <p className="font-semibold text-slate-800 text-sm">
             Q {index + 1}/{quiz.questions.length}
           </p>
 
-          {/* Timer */}
           <div className="px-3 py-1.5 rounded-full bg-indigo-100 text-indigo-700 text-xs font-bold shadow-sm">
             {Math.floor(seconds / 60)}:
             {(seconds % 60).toString().padStart(2, "0")}
@@ -100,20 +113,9 @@ export default function RealTimeQuiz({ quiz, onExit }) {
         </div>
       </div>
 
-      {/* MAIN QUIZ CARD */}
       <div className="max-w-xl mx-auto px-4 pt-24">
+        <div className="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 space-y-5 animate-fadeIn">
 
-        <div className="
-          bg-white 
-          rounded-2xl 
-          shadow-xl 
-          border border-slate-200 
-          p-6 
-          space-y-5 
-          animate-fadeIn
-        ">
-          
-          {/* PASSAGE */}
           {quiz.scenario && (
             <div className="p-4 bg-indigo-50/70 border border-indigo-200 rounded-xl shadow-sm">
               <h3 className="font-semibold text-indigo-700 mb-2 text-sm">
@@ -125,12 +127,10 @@ export default function RealTimeQuiz({ quiz, onExit }) {
             </div>
           )}
 
-          {/* QUESTION */}
           <h2 className="text-base font-semibold text-slate-900 leading-snug">
             {q.question}
           </h2>
 
-          {/* OPTIONS */}
           <div className="space-y-3">
             {q.options.map((opt, i) => {
               const isCorrect = selected !== null && i === q.correctIndex;
