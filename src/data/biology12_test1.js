@@ -7,371 +7,46 @@ export const biology12Test1 = {
   title: "Class 12 Biology — Full Test (40 MCQs)",
   questions:  [
   
-    {
-    id: 1,
-    question:
-      "In a complete, bisexual and hypogynous flower, the correct order of floral whorls from outermost to innermost is:",
-    options: [
-      "Calyx, corolla, androecium and gynoecium",
-      "Calyx, corolla, gynoecium and androecium",
-      "Gynoecium, androecium, corolla and calyx",
-      "Androecium, gynoecium, corolla and calyx"
-    ],
-    correctIndex: 0
-  },
-  {
-    id: 2,
-    question:
-      "Development of fruit without fertilization is called:",
-    options: ["Parthenogenesis", "Apomixis", "Parthenocarpy", "Sexual reproduction"],
-    correctIndex: 2
-  },
-  {
-    id: 3,
-    question:
-      "Correct sequence of sperm formation is:",
-    options: [
-      "Spermatogonia → spermatocyte → spermatozoa → spermatid",
-      "Spermatogonia → spermatozoa → spermatocyte → spermatid",
-      "Spermatogonia → spermatocyte → spermatid → spermatozoa",
-      "Spermatid → spermatocyte → spermatogonia → spermatozoa"
-    ],
-    correctIndex: 2
-  },
-  {
-    id: 4,
-    question:
-      "Which of the following is a non-hormonal IUD?",
-    options: ["Multiload 375", "Lippes loop", "Progestasert", "LNG-20"],
-    correctIndex: 1
-  },
-  {
-    id: 5,
-    question:
-      "A 9:3:3:1 ratio in a dihybrid cross indicates:",
-    options: [
-      "Interaction of genes",
-      "Multigenic inheritance",
-      "Multiple allelism",
-      "Independent assortment of genes"
-    ],
-    correctIndex: 3
-  },
-  {
-    id: 6,
-    question:
-      "A person with AB blood group has:",
-    options: [
-      "No antigens on RBCs",
-      "No antibodies in plasma",
-      "Both antibodies a and b",
-      "Neither antigen A nor B"
-    ],
-    correctIndex: 1
-  },
-  {
-    id: 7,
-    question:
-      "If the coding DNA strand is 5'-ATGCATGC-3', the mRNA sequence is:",
-    options: [
-      "3'-UACGUACG-5'",
-      "5'-UACGUACG-3'",
-      "5'-AUGCAUGC-3'",
-      "3'-ATGCATGC-5'"
-    ],
-    correctIndex: 2
-  },
-  {
-    id: 8,
-    question:
-      "The first genetic material was:",
-    options: ["DNA", "RNA", "Proteins", "Carbohydrates"],
-    correctIndex: 1
-  },
-  {
-    id: 9,
-    question:
-      "The S-shaped growth curve is also known as:",
-    options: ["Sigmoid curve", "Geometric curve", "Exponential curve", "Arithmetic curve"],
-    correctIndex: 0
-  },
-  {
-    id: 10,
-    question:
-      "Evolution of species radiating from a point into different habitats is called:",
-    options: ["Saltation", "Natural selection", "Adaptive radiation", "Convergent evolution"],
-    correctIndex: 2
-  },
-  {
-    id: 11,
-    question:
-      "An autoimmune disease is:",
-    options: ["AIDS", "Rheumatoid arthritis", "Cancer", "Allergy"],
-    correctIndex: 1
-  },
-  {
-    id: 12,
-    question:
-      "In secondary sewage treatment, flocs are:",
-    options: [
-      "Masses of algae and fungi",
-      "Bacteria associated with fungal filaments",
-      "Cysts of protozoa",
-      "Solid wastes"
-    ],
-    correctIndex: 1
-  },
-  {
-    id: 13,
-    question:
-      "Restriction endonucleases:",
-    options: [
-      "Cut DNA at specific sites",
-      "Remove nucleotides from ends",
-      "Inhibit DNA polymerase",
-      "Remove DNA from cells"
-    ],
-    correctIndex: 0
-  },
-  {
-    id: 14,
-    question:
-      "First clinical gene therapy was for deficiency of:",
-    options: [
-      "Insulin",
-      "Adenosine deaminase (ADA)",
-      "Tyrosinase",
-      "Phenylalanine hydroxylase"
-    ],
-    correctIndex: 1
-  },
-  {
-    id: 15,
-    question:
-      "Verhulst-Pearl logistic growth equation is:",
-    options: [
-      "dN/dt = rN",
-      "dN/dt = rN[(K−N)/K]",
-      "Nt = N₀eʳᵗ",
-      "dN/dt = N/K"
-    ],
-    correctIndex: 1
-  },
-  {
-    id: 16,
-    question:
-      "The Evil Quartet refers to causes of:",
-    options: ["Soil pollution", "Biodiversity loss", "Population explosion", "Global warming"],
-    correctIndex: 1
-  },
-  {
-    id: 17,
-    question:
-      "Bio-control agents against plant pathogens include:",
-    options: [
-      "Trichoderma",
-      "Nucleopolyhedrovirus",
-      "Bacillus thuringiensis",
-      "All of these"
-    ],
-    correctIndex: 3
-  },
-  {
-    id: 18,
-    question:
-      "Correct statement about thalassemia and sickle-cell anemia:",
-    options: [
-      "Both qualitative",
-      "Both quantitative",
-      "Thalassemia quantitative, sickle-cell qualitative",
-      "Thalassemia qualitative, sickle-cell quantitative"
-    ],
-    correctIndex: 2
-  },
-  {
-    id: 19,
-    question:
-      "VNTRs used in DNA fingerprinting belong to:",
-    options: ["Satellite DNA", "Coding DNA", "rDNA", "Exonic DNA"],
-    correctIndex: 0
-  },
-  {
-    id: 20,
-    question:
-      "Wings of bird and insect are:",
-    options: [
-      "Phylogenetic structures",
-      "Homologous – convergent evolution",
-      "Homologous – divergent evolution",
-      "Analogous – convergent evolution"
-    ],
-    correctIndex: 3
-  },
-  {
-    id: 21,
-    question:
-      "Smack is obtained from which part of poppy plant?",
-    options: ["Flowers", "Latex", "Roots", "Leaves"],
-    correctIndex: 1
-  },
-  {
-    id: 22,
-    question:
-      "Unauthorized exploitation of bioresources is called:",
-    options: ["Bio-war", "Bio-ethics", "Biopiracy", "Bio-mining"],
-    correctIndex: 2
-  },
-  {
-    id: 23,
-    question:
-      "Prickly pear cactus in Australia was controlled by:",
-    options: ["Cactophagous moth", "Pesticides", "Burning fields", "Competitive plants"],
-    correctIndex: 0
-  },
-  {
-    id: 24,
-    question:
-      "Ecosystem with maximum biomass is:",
-    options: ["Grassland", "Pond", "Lake", "Forest"],
-    correctIndex: 3
-  },
-  {
-    id: 25,
-    question:
-      "Earth Summit (CBD) was held in:",
-    options: ["1985", "1992", "1997", "2002"],
-    correctIndex: 1
-  },
-  {
-    id: 26,
-    question:
-      "RNA interference (RNAi) silences genes using:",
-    options: ["ssDNA", "dsDNA", "dsRNA", "ssRNA"],
-    correctIndex: 2
-  },
-  {
-    id: 27,
-    question:
-      "Miller–Urey experiment supported:",
-    options: [
-      "Biogenesis",
-      "Special creation",
-      "Chemical evolution",
-      "Spontaneous generation"
-    ],
-    correctIndex: 2
-  },
-  {
-    id: 28,
-    question:
-      "In human females, meiosis-II completes at:",
-    options: ["Puberty", "Birth", "Fertilization", "Implantation"],
-    correctIndex: 2
-  },
-  {
-    id: 29,
-    question:
-      "Most common site of fertilization is:",
-    options: ["Ampulla", "Isthmus", "Infundibulum", "Cervix"],
-    correctIndex: 0
-  },
-  {
-    id: 30,
-    question:
-      "Antibody present in colostrum is:",
-    options: ["IgG", "IgM", "IgE", "IgA"],
-    correctIndex: 3
-  },
-  {
-    id: 31,
-    question:
-      "Industrial melanism in moths is an example of:",
-    options: [
-      "Disruptive selection",
-      "Directional selection",
-      "Stabilizing selection",
-      "Artificial selection"
-    ],
-    correctIndex: 1
-  },
-  {
-    id: 32,
-    question:
-      "Enzyme that joins DNA fragments is:",
-    options: [
-      "DNA polymerase",
-      "Restriction enzyme",
-      "DNA ligase",
-      "Alkaline phosphatase"
-    ],
-    correctIndex: 2
-  },
-  {
-    id: 33,
-    question:
-      "Stirred-tank bioreactors ensure:",
-    options: [
-      "Preservative addition",
-      "Product purification",
-      "Oxygen availability",
-      "Anaerobic conditions"
-    ],
-    correctIndex: 2
-  },
-  {
-    id: 34,
-    question:
-      "Collection of all alleles of a crop is called:",
-    options: ["Herbarium", "Germplasm collection", "Gene library", "Genome"],
-    correctIndex: 1
-  },
-  {
-    id: 35,
-    question:
-      "Functional unit of nature is:",
-    options: ["Population", "Community", "Ecosystem", "Biome"],
-    correctIndex: 2
-  },
-  {
-    id: 36,
-    question:
-      "Sacred groves in India include:",
-    options: [
-      "Western Ghats",
-      "Khasi & Jaintia Hills",
-      "Aravalli Hills",
-      "All of these"
-    ],
-    correctIndex: 3
-  },
-  {
-    id: 37,
-    question:
-      "Ploidy of Primary Endosperm Nucleus (PEN) is:",
-    options: ["n", "2n", "3n", "4n"],
-    correctIndex: 2
-  },
-  {
-    id: 38,
-    question:
-      "Codon with dual function is:",
-    options: ["AUG", "UAA", "UAG", "UGA"],
-    correctIndex: 0
-  },
-  {
-    id: 39,
-    question:
-      "Interaction where one benefits and other unaffected:",
-    options: ["Amensalism", "Commensalism", "Parasitism", "Mutualism"],
-    correctIndex: 1
-  },
-  {
-    id: 40,
-    question:
-      "Degradation of detritus by microbial enzymes is called:",
-    options: ["Fragmentation", "Leaching", "Catabolism", "Humification"],
-    correctIndex: 2
-  },
+   { id: 1, question: "Tender coconut water represents:", options: ["Endocarp", "Free nuclear endosperm", "Cellular endosperm", "Fleshy mesocarp"], correctIndex: 1 },
+  { id: 2, question: "If DNA has 20% cytosine, percentage of adenine is:", options: ["20%", "40%", "30%", "60%"], correctIndex: 2 },
+  { id: 3, question: "Part of fallopian tube closest to ovary is:", options: ["Ampulla", "Isthmus", "Infundibulum", "Cervix"], correctIndex: 2 },
+  { id: 4, question: "Hormone-releasing IUD is:", options: ["Lippes loop", "Multiload 375", "Cu7", "LNG-20"], correctIndex: 3 },
+  { id: 5, question: "9:3:3:1 ratio in dihybrid cross shows:", options: ["Gene interaction", "Multigenic inheritance", "Codominance", "Independent assortment"], correctIndex: 3 },
+  { id: 6, question: "Splicing in eukaryotes removes:", options: ["Exons", "Introns", "Promoter", "Terminator"], correctIndex: 1 },
+  { id: 7, question: "Evil Quartet refers to causes of:", options: ["Population explosion", "Global warming", "Biodiversity loss", "Water pollution"], correctIndex: 2 },
+  { id: 8, question: "‘i’ gene of lac operon codes for:", options: ["Inducer", "Repressor", "β-galactosidase", "Permease"], correctIndex: 1 },
+  { id: 9, question: "Kidney graft rejection is due to:", options: ["Humoral immunity", "Cell-mediated immunity", "Auto-immunity", "Inflammatory response"], correctIndex: 1 },
+  { id: 10, question: "First human-like hominid was:", options: ["Homo erectus", "Homo habilis", "Neanderthal", "Australopithecus"], correctIndex: 1 },
+  { id: 11, question: "Correct PCR sequence is:", options: ["Extension → Denaturation → Annealing", "Annealing → Extension → Denaturation", "Denaturation → Extension → Annealing", "Denaturation → Annealing → Extension"], correctIndex: 3 },
+  { id: 12, question: "RNA interference uses:", options: ["ssDNA", "dsDNA", "dsRNA", "ssRNA"], correctIndex: 2 },
+  { id: 13, question: "Formula for exponential population growth is:", options: ["dN/dt = rN", "dt/dN = rN", "dN/rN = dt", "rN/dN = dt"], correctIndex: 0 },
+  { id: 14, question: "Hormones increasing in follicular phase are:", options: ["LH only", "FSH only", "LH, FSH, Estrogen", "LH, FSH, Progesterone"], correctIndex: 2 },
+  { id: 15, question: "mRNA sequence from coding strand 5’-ATGCATGC-3’ is:", options: ["3’-UACGUACG-5’", "5’-UACGUACG-3’", "5’-AUGCAUGC-3’", "3’-AUGCAUGC-5’"], correctIndex: 2 },
+  { id: 16, question: "NOT a wind-pollinated flower feature:", options: ["Feathery stigma", "Exposed stamens", "Nectar & fragrance", "Light pollen"], correctIndex: 2 },
+  { id: 17, question: "Extra chromosome 21 causes:", options: ["Turner’s syndrome", "Down’s syndrome", "Klinefelter’s syndrome", "Thalassemia"], correctIndex: 1 },
+  { id: 18, question: "Asymptotic phase in S-curve occurs when:", options: ["Unlimited resources", "Population reaches carrying capacity", "Zero mortality", "Zero natality"], correctIndex: 1 },
+  { id: 19, question: "Citric acid is produced using:", options: ["Aspergillus niger", "Acetobacter aceti", "Clostridium butylicum", "Lactobacillus"], correctIndex: 0 },
+  { id: 20, question: "Sticky ends are formed due to:", options: ["Single-stranded overhangs", "Double-stranded breaks", "Phosphate removal", "DNA methylation"], correctIndex: 0 },
+  { id: 21, question: "Rate of photosynthetic production is:", options: ["Net primary productivity", "Secondary productivity", "Gross primary productivity", "Decomposition"], correctIndex: 2 },
+  { id: 22, question: "Totipotency is the ability of a:", options: ["Whole plant", "Single cell", "Seed", "Flower"], correctIndex: 1 },
+  { id: 23, question: "Entamoeba histolytica infects mainly:", options: ["Small intestine", "Large intestine", "Liver", "Lungs"], correctIndex: 1 },
+  { id: 24, question: "Miller’s experiment supports:", options: ["Biogenesis", "Abiogenesis", "Chemical evolution", "Panspermia"], correctIndex: 2 },
+  { id: 25, question: "Turner’s syndrome female has:", options: ["45 chromosomes (XO)", "Extra X chromosome", "Male traits", "Normal fertility"], correctIndex: 0 },
+  { id: 26, question: "Primary sewage treatment involves:", options: ["Aerobic decomposition", "Anaerobic decomposition", "Physical removal", "Use of flocs"], correctIndex: 2 },
+  { id: 27, question: "First gene therapy treated deficiency of:", options: ["Insulin", "Tyrosinase", "ADA", "Phenylalanine hydroxylase"], correctIndex: 2 },
+  { id: 28, question: "Rivet Popper hypothesis represents:", options: ["Ecosystem", "Species", "Environment", "Population"], correctIndex: 1 },
+  { id: 29, question: "Cleistogamous flowers ensure:", options: ["Cross-pollination", "Genetic variation", "Seed set without pollinators", "Geitonogamy"], correctIndex: 2 },
+  { id: 30, question: "Antibody-rich first milk is:", options: ["Serum", "Colostrum", "Plasma", "Sebum"], correctIndex: 1 },
+  { id: 31, question: "Parents of blood group O child are:", options: ["IAIA & IBIO", "IAIO & IBIO", "IAIO & IBIB", "IOIO & IAIB"], correctIndex: 1 },
+  { id: 32, question: "DNA fragments are joined by:", options: ["DNA polymerase", "Restriction enzyme", "DNA ligase", "Chitinase"], correctIndex: 2 },
+  { id: 33, question: "Example of homologous organs:", options: ["Butterfly & bird wings", "Penguin & dolphin flippers", "Bougainvillea thorn & Cucurbita tendril", "Octopus & mammal eyes"], correctIndex: 2 },
+  { id: 34, question: "Persistent nucellus is called:", options: ["Perisperm", "Tegmen", "Hilum", "Chalaza"], correctIndex: 0 },
+  { id: 35, question: "Bt toxin activates in insect:", options: ["Acidic stomach", "Alkaline gut", "Salivary glands", "Haemolymph"], correctIndex: 1 },
+  { id: 36, question: "Inverted biomass pyramid occurs in:", options: ["Grassland", "Forest", "Aquatic ecosystem", "Desert"], correctIndex: 2 },
+  { id: 37, question: "Saheli contraceptive was developed by:", options: ["AIIMS", "CDRI Lucknow", "IISC", "CMC"], correctIndex: 1 },
+  { id: 38, question: "RNA polymerase binds to:", options: ["Structural gene", "Terminator", "Promoter", "Operator"], correctIndex: 2 },
+  { id: 39, question: "Morphine is obtained from:", options: ["Cannabis leaves", "Papaver latex", "Datura flowers", "Coca fruits"], correctIndex: 1 },
+  { id: 40, question: "Nile perch caused extinction of:", options: ["Cichlid fish", "Catfish", "Frogs", "Zooplankton"], correctIndex: 0 },
 
 ],
 };

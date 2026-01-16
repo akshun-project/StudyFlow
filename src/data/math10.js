@@ -8,290 +8,50 @@ export const math10 = {
   questions: [
     // ---------- REAL NUMBERS ----------
     // ---------- 1–8 ----------
-    {
-      id: 1,
-      question:
-        "If p = ab² and q = a³b, where a and b are prime numbers, then LCM(p, q) is:",
-      options: ["ab", "a²b²", "a³b²", "a³b³"],
-      correctIndex: 2,
-    },
-    {
-      id: 2,
-      question:
-        "The pair of linear equations 2x − 3y = 1 and kx + 5y = 7 has a unique solution if:",
-      options: ["k ≠ −10/3", "k ≠ 10/3", "k = −10/3", "k = 10/3"],
-      correctIndex: 0,
-    },
-    {
-      id: 3,
-      question:
-        "The sum of the roots of the quadratic equation 3x² − 5x + 2 = 0 is:",
-      options: ["−5/3", "5/3", "3/5", "−2/3"],
-      correctIndex: 1,
-    },
-    {
-      id: 4,
-      question:
-        "If α and β are the zeroes of the polynomial f(x) = px² − 2x + 3p and α + β = αβ, then the value of p is:",
-      options: ["-2/3", "2/3", "1/3", "-1/3"],
-      correctIndex: 1,
-    },
-    {
-      id: 5,
-      question:
-        "Ratio of volume of a cone to a cylinder with same base radius & height is:",
-      options: ["1:2", "1:3", "2:3", "3:1"],
-      correctIndex: 1,
-    },
-    {
-      id: 6,
-      question: "The midpoint of the segment joining (−5, 7) and (−1, 3) is:",
-      options: ["(−4, 5)", "(−3, 4)", "(−3, 5)", "(−2, 5)"],
-      correctIndex: 2,
-    },
-    {
-      id: 7,
-      question:
-        "In ΔABC, DE ∥ BC, AD = 3 cm, DB = 5 cm and AC = 5.6 cm. AE is:",
-      options: ["2.1 cm", "3.1 cm", "1.5 cm", "2.8 cm"],
-      correctIndex: 0,
-    },
-    {
-      id: 8,
-      question:
-        "If P(k, 0) divides A(2, −2) and B(−7, 4) in the ratio 1:2, then k is:",
-      options: ["1", "2", "−2", "−1"],
-      correctIndex: 3,
-    },
-    // ---------- 9–16 ----------
-    {
-      id: 9,
-      question:
-        "The discriminant of the quadratic equation 2x² − 4x + 3 = 0 is:",
-      options: ["−8", "8", "4", "−4"],
-      correctIndex: 0,
-    },
-    {
-      id: 10,
-      question: "If sin A = 3/4, then tan A =",
-      options: ["4/3", "√7/4", "3/5", "3/√7"],
-      correctIndex: 3,
-    },
-    {
-      id: 11,
-      question: "A die is thrown once. Probability of getting a number < 3 is:",
-      options: ["2/3", "1/6", "1/3", "1/2"],
-      correctIndex: 2,
-    },
-    {
-      id: 12,
-      question: "Nature of roots of equation 2x² − 4x + 3 = 0:",
-      options: [
-        "Real & equal",
-        "Real & unequal",
-        "No real roots",
-        "Cannot determine",
-      ],
-      correctIndex: 2,
-    },
-    {
-      id: 13,
-      question:
-        "If the angle between two radii of a circle is 130°, the angle between the tangents is:",
-      options: ["90°", "50°", "70°", "40°"],
-      correctIndex: 2,
-    },
-    {
-      id: 14,
-      question: "If HCF(65, 117) = 65m − 117, the value of m is:",
-      options: ["1", "3", "2", "4"],
-      correctIndex: 2,
-    },
-    {
-      id: 15,
-      question: "(1 − tan²45°) / (1 + tan²45°) =",
-      options: ["tan 90°", "1", "sin 45°", "0"],
-      correctIndex: 3,
-    },
-    {
-      id: 16,
-      question: "The zeroes of x² + 7x + 10 are:",
-      options: ["2 and 5", "2 and −5", "−2 and −5", "−2 and 5"],
-      correctIndex: 2,
-    },
-
-    // ---------- 17–24 ----------
-    {
-      id: 17,
-      question:
-        "A ladder 15 m long just reaches the top of a vertical wall. If the ladder makes an angle of 60° with the wall, then the height of the wall is:",
-      options: ["15 m", "15√3 m", "7.5 m", "7.5√3 m"],
-      correctIndex: 2,
-    },
-    {
-      id: 18,
-      question: "For 4x² − 2px + 1 = 0 to have equal roots, p =",
-      options: ["±4", "±2", "±1", "0"],
-      correctIndex: 1,
-    },
-    {
-      id: 19,
-      question: "Probability of drawing a red face card from 52 cards is:",
-      options: ["1/26", "3/13", "3/26", "1/13"],
-      correctIndex: 2,
-    },
-    {
-      id: 20,
-      question:
-        "Sphere of radius r melted to form cone of height r. Radius of cone =",
-      options: ["r", "3r", "4r", "2r"],
-      correctIndex: 3,
-    },
-    {
-      id: 21,
-      question: "If sin θ = cos θ, then θ =",
-      options: ["0°", "30°", "60°", "45°"],
-      correctIndex: 3,
-    },
-    {
-      id: 22,
-      question: "Distance between (2, −2) and (−1, x) is 5. One value of x is:",
-      options: ["−6", "−4", "2", "1"],
-      correctIndex: 2,
-    },
-    {
-      id: 23,
-      question: "If a₁₈ − a₁₄ = 32 in an AP, common difference is:",
-      options: ["4", "−8", "8", "16"],
-      correctIndex: 2,
-    },
-    {
-      id: 24,
-      question:
-        "If difference between two numbers is 26 & one is thrice the other:",
-      options: ["x+y=26, x=3y", "x−y=26, x=3y", "x−y=26, y=3x", "x+y=26, y=3x"],
-      correctIndex: 1,
-    },
-
-    // ---------- 25–32 ----------
-    {
-      id: 25,
-      question: "If 3 cot A = 4, then sin A =",
-      options: ["4/5", "5/3", "4/3", "3/5"],
-      correctIndex: 3,
-    },
-    {
-      id: 26,
-      question: "Sum of first 11 terms of AP 2, 6, 10, ... is:",
-      options: ["220", "200", "242", "264"],
-      correctIndex: 2,
-    },
-    {
-      id: 27,
-      question:
-        "Length of tangent from point 10 cm away from centre of radius 6 cm:",
-      options: ["16 cm", "4 cm", "8 cm", "12 cm"],
-      correctIndex: 2,
-    },
-    {
-      id: 28,
-      question:
-        "From a point Q, the tangent to a circle is 24 cm and Q is 25 cm from centre. Radius is:",
-      options: ["7 cm", "12 cm", "15 cm", "24.5 cm"],
-      correctIndex: 0,
-    },
-    {
-      id: 29,
-      question:
-        "If the 17th term of an A.P. exceeds its 10th term by 7, then the common difference is:",
-      options: ["1", "2", "3", "0"],
-      correctIndex: 0,
-    },
-    {
-      id: 30,
-      question: "Relationship between Mean, Median, Mode:",
-      options: [
-        "Mode = 2 Median − 3 Mean",
-        "Mode = 3 Median − 2 Mean",
-        "Mode = 3 Mean − 2 Median",
-        "Mode = 2 Mean − 3 Median",
-      ],
-      correctIndex: 1,
-    },
-    {
-      id: 31,
-      question:
-        "Probability of getting a face card from a deck of 52 cards is:",
-      options: ["1/13", "3/13", "4/13", "1/4"],
-      correctIndex: 1,
-    },
-    {
-      id: 32,
-      question: "Capacity of cylinder = 1100 cm³, radius = 5 cm. Height =",
-      options: ["10 cm", "7 cm", "12 cm", "14 cm"],
-      correctIndex: 3,
-    },
-
-    // ---------- 33–40 ----------
-    {
-      id: 33,
-      question: "If x=a, y=b solves x−y=2 and x+y=4, then (a,b) =",
-      options: ["(1,3)", "(0,0)", "(3,1)", "(3,1)"],
-      correctIndex: 2,
-    },
-    {
-      id: 34,
-      question:
-        "In ΔABC, DE ∥ BC. If AD = x, DB = x − 2, AE = x + 2 and EC = x − 1, then the value of x is:",
-      options: ["3", "4", "5", "3.5"],
-      correctIndex: 1,
-    },
-    {
-      id: 35,
-      question: "The nature of roots of x² + x − 5 = 0 is:",
-      options: [
-        "Real and equal",
-        "Real and distinct",
-        "Not real",
-        "None of these",
-      ],
-      correctIndex: 1,
-    },
-    {
-      id: 36,
-      question: "Which term of the A.P. 21, 18, 15, … is −81?",
-      options: ["34", "35", "36", "33"],
-      correctIndex: 3,
-    },
-    {
+{ id: 1, question: "If the HCF of 65 and 117 is expressible in the form 65m − 117, then the value of m is:", options: ["4", "2", "1", "3"], correctIndex: 1 },
+  { id: 2, question: "If p and q are coprime, then HCF(p², q²) is:", options: ["p", "q", "1", "pq"], correctIndex: 2 },
+  { id: 3, question: "The exponent of 2 in the prime factorisation of 144 is:", options: ["4", "5", "6", "3"], correctIndex: 0 },
+  { id: 4, question: "If α and β are zeroes of f(x)=x²−p(x+1)−c, then (α+1)(β+1) equals:", options: ["c−1", "1−c", "c", "1+c"], correctIndex: 1 },
+  { id: 5, question: "The number of polynomials having zeroes −2 and 5 is:", options: ["1", "2", "3", "More than 3"], correctIndex: 3 },
+  { id: 6, question: "If one zero of x²+3x+k is 2, then k is:", options: ["10", "-10", "5", "-5"], correctIndex: 1 },
+  { id: 7, question: "For what value of k do the equations 3x−y+8=0 and 6x−ky=−16 represent coincident lines?", options: ["1/2", "-1/2", "2", "-2"], correctIndex: 2 },
+  { id: 8, question: "The pair of equations x=a and y=b represents lines which are:", options: ["Parallel", "Intersecting at (b,a)", "Coincident", "Intersecting at (a,b)"], correctIndex: 3 },
+  { id: 9, question: "If x=a, y=b is the solution of x−y=2 and x+y=4, then (a,b) is:", options: ["3 and 5", "5 and 3", "3 and 1", "-1 and -3"], correctIndex: 2 },
+  { id: 10, question: "The quadratic 2x²−kx+k=0 has equal roots for k =", options: ["0 only", "4", "8 only", "0 and 8"], correctIndex: 3 },
+  { id: 11, question: "Which equation has 2 as a root?", options: ["x²−4x+5=0", "x²+3x−12=0", "2x²−7x+6=0", "3x²−6x−2=0"], correctIndex: 2 },
+  { id: 12, question: "If the discriminant of 6x²−bx+2=0 is 1, then b is:", options: ["7", "-7", "±7", "±49"], correctIndex: 2 },
+  { id: 13, question: "If an = 3 + 4n, the common difference of the AP is:", options: ["7", "3", "4", "1"], correctIndex: 2 },
+  { id: 14, question: "If the sum of first n terms of an AP is 3n²+n, then its 2nd term is:", options: ["7", "10", "8", "14"], correctIndex: 1 },
+  { id: 15, question: "If a18 − a14 = 32 for an AP, then common difference is:", options: ["8", "-8", "4", "-4"], correctIndex: 0 },
+  { id: 16, question: "In ΔABC, DE ∥ BC. If AD=3 cm, DB=4 cm and AE=6 cm, then EC is:", options: ["8 cm", "12 cm", "6 cm", "4 cm"], correctIndex: 0 },
+  { id: 17, question: "If AB/QR = BC/PR = CA/PQ, then:", options: ["ΔPQR ~ ΔCAB", "ΔPQR ~ ΔABC", "ΔCBA ~ ΔPQR", "ΔBCA ~ ΔPQR"], correctIndex: 0 },
+  { id: 18, question: "In ΔABC, AB=6√3 cm, AC=12 cm and BC=6 cm. Angle B is:", options: ["120°", "60°", "90°", "45°"], correctIndex: 2 },
+  { id: 19, question: "Distance of point P(2,3) from x-axis is:", options: ["2 units", "3 units", "1 unit", "5 units"], correctIndex: 1 },
+  { id: 20, question: "If distance between A(x,−1) and B(3,2) is 5, then x is:", options: ["−7 or 1", "7 or −1", "7 or 1", "−7 or −1"], correctIndex: 1 },
+  { id: 21, question: "Point dividing (4,−3) and (8,5) internally in ratio 3:1 is:", options: ["(7,3)", "(3,7)", "(7,2)", "(2,7)"], correctIndex: 0 },
+  { id: 22, question: "If cos A = 4/5, then tan A is:", options: ["3/5", "3/4", "4/3", "5/3"], correctIndex: 1 },
+  { id: 23, question: "If sin θ = cos θ, then θ equals:", options: ["0°", "30°", "45°", "60°"], correctIndex: 2 },
+  { id: 24, question: "Value of (2 tan30°)/(1+tan²30°) is:", options: ["sin60°", "cos60°", "tan60°", "sin30°"], correctIndex: 0 },
+  { id: 25, question: "Value of (1+tan²θ)(1−sinθ)(1+sinθ) is:", options: ["0", "1", "-1", "2"], correctIndex: 1 },
+  { id: 26, question: "If x=a cosθ and y=b sinθ, then b²x² + a²y² equals:", options: ["a²b²", "ab", "a⁴b⁴", "a²+b²"], correctIndex: 0 },
+  { id: 27, question: "If height of pole is √3 times its shadow, angle of elevation is:", options: ["30°", "60°", "45°", "75°"], correctIndex: 1 },
+  { id: 28, question: "A ladder 15 m long makes 60° with wall. Height of wall is:", options: ["15 m", "7.5√3 m", "7.5 m", "15√3 m"], correctIndex: 2 },
+  { id: 29, question: "Area of quadrilateral formed by tangents from a point 13 cm away to circle of radius 5 cm is:", options: ["60 cm²", "65 cm²", "30 cm²", "32.5 cm²"], correctIndex: 0 },
+  { id: 30, question: "If two tangents inclined at 60° touch a circle of radius 3 cm, length of each tangent is:", options: ["(3/2)√3 cm", "6 cm", "3 cm", "3√3 cm"], correctIndex: 3 },
+  { id: 31, question: "If angle between two radii is 110°, angle between tangents is:", options: ["90°", "50°", "70°", "40°"], correctIndex: 2 },
+  { id: 32, question: "If circumference and area of a circle are numerically equal, radius is:", options: ["2 units", "π units", "4 units", "7 units"], correctIndex: 0 },
+  { id: 33, question: "Area of a sector of radius 6 cm and angle 60° is:", options: ["132/7 cm²", "154/7 cm²", "122/7 cm²", "144/7 cm²"], correctIndex: 0 },
+  { id: 34, question: "A cuboid of dimensions 49×33×24 cm is melted into a sphere. Radius of sphere is:", options: ["21 cm", "23 cm", "25 cm", "19 cm"], correctIndex: 0 },
+  { id: 35, question: "Ratio of volumes of cylinder, cone and hemisphere of same base and height is:", options: ["3:1:2", "1:2:3", "3:2:1", "1:3:2"], correctIndex: 0 },
+  { id: 36, question: "If mean=30 and mode=24, median is:", options: ["26", "28", "25", "27"], correctIndex: 1 },
+      {
       id: 37,
       question: "If 18, a, b, −3 are in AP, then a + b =",
       options: ["17", "21", "15", "18"],
       correctIndex: 2,
     },
-    {
-      id: 38,
-      question: "If Mean=26 and Mode=29, then Median is:",
-      options: ["28", "27", "27.5", "26"],
-      correctIndex: 1,
-    },
-    {
-      id: 39,
-      question: "If 3 cotθ = 4, then (1 − tan²θ)/(1 + tan²θ) is:",
-      options: ["7/25", "24/25", "1", "0"],
-      correctIndex: 1,
-    },
-    {
-      id: 40,
-      question:
-        "A cylindrical pencil sharpened at one end is a combination of:",
-      options: [
-        "a cone and a cylinder",
-        "frustum of a cone and a cylinder",
-        "a hemisphere and a cylinder",
-        "two cylinders",
-      ],
-      correctIndex: 0,
-    },
+  { id: 38, question: "Mean of first five prime numbers is:", options: ["3.6", "5.6", "5.4", "4.8"], correctIndex: 1 },
+  { id: 39, question: "If probability of bad egg is 0.035 in a lot of 400, number of bad eggs is:", options: ["7", "14", "21", "28"], correctIndex: 1 },
+  { id: 40, question: "Probability of drawing a red king from a deck of cards is:", options: ["1/26", "1/13", "1/52", "3/26"], correctIndex: 0 },
   ],
 };
