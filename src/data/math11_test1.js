@@ -5,12 +5,7 @@ subject: "Mathematics",
   title: "Class 11 Maths – Basic Mathematics",
   questions: [
    
-        {
-    id: 1,
-    question: "If A = {x : x is an even prime number}, then the set A is:",
-    options: ["Null set", "Singleton set", "Infinite set", "None of these"],
-    correctIndex: 1
-  },
+  { id: 1, question: "If A = {x : x is a letter in the word FOLLOW} and B = {y : y is a letter in the word WOLF}, then:", options: ["A ⊂ B", "B ⊂ A", "A = B", "A ∩ B = ϕ"], correctIndex: 2 },
   {
     id: 2,
     question: "The number of subsets of a set containing n elements is:",
@@ -95,29 +90,14 @@ subject: "Mathematics",
     options: ["120", "60", "24", "12"],
     correctIndex: 1
   },
-  {
-    id: 16,
-    question: "ⁿCᵣ + ⁿCᵣ₋₁ is equal to:",
-    options: ["ⁿCᵣ₊₁", "ⁿ⁺¹Cᵣ₊₁", "ⁿ⁺¹Cᵣ", "ⁿ⁻¹Cᵣ"],
-    correctIndex: 2
-  },
+   { id: 16, question: "If ⁿP₄ = 12 × ⁿP₂, then n is:", options: ["6", "12", "4", "8"], correctIndex: 0 },
   {
     id: 17,
     question: "The number of terms in the expansion of (x + a)⁵⁰ is:",
     options: ["50", "51", "49", "100"],
     correctIndex: 1
   },
-  {
-    id: 18,
-    question: "The general term Tᵣ₊₁ of (a + b)ⁿ is:",
-    options: [
-      "ⁿCᵣ aⁿ⁻ʳ bʳ",
-      "ⁿCᵣ aʳ bⁿ⁻ʳ",
-      "ⁿCᵣ₊₁ aⁿ⁻ʳ bʳ",
-      "n aⁿ⁻¹"
-    ],
-    correctIndex: 0
-  },
+  { id: 18, question: "Derivative of x² cos x is:", options: ["2x cosx − x² sinx", "2x sinx + x² cosx", "2x cosx + x² sinx", "-2x sinx"], correctIndex: 0 },
   {
     id: 19,
     question: "The 10th term of the G.P. 5, 25, 125, … is:",
@@ -130,17 +110,7 @@ subject: "Mathematics",
     options: ["ab", "√ab", "(ab)²", "2ab/(a+b)"],
     correctIndex: 1
   },
-  {
-    id: 21,
-    question: "The sum of first n terms of a G.P. (r > 1) is:",
-    options: [
-      "a(rⁿ − 1)/(r − 1)",
-      "a(1 − rⁿ)/(1 − r)",
-      "arnⁿ⁻¹",
-      "n/2[2a + (n−1)d]"
-    ],
-    correctIndex: 0
-  },
+   { id: 21, question: "Value of lim (x→3) (x²−9)/(x−3) is:", options: ["0", "3", "6", "Does not exist"], correctIndex: 2 },
   {
     id: 22,
     question: "The slope of the line joining (3, −2) and (−1, 4) is:",
@@ -207,30 +177,15 @@ subject: "Mathematics",
     options: ["nxⁿ⁺¹", "nxⁿ⁻¹", "xⁿ⁺¹/(n+1)", "xⁿ⁻¹"],
     correctIndex: 1
   },
-  {
-    id: 33,
-    question: "The derivative of cos x is:",
-    options: ["sin x", "−sin x", "−cos x", "sec²x"],
-    correctIndex: 1
-  },
+  { id: 33, question: "The value of cos(−1710°) is:", options: ["0", "1", "1/2", "-1"], correctIndex: 0 },
   {
     id: 34,
     question: "The derivative of f(x)=x²−2 at x=10 is:",
     options: ["10", "20", "18", "0"],
     correctIndex: 1
   },
-  {
-    id: 35,
-    question: "The mean of first n natural numbers is:",
-    options: ["n/2", "(n+1)/2", "n+1", "n(n+1)/2"],
-    correctIndex: 1
-  },
-  {
-    id: 36,
-    question: "If variance is σ², standard deviation is:",
-    options: ["σ", "σ⁴", "√σ", "2σ"],
-    correctIndex: 0
-  },
+   { id: 35, question: "Equation of line with slope 2 through (−4,3):", options: ["2x−y+11=0", "2x+y+5=0", "x−2y+10=0", "2x−y−11=0"], correctIndex: 0 },
+  { id: 36, question: "Distance between lines 3x−4y+7=0 and 3x−4y+5=0 is:", options: ["2/5", "12/5", "2/25", "3/5"], correctIndex: 0 },
   {
     id: 37,
     question: "If P(A)=3/5 and P(B)=1/5, A and B are mutually exclusive. P(A∪B) is:",
@@ -254,7 +209,7 @@ subject: "Mathematics",
     question: "Sum of probabilities of all elementary events is:",
     options: ["0", "1", "0.5", "n"],
     correctIndex: 1
-  }
+  },
     
   ],
 };
