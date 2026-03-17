@@ -129,9 +129,7 @@ Students often:
 ## 🧑‍💻 Author
 
 **Akshun Jindal**
-B.Tech Final Year Student
-Aspiring Software Developer
-
+ 
 ---
 
 ## ⭐ Final Thought
