@@ -1,4 +1,4 @@
- 🚀 StudyFlow — AI-Powered Study Planner & Practice Platform
+# 🚀 StudyFlow — AI-Powered Study Planner & Practice Platform
 
 StudyFlow is an intelligent web application designed to help students prepare smarter for board exams.
 It leverages **AI-driven planning + real-time practice + performance tracking** to create a complete study ecosystem.
