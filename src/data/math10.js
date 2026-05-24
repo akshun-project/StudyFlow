@@ -6,52 +6,316 @@ export const math10 = {
   subject: "Mathematics",
   title: "Class 10 Mathematics – Full NCERT Test (40 MCQs)",
   questions: [
-    // ---------- REAL NUMBERS ----------
-    // ---------- 1–8 ----------
-{ id: 1, question: "If the HCF of 65 and 117 is expressible in the form 65m − 117, then the value of m is:", options: ["4", "2", "1", "3"], correctIndex: 1 },
-  { id: 2, question: "If p and q are coprime, then HCF(p², q²) is:", options: ["p", "q", "1", "pq"], correctIndex: 2 },
-  { id: 3, question: "The exponent of 2 in the prime factorisation of 144 is:", options: ["4", "5", "6", "3"], correctIndex: 0 },
-  { id: 4, question: "If α and β are zeroes of f(x)=x²−p(x+1)−c, then (α+1)(β+1) equals:", options: ["c−1", "1−c", "c", "1+c"], correctIndex: 1 },
-  { id: 5, question: "The number of polynomials having zeroes −2 and 5 is:", options: ["1", "2", "3", "More than 3"], correctIndex: 3 },
-  { id: 6, question: "If one zero of x²+3x+k is 2, then k is:", options: ["10", "-10", "5", "-5"], correctIndex: 1 },
-  { id: 7, question: "For what value of k do the equations 3x−y+8=0 and 6x−ky=−16 represent coincident lines?", options: ["1/2", "-1/2", "2", "-2"], correctIndex: 2 },
-  { id: 8, question: "The pair of equations x=a and y=b represents lines which are:", options: ["Parallel", "Intersecting at (b,a)", "Coincident", "Intersecting at (a,b)"], correctIndex: 3 },
-  { id: 9, question: "If x=a, y=b is the solution of x−y=2 and x+y=4, then (a,b) is:", options: ["3 and 5", "5 and 3", "3 and 1", "-1 and -3"], correctIndex: 2 },
-  { id: 10, question: "The quadratic 2x²−kx+k=0 has equal roots for k =", options: ["0 only", "4", "8 only", "0 and 8"], correctIndex: 3 },
-  { id: 11, question: "Which equation has 2 as a root?", options: ["x²−4x+5=0", "x²+3x−12=0", "2x²−7x+6=0", "3x²−6x−2=0"], correctIndex: 2 },
-  { id: 12, question: "If the discriminant of 6x²−bx+2=0 is 1, then b is:", options: ["7", "-7", "±7", "±49"], correctIndex: 2 },
-  { id: 13, question: "If an = 3 + 4n, the common difference of the AP is:", options: ["7", "3", "4", "1"], correctIndex: 2 },
-  { id: 14, question: "If the sum of first n terms of an AP is 3n²+n, then its 2nd term is:", options: ["7", "10", "8", "14"], correctIndex: 1 },
-  { id: 15, question: "If a18 − a14 = 32 for an AP, then common difference is:", options: ["8", "-8", "4", "-4"], correctIndex: 0 },
-  { id: 16, question: "In ΔABC, DE ∥ BC. If AD=3 cm, DB=4 cm and AE=6 cm, then EC is:", options: ["8 cm", "12 cm", "6 cm", "4 cm"], correctIndex: 0 },
-  { id: 17, question: "If AB/QR = BC/PR = CA/PQ, then:", options: ["ΔPQR ~ ΔCAB", "ΔPQR ~ ΔABC", "ΔCBA ~ ΔPQR", "ΔBCA ~ ΔPQR"], correctIndex: 0 },
-  { id: 18, question: "In ΔABC, AB=6√3 cm, AC=12 cm and BC=6 cm. Angle B is:", options: ["120°", "60°", "90°", "45°"], correctIndex: 2 },
-  { id: 19, question: "Distance of point P(2,3) from x-axis is:", options: ["2 units", "3 units", "1 unit", "5 units"], correctIndex: 1 },
-  { id: 20, question: "If distance between A(x,−1) and B(3,2) is 5, then x is:", options: ["−7 or 1", "7 or −1", "7 or 1", "−7 or −1"], correctIndex: 1 },
-  { id: 21, question: "Point dividing (4,−3) and (8,5) internally in ratio 3:1 is:", options: ["(7,3)", "(3,7)", "(7,2)", "(2,7)"], correctIndex: 0 },
-  { id: 22, question: "If cos A = 4/5, then tan A is:", options: ["3/5", "3/4", "4/3", "5/3"], correctIndex: 1 },
-  { id: 23, question: "If sin θ = cos θ, then θ equals:", options: ["0°", "30°", "45°", "60°"], correctIndex: 2 },
-  { id: 24, question: "Value of (2 tan30°)/(1+tan²30°) is:", options: ["sin60°", "cos60°", "tan60°", "sin30°"], correctIndex: 0 },
-  { id: 25, question: "Value of (1+tan²θ)(1−sinθ)(1+sinθ) is:", options: ["0", "1", "-1", "2"], correctIndex: 1 },
-  { id: 26, question: "If x=a cosθ and y=b sinθ, then b²x² + a²y² equals:", options: ["a²b²", "ab", "a⁴b⁴", "a²+b²"], correctIndex: 0 },
-  { id: 27, question: "If height of pole is √3 times its shadow, angle of elevation is:", options: ["30°", "60°", "45°", "75°"], correctIndex: 1 },
-  { id: 28, question: "A ladder 15 m long makes 60° with wall. Height of wall is:", options: ["15 m", "7.5√3 m", "7.5 m", "15√3 m"], correctIndex: 2 },
-  { id: 29, question: "Area of quadrilateral formed by tangents from a point 13 cm away to circle of radius 5 cm is:", options: ["60 cm²", "65 cm²", "30 cm²", "32.5 cm²"], correctIndex: 0 },
-  { id: 30, question: "If two tangents inclined at 60° touch a circle of radius 3 cm, length of each tangent is:", options: ["(3/2)√3 cm", "6 cm", "3 cm", "3√3 cm"], correctIndex: 3 },
-  { id: 31, question: "If angle between two radii is 110°, angle between tangents is:", options: ["90°", "50°", "70°", "40°"], correctIndex: 2 },
-  { id: 32, question: "If circumference and area of a circle are numerically equal, radius is:", options: ["2 units", "π units", "4 units", "7 units"], correctIndex: 0 },
-  { id: 33, question: "Area of a sector of radius 6 cm and angle 60° is:", options: ["132/7 cm²", "154/7 cm²", "122/7 cm²", "144/7 cm²"], correctIndex: 0 },
-  { id: 34, question: "A cuboid of dimensions 49×33×24 cm is melted into a sphere. Radius of sphere is:", options: ["21 cm", "23 cm", "25 cm", "19 cm"], correctIndex: 0 },
-  { id: 35, question: "Ratio of volumes of cylinder, cone and hemisphere of same base and height is:", options: ["3:1:2", "1:2:3", "3:2:1", "1:3:2"], correctIndex: 0 },
-  { id: 36, question: "If mean=30 and mode=24, median is:", options: ["26", "28", "25", "27"], correctIndex: 1 },
-      {
-      id: 37,
-      question: "If 18, a, b, −3 are in AP, then a + b =",
-      options: ["17", "21", "15", "18"],
+ 
+    {
+      id: 1,
+      question:
+        "If two positive integers a and b are written as a = x³y² and b = xy³, where x and y are prime numbers, then HCF(a, b) is:",
+      options: ["xy", "xy²", "x³y³", "x²y²"],
+      correctIndex: 1,
+    },
+    {
+      id: 2,
+      question:
+        "If one zero of the polynomial p(x) = x² − 5x + 6 is 2, then the other zero is:",
+      options: ["1", "2", "3", "6"],
       correctIndex: 2,
     },
-  { id: 38, question: "Mean of first five prime numbers is:", options: ["3.6", "5.6", "5.4", "4.8"], correctIndex: 1 },
-  { id: 39, question: "If probability of bad egg is 0.035 in a lot of 400, number of bad eggs is:", options: ["7", "14", "21", "28"], correctIndex: 1 },
-  { id: 40, question: "Probability of drawing a red king from a deck of cards is:", options: ["1/26", "1/13", "1/52", "3/26"], correctIndex: 0 },
+    {
+      id: 3,
+      question:
+        "The pair of equations x + 2y + 5 = 0 and -3x - 6y + 1 = 0 has:",
+      options: [
+        "a unique solution",
+        "exactly two solutions",
+        "infinitely many solutions",
+        "no solution",
+      ],
+      correctIndex: 3,
+    },
+    {
+      id: 4,
+      question:
+        "According to the Fundamental Theorem of Arithmetic, every composite number can be expressed as a product of primes. This factorization is unique apart from:",
+      options: [
+        "the order of its factors",
+        "the number of factors",
+        "the values of the primes",
+        "the power of the factors",
+      ],
+      correctIndex: 0,
+    },
+    {
+      id: 5,
+      question:
+        "If one zero of the quadratic polynomial x² + 3x + k is 2, then the value of k is:",
+      options: ["10", "-10", "-7", "-2"],
+      correctIndex: 1,
+    },
+    {
+      id: 6,
+      question:
+        "If the lines given by 3x + 2ky = 2 and 2x + 5y + 1 = 0 are parallel, then the value of k is:",
+      options: ["15/4", "3/2", "2/5", "5/4"],
+      correctIndex: 0,
+    },
+    {
+      id: 7,
+      question: "The exponent of 2 in the prime factorization of 144 is:",
+      options: ["4", "5", "3", "2"],
+      correctIndex: 0,
+    },
+    {
+      id: 8,
+      question:
+        "If α and β are the zeroes of the polynomial f(x) = x² - p(x + 1) - c, then (α + 1)(β + 1) is equal to:",
+      options: ["c - 1", "1 - c", "c", "1 + c"],
+      correctIndex: 1,
+    },
+    {
+      id: 9,
+      question:
+        "The value of k for which the system of equations x + y - 4 = 0 and 2x + ky = 3 has no solution is:",
+      options: ["-2", "3", "2", "4"],
+      correctIndex: 2,
+    },
+    {
+      id: 10,
+      question:
+        "If the LCM of a and 18 is 36 and the HCF of a and 18 is 2, then a is equal to:",
+      options: ["2", "3", "4", "1"],
+      correctIndex: 2,
+    },
+    {
+      id: 11,
+      question:
+        "If the zeroes of the polynomial x² − 7x + 10 are α and β, then α + β equals:",
+      options: ["10", "7", "-7", "-10"],
+      correctIndex: 1,
+    },
+    {
+      id: 12,
+      question: "The pair of equations x + y = 10 and x − y = 2 has:",
+      options: [
+        "No solution",
+        "Unique solution",
+        "Infinitely many solutions",
+        "Only x = 0",
+      ],
+      correctIndex: 1,
+    },
+    {
+      id: 13,
+      question:
+        "The product of a non-zero rational and an irrational number is always:",
+      options: ["rational", "irrational", "whole number", "natural number"],
+      correctIndex: 1,
+    },
+    {
+      id: 14,
+      question:
+        "If the polynomial p(x) = x² − 9 has zeroes α and β, then αβ equals:",
+      options: ["9", "-9", "0", "1"],
+      correctIndex: 1,
+    },
+    {
+      id: 15,
+      question:
+        "The father's age is six times his son's age. Four years hence, the age of the father will be four times his son's age. The present ages, in years, of the son and the father are, respectively:",
+      options: ["4 and 24", "5 and 30", "6 and 36", "3 and 18"],
+      correctIndex: 2,
+    },
+    {
+      id: 16,
+      question: "If LCM(77, 99) = 693, then HCF(77, 99) is:",
+      options: ["11", "7", "9", "22"],
+      correctIndex: 0,
+    },
+    {
+      id: 17,
+      question: "The number of polynomials having zeroes as -2 and 5 is:",
+      options: ["1", "2", "3", "more than 3"],
+      correctIndex: 3,
+    },
+    {
+      id: 18,
+      question:
+        "If the system of equations 2x + 3y = 7 and 2ax + (a + b)y = 28 has infinitely many solutions, then:",
+      options: ["b = 2a", "a = 2b", "b = a", "a = b"],
+      correctIndex: 0,
+    },
+    {
+      id: 19,
+      question: "If HCF(26, 169) = 13, then LCM(26, 169) is:",
+      options: ["26", "52", "338", "13"],
+      correctIndex: 2,
+    },
+    {
+      id: 20,
+      question:
+        "If α and β are the zeroes of the quadratic polynomial f(x) = ax² + bx + c, then the value of (1/α) + (1/β) is:",
+      options: ["b/c", "-b/c", "-b/a", "c/a"],
+      correctIndex: 1,
+    },
+    {
+      id: 21,
+      question:
+        "For what value of k, do the equations 3x - y + 8 = 0 and 6x - ky = -16 represent coincident lines?",
+      options: ["1/2", "-1/2", "2", "-2"],
+      correctIndex: 2,
+    },
+    {
+      id: 22,
+      question:
+        "The largest number which divides 70 and 125, leaving remainders 5 and 8 respectively, is:",
+      options: ["13", "65", "875", "1750"],
+      correctIndex: 0,
+    },
+    {
+      id: 23,
+      question:
+        "If the zeroes of the quadratic polynomial ax² + bx + c, where c is not equal to 0, are equal, then:",
+      options: [
+        "c and a have opposite signs",
+        "c and b have opposite signs",
+        "c and a have the same sign",
+        "c and b have the same sign",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 24,
+      question:
+        "A fraction becomes 4/5 if 1 is added to both numerator and denominator. If, however, 5 is subtracted from both numerator and denominator, the fraction becomes 1/2. What is the fraction?",
+      options: ["7/9", "8/9", "6/7", "5/6"],
+      correctIndex: 0,
+    },
+
+    {
+      id: 25,
+      question:
+        "If the pair of equations 2x + 3y = 7 and 4x + 6y = 14 is represented graphically, then the lines are:",
+      options: ["Intersecting", "Parallel", "Coincident", "Perpendicular"],
+      correctIndex: 2,
+    },
+    {
+      id: 26,
+      question:
+        "If the sum of the zeroes of the quadratic polynomial kx² + 2x + 3k is equal to their product, then k is equal to:",
+      options: ["1/3", "-1/3", "2/3", "-2/3"],
+      correctIndex: 3,
+    },
+    {
+      id: 27,
+      question:
+        "If the equations 3x + 2y = 12 and 6x + 4y = 24 are represented graphically, then the pair of lines is:",
+      options: ["Intersecting", "Parallel", "Coincident", "Perpendicular"],
+      correctIndex: 2,
+    },
+    {
+      id: 28,
+      question:
+        "Assertion (A): The HCF of two numbers is 5 and their product is 150, then their LCM is 30.\nReason (R): For any two positive integers a and b, HCF(a, b) × LCM(a, b) = a × b.",
+      options: [
+        "Both A and R are true and R is the correct explanation of A.",
+        "Both A and R are true but R is not the correct explanation of A.",
+        "A is true but R is false.",
+        "A is false but R is true.",
+      ],
+      correctIndex: 0,
+    },
+    {
+      id: 29,
+      question:
+        "If one zero of the quadratic polynomial (k-1)x² + kx + 1 is -3, then the value of k is:",
+      options: ["4/3", "-4/3", "2/3", "-2/3"],
+      correctIndex: 0,
+    },
+    {
+      id: 30,
+      question: "The pair of equations x + 2y = 5 and 2x + 4y = 10 has:",
+      options: [
+        "Unique solution",
+        "No solution",
+        "Infinitely many solutions",
+        "Only y = 0",
+      ],
+      correctIndex: 2,
+    },
+    {
+      id: 31,
+      question:
+        "If p and q are two distinct prime numbers, then their least common multiple (LCM) is always:",
+      options: ["1", "p + q", "p × q", "p / q"],
+      correctIndex: 2,
+    },
+    {
+      id: 32,
+      question:
+        "If the zeroes of the quadratic polynomial x² + (a + 1)x + b are 2 and -3, then:",
+      options: [
+        "a = -7, b = -1",
+        "a = 5, b = -1",
+        "a = 2, b = -6",
+        "a = 0, b = -6",
+      ],
+      correctIndex: 3,
+    },
+    {
+      id: 33,
+      question:
+        "If the pair of equations 3x + 5y = 11 and 6x + 10y = 22 is solved graphically, then the number of solutions is:",
+      options: ["0", "1", "2", "Infinitely many"],
+      correctIndex: 3,
+    },
+    {
+      id: 34,
+      question: "The HCF of 96 and 404 is:",
+      options: ["2", "4", "8", "12"],
+      correctIndex: 1,
+    },
+
+    {
+      id: 35,
+      question:
+        "If the zeroes of the polynomial x² − 5x + 6 are α and β, then αβ equals:",
+      options: ["5", "6", "-5", "-6"],
+      correctIndex: 1,
+    },
+    {
+      id: 36,
+      question:
+        "If the system of equations 3x + y = 1 and (2k - 1)x + (k - 1)y = 2k + 1 is inconsistent, then k is equal to:",
+      options: ["1", "0", "-1", "2"],
+      correctIndex: 3,
+    },
+    {
+      id: 37,
+      question:
+        "If a and b are two positive integers such that a = p³q⁴ and b = p²q³, where p and q are prime numbers, then LCM(a, b) × HCF(a, b) is equal to:",
+      options: ["p⁵q⁷", "p⁶q¹²", "p⁵q⁶", "p⁴q⁷"],
+      correctIndex: 0,
+    },
+    {
+      id: 38,
+      question:
+        "If α, β are the zeroes of a polynomial such that α + β = -6 and αβ = 4, then the quadratic polynomial is:",
+      options: ["x² - 6x + 4", "x² + 6x + 4", "x² - 6x - 4", "x² + 6x - 4"],
+      correctIndex: 1,
+    },
+    {
+      id: 39,
+      question:
+        "If the zeroes of the polynomial x² − 6x + 8 are α and β, then α + β equals:",
+      options: ["6", "-6", "8", "-8"],
+      correctIndex: 0,
+    },
+    {
+      id: 40,
+      question:
+        "If the pair of equations x + y = 7 and x − y = 1 is solved, then the value of x is:",
+      options: ["3", "4", "5", "6"],
+      correctIndex: 1,
+    },
   ],
 };

@@ -11,7 +11,7 @@ import {
 
 const FEATURES = [
   {
-    emoji: "📝",
+  
     title: "Daily Study Planner",
     description:
       "Create smart chapter-wise plans and stay consistent every day.",
@@ -22,7 +22,7 @@ const FEATURES = [
     preview: "planner",
   },
   {
-    emoji: "⚡",
+    
     title: "Smart AI Quiz",
     description:
       "Practice chapter-wise quizzes and improve your daily accuracy.",
@@ -33,7 +33,7 @@ const FEATURES = [
     preview: "quiz",
   },
   {
-    emoji: "🎯",
+    
     title: "Board Practice Zone",
     description:
       "Solve PYQs, passages, mock tests, and prepare for boards.",
@@ -44,7 +44,7 @@ const FEATURES = [
     preview: "board",
   },
   {
-    emoji: "🧩",
+  
     title: "Performance Dashboard",
     description:
       "Track streaks, coins, quizzes, and your complete progress.",

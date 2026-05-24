@@ -26,7 +26,7 @@ const TESTIMONIALS = [
   {
     name: "Ananya Gupta",
     initials: "AG",
-    class: "Class 9",
+    class: "Class 12",
     review:
       "The streak system keeps me motivated. I studied consistently for the first time.",
   },
@@ -44,6 +44,34 @@ const TESTIMONIALS = [
     review:
       "Everything feels connected — planner, quizzes, streaks, and progress tracking.",
   },
+  {
+  name: "Arnav Singhal",
+  initials: "AM",
+  class: "Class 10",
+  review:
+    "The daily targets make studying much easier. I stopped wasting time deciding what to study.",
+},
+{
+  name: "Sneha Kapoor",
+  initials: "SK",
+  class: "Class 12",
+  review:
+    "I love how simple and modern the platform feels. It actually makes studying less stressful.",
+},
+{
+  name: "Vivek Chauhan",
+  initials: "VC",
+  class: "Class 11",
+  review:
+    "The performance analytics helped me identify my weak subjects and improve faster.",
+},
+{
+  name: "Ishita Arora",
+  initials: "IA",
+  class: "Class 10",
+  review:
+    "The quiz experience is really engaging. Practicing every day became a habit for me now.",
+},
 ];
 
 const fadeUp = {
