@@ -1,259 +1,455 @@
- import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { SignInButton, UserButton, useUser } from "@clerk/clerk-react";
-import { supabase } from "../Supabase/supabaseClient";
-import { motion } from "framer-motion";
+ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
+import { useUser } from "@clerk/clerk-react";
+import Navbar from "../Components/Navbar";
 
-
-export default function Hero() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [coins, setCoins] = useState(0);
-  const { isSignedIn, user } = useUser();
-  const location = useLocation();
-  const navigate = useNavigate();
-
+function Counter({ from = 0, to, suffix = "" }) {
+  const [value, setValue] = useState(from);
 
   useEffect(() => {
-    if (!isSignedIn || !user) return;
+    let start = from;
 
-    async function fetchCoins() {
-      const { data } = await supabase
-        .from("coins")
-        .select("balance")
-        .eq("user_id", user.id)
-        .single();
+    const duration = 1800;
+    const increment = to / (duration / 16);
 
-      if (data) setCoins(data.balance || 0);
-    }
-    fetchCoins();
-  }, [isSignedIn, user]);
+    const timer = setInterval(() => {
+      start += increment;
 
-  const fadeUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.8, ease: "easeOut" },
-    },
-  };
+      if (start >= to) {
+        start = to;
+        clearInterval(timer);
+      }
 
-  const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/planner", label: "Planner" },
-    { path: "/quiz", label: "Quiz" },
-    { path: "/dashboard", label: "Dashboard" },
-    { path: "/board-practice", label: "Board Practice" },
-  ];
+      setValue(Math.floor(start));
+    }, 16);
+
+    return () => clearInterval(timer);
+  }, [from, to]);
 
   return (
-    <main className="relative min-h-screen bg-[url('https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/hero/gradientBackground.png')] bg-cover bg-center text-gray-700 overflow-x-hidden">
+    <span>
+      {value}
+      {suffix}
+    </span>
+  );
+}
+
+export default function Hero() {
+  const navigate = useNavigate();
+  const { isSignedIn } = useUser();
+
+  const fadeUp = {
+    hidden: {
+      opacity: 0,
+      y: 30,
+    },
+
+    visible: (delay = 0) => ({
+      opacity: 1,
+      y: 0,
+
+      transition: {
+        duration: 0.8,
+        delay,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    }),
+  };
+
+  return (
+    <main className="relative overflow-hidden bg-[#F7F8FA] text-[#111827]">
+
+      {/* BACKGROUND */}
+      <div className="absolute inset-0 -z-10 overflow-hidden">
+
+        {/* MAIN BLUR */}
+        <motion.div
+          animate={{
+            x: [0, 40, 0],
+            y: [0, -20, 0],
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute left-1/2 top-0 h-[350px] w-[500px] -translate-x-1/2 rounded-full bg-indigo-100/50 blur-3xl sm:h-[500px] sm:w-[700px]"
+        />
+
+        {/* SECOND BLUR */}
+        <motion.div
+          animate={{
+            x: [0, -30, 0],
+            y: [0, 20, 0],
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="absolute right-0 top-40 h-[220px] w-[220px] rounded-full bg-violet-100/40 blur-3xl sm:h-[300px] sm:w-[300px]"
+        />
+      </div>
 
       {/* NAVBAR */}
-      <header className="fixed top-0 left-0 w-full z-20 bg-white/70 backdrop-blur-md border-b border-gray-200 shadow-sm">
-        <nav className="flex items-center justify-between px-6 md:px-16 lg:px-24 py-5 font-medium">
+      <Navbar />
 
-          {/* Logo */}
-          <Link
-            to="/"
-            className="font-bold text-2xl text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600"
+      {/* HERO */}
+      <section className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pb-14 pt-24 sm:px-6 sm:pb-16 sm:pt-28 lg:flex-row lg:items-center lg:gap-20 lg:px-10">
+
+        {/* LEFT */}
+        <div className="flex-1">
+
+          {/* BADGE */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0}
+            className="mb-6 inline-flex items-center gap-2 rounded-full border border-black/5 bg-white px-4 py-2 shadow-sm"
           >
-            StudyFlow
-          </Link>
+            <div className="h-2 w-2 rounded-full bg-emerald-500" />
 
-          {/* Desktop Navbar */}
-          <ul className="hidden md:flex gap-10 text-base font-medium">
-            {navItems.map((item) => (
-              <li key={item.path}>
-                <Link
-                  to={item.path}
-                  className={`relative transition-all ${
-                    location.pathname === item.path
-                      ? "text-indigo-700 font-semibold after:absolute after:-bottom-1 after:left-0 after:w-full after:h-[2px] after:bg-indigo-600 after:rounded-full"
-                      : "hover:text-indigo-600"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
+            <span className="text-[13px] font-medium text-gray-600">
+              Trusted by 150+ students
+            </span>
+          </motion.div>
 
-          {/* Coins + Auth */}
-          <div className="flex items-center gap-6">
-            {isSignedIn && (
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="flex items-center gap-1 bg-yellow-100 px-3 py-1 rounded-full border border-yellow-300 shadow-sm"
-              >
-                <span className="text-yellow-700 text-sm font-semibold">
-                  {coins}
-                </span>
-                <span className="text-yellow-600 text-lg animate-bounce">🪙</span>
-              </motion.div>
-            )}
+          {/* HEADING */}
+          <motion.h1
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.1}
+            className="max-w-[320px] text-[36px] font-semibold leading-[1.02] tracking-tight text-black sm:max-w-3xl sm:text-6xl lg:text-7xl"
+          >
+            Build a study routine
+            <span className="text-gray-400">
+              {" "}you’ll actually follow.
+            </span>
+          </motion.h1>
 
-            <div className="hidden md:block">
-              {!isSignedIn ? (
-                <SignInButton mode="modal">
-                  <button className="px-5 py-2 border border-indigo-300 rounded-lg text-indigo-700 hover:bg-indigo-50 transition-all font-medium">
-                    Log In
-                  </button>
-                </SignInButton>
-              ) : (
-                <UserButton afterSignOutUrl="/" />
-              )}
+          {/* DESCRIPTION */}
+          <motion.p
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.2}
+            className="mt-6 max-w-xl text-[15px] leading-7 text-gray-500 sm:text-lg sm:leading-8"
+          >
+            StudyFlow helps students plan sessions,
+            practice smarter, track consistency,
+            and stay focused without feeling overwhelmed.
+          </motion.p>
+
+          {/* BUTTONS */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.3}
+            className="mt-8 flex flex-col gap-3 sm:flex-row"
+          >
+            <button
+              onClick={() => navigate("/planner")}
+              className="rounded-2xl bg-black px-7 py-4 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-[1px] hover:shadow-lg active:scale-[0.98]"
+            >
+              Start studying
+            </button>
+
+            <button
+              onClick={() => {
+                const section =
+                  document.getElementById("features");
+
+                if (section) {
+                  section.scrollIntoView({
+                    behavior: "smooth",
+                  });
+                }
+              }}
+              className="rounded-2xl border border-black/5 bg-white/70 px-7 py-4 text-sm font-medium text-gray-700 backdrop-blur transition-all duration-300 hover:bg-white"
+            >
+              Explore platform
+            </button>
+          </motion.div>
+
+          {/* STATS */}
+          <motion.div
+            variants={fadeUp}
+            initial="hidden"
+            animate="visible"
+            custom={0.4}
+            className="mt-12 grid grid-cols-3 gap-3 sm:mt-14 sm:flex sm:flex-wrap sm:items-center sm:gap-10"
+          >
+            <div>
+              <p className="text-xl font-semibold sm:text-3xl">
+                <Counter to={190} suffix="+" />
+              </p>
+
+              <p className="mt-1 text-[11px] text-gray-500 sm:text-sm">
+                active students
+              </p>
             </div>
 
-            {/* Mobile Menu Button */}
-            <button
-              onClick={() => setMenuOpen(!menuOpen)}
-              className="md:hidden text-gray-700 focus:outline-none"
-            >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path d="M4 6h16M4 12h16M4 18h16" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </button>
-          </div>
+            <div>
+              <p className="text-xl font-semibold sm:text-3xl">
+                <Counter to={10} suffix="k+" />
+              </p>
 
-          {/* Mobile Menu */}
-          {menuOpen && (
-            <motion.ul
-              initial={{ opacity: 0, y: -10 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="md:hidden absolute top-full left-0 w-full bg-white shadow-md flex flex-col gap-5 text-base px-6 py-6 border-t border-gray-200 z-50"
-            >
-              {navItems.map((item) => (
-                <li key={item.path}>
-                  <Link
-                    to={item.path}
-                    onClick={() => setMenuOpen(false)}
-                    className="hover:text-indigo-600 transition"
-                  >
-                    {item.label}
-                  </Link>
-                </li>
-              ))}
+              <p className="mt-1 text-[11px] text-gray-500 sm:text-sm">
+                quizzes completed
+              </p>
+            </div>
 
-              <div className="mt-4">
-                {!isSignedIn ? (
-                  <SignInButton mode="modal">
-                    <button className="w-full px-4 py-2 border rounded-lg hover:bg-indigo-50 transition">
-                      Log In
-                    </button>
-                  </SignInButton>
-                ) : (
-                  <UserButton afterSignOutUrl="/" />
-                )}
-              </div>
-            </motion.ul>
-          )}
-        </nav>
-      </header>
+            <div>
+              <p className="text-xl font-semibold sm:text-3xl">
+                <Counter to={92} suffix="%" />
+              </p>
 
-      {/* HERO SECTION */}
-      <section className="h-screen flex flex-col justify-center items-center text-center px-6 pt-24 max-w-4xl mx-auto">
+              <p className="mt-1 text-[11px] text-gray-500 sm:text-sm">
+                weekly consistency
+              </p>
+            </div>
+          </motion.div>
+        </div>
 
-        {/* Small Banner */}
-       
-   <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          className="flex flex-wrap items-center justify-center gap-2 mb-6 border border-gray-300/50 rounded-full bg-gray-100/40 pl-4 p-1 text-sm text-gray-800"
-        >
-          <p>Make your study plan today!</p>
-
-          <button
-            onClick={() => navigate("/planner")}
-            className="flex items-center gap-2 bg-white border border-gray-300/70 rounded-2xl px-3 py-1 shadow-sm hover:shadow-md transition"
-          >
-            <p>Explore</p>
-            <svg width="12" height="9" fill="none" stroke="#6B7280" strokeWidth="1.5">
-              <path d="M1 4.5h10.182m-4-3.5 4 3.5-4 3.5" strokeLinecap="round" />
-            </svg>
-          </button>
-        </motion.div>
-        {/* Heading */}
-        <motion.h1
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 0.2 }}
-          className="text-4xl sm:text-5xl md:text-6xl font-bold max-w-4xl text-gray-800 leading-tight"
-        >
-          <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">
-            Plan. Learn. Quiz.
-          </span>{" "}
-          Build Your Study Flow.
-        </motion.h1>
-
-        {/* Description */}
-        <motion.p
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          transition={{ delay: 0.4 }}
-          className="max-w-lg mt-10 text-gray-600 text-base md:text-lg leading-relaxed"
-        >
-          Stay consistent, study smarter, and feel proud of your progress with StudyFlow.
-        </motion.p>
-
-        {/* Buttons */}
+        {/* RIGHT */}
         <motion.div
           variants={fadeUp}
           initial="hidden"
           animate="visible"
-          transition={{ delay: 0.6 }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8"
+          custom={0.5}
+          className="relative mt-12 mx-auto w-full max-w-[340px] flex-1 sm:mt-16 sm:max-w-none lg:mt-0"
         >
-          {/* Smooth Scroll Button */}
-          <button
-            onClick={() => {
-              const target = document.getElementById("features");
-              if (target) target.scrollIntoView({ behavior: "smooth" });
-            }}
-            className="px-6 py-3 rounded-lg bg-indigo-600 hover:bg-indigo-700 hover:scale-105 transition transform text-white font-semibold shadow-md hover:shadow-lg"
-          >
-            Start Learning
-          </button>
 
-          <button
-            onClick={() => {
-              const target = document.getElementById("faq");
-              if (target) target.scrollIntoView({ behavior: "smooth" });
+          {/* FLOATING CARD */}
+          <motion.div
+            animate={{
+              y: [0, -10, 0],
             }}
-            className="group px-7 py-2.5 flex items-center gap-2 font-medium text-gray-700 hover:text-indigo-600 transition"
+            transition={{
+              duration: 4,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            className="absolute -top-5 right-3 z-20 hidden rounded-2xl border border-black/5 bg-white px-4 py-3 shadow-xl lg:block"
           >
-            Learn More
-            <svg
-              className="group-hover:translate-x-1 transition pt-0.5"
-              width="12"
-              height="9"
-              fill="none"
-              stroke="#6B7280"
-              strokeWidth="1.5"
-            >
-              <path d="M1 4.5h10.182m-4-3.5 4 3.5-4 3.5" strokeLinecap="round" />
-            </svg>
-          </button>
+            <p className="text-xs text-gray-400">
+              Weekly consistency
+            </p>
+
+            <div className="mt-1 flex items-end gap-2">
+              <span className="text-2xl font-semibold">
+                92%
+              </span>
+
+              <span className="text-sm text-emerald-600">
+                +12%
+              </span>
+            </div>
+          </motion.div>
+
+          {/* MAIN CARD */}
+          <motion.div
+            animate={{
+              y: [0, -6, 0],
+            }}
+            transition={{
+              duration: 6,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+            whileHover={{
+              y: -3,
+            }}
+            className="overflow-hidden rounded-[24px] border border-black/5 bg-white shadow-[0_20px_80px_rgba(0,0,0,0.08)] sm:rounded-[30px]"
+          >
+
+            {/* TOP BAR */}
+            <div className="flex items-center gap-2 border-b border-black/5 px-4 py-3 sm:px-5 sm:py-4">
+              <div className="h-3 w-3 rounded-full bg-red-300" />
+
+              <div className="h-3 w-3 rounded-full bg-yellow-300" />
+
+              <div className="h-3 w-3 rounded-full bg-green-300" />
+            </div>
+
+            {/* CONTENT */}
+            <div className="grid gap-2.5 p-3.5 sm:gap-4 sm:p-5">
+
+              {/* TOP GRID */}
+              <div className="grid grid-cols-3 gap-2.5 sm:gap-4">
+
+                {/* STREAK */}
+                <motion.div
+                  animate={{
+                    y: [0, -2, 0],
+                  }}
+                  transition={{
+                    duration: 3,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="rounded-2xl border border-black/5 bg-[#F9FAFB] p-3 sm:p-4"
+                >
+                  <p className="text-[9px] uppercase tracking-wide text-gray-400 sm:text-xs">
+                    Streak
+                  </p>
+
+                  <h3 className="mt-2 text-xl font-semibold sm:mt-3 sm:text-3xl">
+                    14
+                  </h3>
+
+                  <p className="mt-1 text-[10px] text-gray-500 sm:text-sm">
+                    days active
+                  </p>
+                </motion.div>
+
+                {/* PROGRESS */}
+                <div className="col-span-2 rounded-2xl border border-black/5 bg-[#F9FAFB] p-3 sm:p-4">
+
+                  <div className="flex items-center justify-between">
+
+                    <p className="text-[9px] uppercase tracking-wide text-gray-400 sm:text-xs">
+                      Weekly Progress
+                    </p>
+
+                    <p className="text-[10px] text-emerald-600 sm:text-sm">
+                      +18%
+                    </p>
+                  </div>
+
+                  {/* CHART */}
+                  <div className="mt-4 flex items-end gap-1.5 sm:mt-6 sm:gap-2">
+                    {[35, 55, 40, 75, 60, 90, 72].map(
+                      (height, i) => (
+                        <motion.div
+                          key={i}
+                          initial={{
+                            height: 0,
+                          }}
+                          animate={{
+                            height,
+                          }}
+                          transition={{
+                            duration: 0.7,
+                            delay: i * 0.08,
+                          }}
+                          className="flex-1 rounded-full bg-gradient-to-t from-indigo-600 to-violet-500"
+                        />
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* TASKS */}
+              <div className="rounded-2xl border border-black/5 bg-[#F9FAFB] p-4 sm:p-5">
+
+                <div className="flex items-center justify-between">
+
+                  <h3 className="text-[13px] font-medium sm:text-sm">
+                    Today's Study Plan
+                  </h3>
+
+                  <span className="text-[10px] text-gray-400 sm:text-sm">
+                    3 tasks
+                  </span>
+                </div>
+
+                <div className="mt-4 flex flex-col gap-2.5 sm:gap-3">
+
+                  {[
+                    {
+                      title: "Physics Revision",
+                      time: "7:00 PM",
+                      completed: true,
+                    },
+
+                    {
+                      title: "Math Mock Test",
+                      time: "8:30 PM",
+                    },
+
+                    {
+                      title: "Chemistry Quiz",
+                      time: "10:00 PM",
+                    },
+                  ].map((task, i) => (
+                    <motion.div
+                      key={i}
+                      initial={{
+                        opacity: 0,
+                        x: -10,
+                      }}
+                      animate={{
+                        opacity: 1,
+                        x: 0,
+                      }}
+                      transition={{
+                        delay: i * 0.12,
+                      }}
+                      className="flex items-center justify-between rounded-xl border border-black/5 bg-white px-3 py-2.5 sm:px-4 sm:py-3"
+                    >
+                      <div className="flex items-center gap-3">
+
+                        {/* CHECK */}
+                        <div
+                          className={`flex h-5 w-5 items-center justify-center rounded-full border ${
+                            task.completed
+                              ? "border-indigo-600 bg-indigo-600 text-white"
+                              : "border-gray-300"
+                          }`}
+                        >
+                          {task.completed && (
+                            <svg
+                              width="10"
+                              height="10"
+                              viewBox="0 0 10 10"
+                              fill="none"
+                            >
+                              <path
+                                d="M1 5L4 8L9 2"
+                                stroke="white"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          )}
+                        </div>
+
+                        {/* TEXT */}
+                        <div>
+                          <p
+                            className={`text-[12px] font-medium sm:text-sm ${
+                              task.completed
+                                ? "text-gray-400 line-through"
+                                : "text-black"
+                            }`}
+                          >
+                            {task.title}
+                          </p>
+
+                          <p className="text-[10px] text-gray-400 sm:text-xs">
+                            {task.time}
+                          </p>
+                        </div>
+                      </div>
+
+                      <span className="text-[10px] text-gray-400 sm:text-xs">
+                        45 min
+                      </span>
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </motion.div>
       </section>
     </main>
   );
 }
-
-
-
- 
-
-
-
- 
-      
