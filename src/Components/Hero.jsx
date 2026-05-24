@@ -1,452 +1,560 @@
  import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { useUser } from "@clerk/clerk-react";
 import Navbar from "../Components/Navbar";
 
+// ─── Constants ────────────────────────────────────────────────────────────────
+
+const ease = [0.22, 1, 0.36, 1];
+
+const SUBJECTS = [
+  { label: "Physics",   color: "#EDE9FE", text: "#6D28D9" },
+  { label: "Chemistry", color: "#FEF3C7", text: "#D97706" },
+  { label: "Maths",     color: "#ECFDF5", text: "#059669" },
+  { label: "Biology",   color: "#EFF6FF", text: "#2563EB" },
+];
+
+const STREAK     = [true, true, true, true, false, true, true];
+const DAY_LABELS = ["M", "T", "W", "T", "F", "S", "S"];
+const BAR_HEIGHTS = [28, 44, 20, 62, 48, 72, 55];
+
+const TAGS = ["📅 Study Planner", "📝 Board Quiz", "📊 Chapter Tracker", "🎯 Focus Mode"];
+
+const STATS = [
+  { to: 180, suffix: "+",  label: "Active Students"    },
+  { to: 10,  suffix: "k+", label: "Quizzes Completed"  },
+  { to: 92,  suffix: "%",  label: "Weekly Consistency" },
+];
+
+const TASKS = [
+  { title: "Physics — Laws of Motion", time: "7:00 PM",  dur: "45 min", done: true,  color: "#6D28D9" },
+  { title: "Math Mock Test (Ch 5–8)",  time: "8:30 PM",  dur: "50 min", done: false, color: "#2563EB" },
+  { title: "Chemistry — Reactions",    time: "10:00 PM", dur: "30 min", done: false, color: "#D97706" },
+];
+
+const CHAPTERS = [
+  { label: "Laws of Motion",      pct: 85, color: "#6D28D9" },
+  { label: "Chemical Reactions",  pct: 60, color: "#D97706" },
+  { label: "Coordinate Geometry", pct: 40, color: "#2563EB" },
+];
+
+const QUESTIONS = [
+  "What is Newton's Second Law of Motion?",
+  "Define Photosynthesis in plants.",
+  "Solve: ∫ x² dx from 0 to 3.",
+];
+
+// ─── Animation variants ───────────────────────────────────────────────────────
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: (delay = 0) => ({
+    opacity: 1, y: 0,
+    transition: { duration: 0.78, delay, ease },
+  }),
+};
+
+const staggerList = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.05 } },
+};
+
+const listItem = {
+  hidden:  { opacity: 0, x: -10 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.38, ease } },
+};
+
+// ─── Counter (UNCHANGED logic) ────────────────────────────────────────────────
+
 function Counter({ from = 0, to, suffix = "" }) {
   const [value, setValue] = useState(from);
-
   useEffect(() => {
     let start = from;
-
     const duration = 1800;
     const increment = to / (duration / 16);
-
     const timer = setInterval(() => {
       start += increment;
-
-      if (start >= to) {
-        start = to;
-        clearInterval(timer);
-      }
-
+      if (start >= to) { start = to; clearInterval(timer); }
       setValue(Math.floor(start));
     }, 16);
-
     return () => clearInterval(timer);
   }, [from, to]);
+  return <span>{value}{suffix}</span>;
+}
 
+// ─── Blinking cursor ──────────────────────────────────────────────────────────
+
+function Cursor() {
   return (
-    <span>
-      {value}
-      {suffix}
-    </span>
+    <motion.span
+      animate={{ opacity: [1, 0, 1] }}
+      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+      className="ml-0.5 inline-block h-[1em] w-[2px] rounded-full bg-indigo-400 align-middle"
+    />
   );
 }
+
+// ─── Floating badge (desktop only) ───────────────────────────────────────────
+
+function FloatingBadge({ delay, offsetClass, children }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: [0, -9, 0] }}
+      transition={{
+        opacity: { duration: 0.5, delay, ease },
+        y: { duration: 4.8 + delay, repeat: Infinity, ease: "easeInOut", delay },
+      }}
+      className={`absolute z-20 hidden lg:block ${offsetClass} rounded-2xl border border-black/[0.06] bg-white/95 backdrop-blur-sm shadow-[0_8px_32px_rgba(0,0,0,0.10),0_1px_4px_rgba(0,0,0,0.05)]`}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+// ─── Hero Card ────────────────────────────────────────────────────────────────
+
+function HeroCard() {
+  const [activeTab, setActiveTab] = useState(0);
+  const [qIdx, setQIdx]           = useState(0);
+  const tabs = ["Study Plan", "Quiz Mode", "Progress"];
+
+  useEffect(() => {
+    const t = setInterval(() => setQIdx(i => (i + 1) % QUESTIONS.length), 3200);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <div className="overflow-hidden rounded-[24px] border border-black/[0.06] bg-white shadow-[0_32px_80px_rgba(0,0,0,0.10),0_4px_16px_rgba(0,0,0,0.05)] sm:rounded-[28px]">
+
+      {/* Mac chrome bar */}
+      <div className="flex items-center gap-1.5 border-b border-black/[0.05] bg-[#FAFAFA] px-4 py-3 sm:px-5 sm:py-3.5">
+        <div className="h-[9px] w-[9px] rounded-full bg-red-300/90" />
+        <div className="h-[9px] w-[9px] rounded-full bg-amber-300/90" />
+        <div className="h-[9px] w-[9px] rounded-full bg-emerald-300/90" />
+
+        <div className="mx-3 flex flex-1 items-center justify-center">
+          <div className="flex items-center gap-1.5 rounded-md bg-black/[0.04] px-3 py-1">
+            <div className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
+            <span className="text-[9px] font-medium text-gray-400 tracking-[-0.01em]">studyflow.app</span>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-1">
+          {tabs.map((tab, i) => (
+            <button
+              key={tab}
+              onClick={() => setActiveTab(i)}
+              className={`rounded-md px-2 py-1 text-[9px] font-semibold tracking-[-0.01em] transition-all duration-200 sm:px-2.5 ${
+                activeTab === i ? "bg-indigo-50 text-indigo-600" : "text-gray-300 hover:text-gray-500"
+              }`}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <AnimatePresence mode="wait">
+
+        {/* TAB 0: Study Plan */}
+        {activeTab === 0 && (
+          <motion.div
+            key="plan"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.26, ease }}
+            style={{ padding: "14px" }}
+            className="grid gap-2.5"
+          >
+            <div className="flex items-center justify-between rounded-2xl border border-black/[0.05] bg-[#F9FAFB] px-3.5 py-2.5">
+              <div>
+                <p className="text-[8.5px] font-semibold uppercase tracking-wider text-gray-400">Today</p>
+                <p className="mt-0.5 text-[12.5px] font-semibold tracking-[-0.01em] text-gray-800">
+                  {new Date().toLocaleDateString("en-IN", { weekday: "long", day: "numeric", month: "short" })}
+                </p>
+              </div>
+              <div className="flex flex-col items-end gap-1">
+                <p className="text-[8.5px] font-semibold uppercase tracking-wider text-gray-400">Streak</p>
+                <div className="flex gap-1">
+                  {STREAK.map((done, i) => (
+                    <div key={i} className={`h-1.5 w-3.5 rounded-full ${done ? "bg-indigo-500" : "bg-gray-200"}`} />
+                  ))}
+                </div>
+                <p className="text-[8.5px] font-medium text-indigo-500">6-day streak 🔥</p>
+              </div>
+            </div>
+
+            <motion.div variants={staggerList} initial="hidden" animate="visible" className="flex flex-col gap-2">
+              {TASKS.map((task, i) => (
+                <motion.div
+                  key={i}
+                  variants={listItem}
+                  className="flex items-center justify-between rounded-xl border border-black/[0.04] bg-white px-3 py-2.5 hover:border-black/[0.08] transition-colors"
+                >
+                  <div className="flex items-center gap-2.5">
+                    <div className="h-6 w-[3px] flex-shrink-0 rounded-full" style={{ background: task.color + (task.done ? "55" : "cc") }} />
+                    <div>
+                      <p className={`text-[11px] font-semibold leading-none tracking-[-0.01em] ${task.done ? "text-gray-300 line-through" : "text-gray-800"}`}>
+                        {task.title}
+                      </p>
+                      <p className="mt-[3px] text-[9px] font-medium text-gray-400">{task.time}</p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[8.5px] font-medium text-gray-300">{task.dur}</span>
+                    {task.done ? (
+                      <div className="flex h-[17px] w-[17px] flex-shrink-0 items-center justify-center rounded-full bg-indigo-600 shadow-sm shadow-indigo-200">
+                        <svg width="7" height="7" viewBox="0 0 10 10" fill="none">
+                          <path d="M1 5L4 8L9 2" stroke="white" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                      </div>
+                    ) : (
+                      <div className="h-[17px] w-[17px] flex-shrink-0 rounded-full border-2 border-gray-200" />
+                    )}
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+            <div className="flex items-center gap-2 rounded-xl border border-dashed border-gray-200 px-3 py-2.5">
+              <div className="flex h-[17px] w-[17px] items-center justify-center rounded-full border-2 border-indigo-200">
+                <svg width="7" height="7" viewBox="0 0 10 10" fill="none">
+                  <path d="M5 1v8M1 5h8" stroke="#818CF8" strokeWidth="1.8" strokeLinecap="round" />
+                </svg>
+              </div>
+              <span className="text-[10.5px] font-medium text-gray-300">
+                Add revision session<Cursor />
+              </span>
+            </div>
+          </motion.div>
+        )}
+
+        {/* TAB 1: Quiz Mode */}
+        {activeTab === 1 && (
+          <motion.div
+            key="quiz"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.26, ease }}
+            style={{ padding: "14px" }}
+            className="grid gap-2.5"
+          >
+            <div>
+              <p className="mb-2 text-[8.5px] font-semibold uppercase tracking-wider text-gray-400">Choose Subject</p>
+              <div className="flex flex-wrap gap-1.5">
+                {SUBJECTS.map((s, i) => (
+                  <motion.span
+                    key={s.label}
+                    initial={{ opacity: 0, scale: 0.88 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.06 + i * 0.07, ease }}
+                    whileHover={{ scale: 1.05 }}
+                    className="cursor-pointer rounded-full px-3 py-1.5 text-[10.5px] font-semibold"
+                    style={{ background: s.color, color: s.text }}
+                  >
+                    {s.label}
+                  </motion.span>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-black/[0.05] bg-[#F9FAFB] p-3.5">
+              <div className="mb-2.5 flex items-center gap-2">
+                <span className="rounded-md bg-indigo-50 px-2 py-0.5 text-[8.5px] font-bold uppercase tracking-wider text-indigo-500">Q12 of 40</span>
+                <span className="ml-auto text-[8.5px] font-semibold text-gray-400">⏱ 28:14 left</span>
+              </div>
+              <AnimatePresence mode="wait">
+                <motion.p
+                  key={qIdx}
+                  initial={{ opacity: 0, y: 5 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -5 }}
+                  transition={{ duration: 0.28, ease }}
+                  className="text-[12px] font-semibold leading-snug tracking-[-0.01em] text-gray-800"
+                >
+                  {QUESTIONS[qIdx]}
+                </motion.p>
+              </AnimatePresence>
+              <div className="mt-2.5 grid grid-cols-2 gap-1.5">
+                {["Option A", "Option B", "Option C", "Option D"].map((opt, i) => (
+                  <div
+                    key={i}
+                    className={`rounded-xl border px-2.5 py-2 text-[10px] font-medium ${
+                      i === 1 ? "border-emerald-300 bg-emerald-50 text-emerald-700" : "border-black/[0.05] bg-white text-gray-500"
+                    }`}
+                  >
+                    {opt}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-black/[0.04] bg-white px-3 py-2.5">
+              <div className="mb-1 flex justify-between">
+                <span className="text-[8.5px] font-semibold uppercase tracking-wider text-gray-400">Progress</span>
+                <span className="text-[8.5px] font-semibold text-indigo-500">12 / 40</span>
+              </div>
+              <div className="h-1.5 overflow-hidden rounded-full bg-gray-100">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "30%" }}
+                  transition={{ duration: 1.2, delay: 0.3, ease }}
+                  className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-violet-500"
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+
+        {/* TAB 2: Progress */}
+        {activeTab === 2 && (
+          <motion.div
+            key="progress"
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.26, ease }}
+            style={{ padding: "14px" }}
+            className="grid gap-2.5"
+          >
+            <div className="rounded-2xl border border-black/[0.05] bg-[#F9FAFB] p-3.5">
+              <div className="mb-2.5 flex items-center justify-between">
+                <p className="text-[8.5px] font-semibold uppercase tracking-wider text-gray-400">Sessions this week</p>
+                <span className="rounded-full bg-emerald-50 px-2 py-0.5 text-[8.5px] font-semibold text-emerald-600">+3 vs last week</span>
+              </div>
+              <div className="flex items-end gap-1.5" style={{ height: 60 }}>
+                {BAR_HEIGHTS.map((h, i) => (
+                  <div key={i} className="flex flex-1 flex-col items-center gap-1">
+                    <motion.div
+                      initial={{ scaleY: 0 }}
+                      animate={{ scaleY: 1 }}
+                      transition={{ duration: 0.5, delay: 0.1 + i * 0.07, ease }}
+                      style={{ originY: 1, height: h }}
+                      className={`w-full rounded-full ${i === 5 ? "bg-gradient-to-t from-indigo-600 to-violet-500" : "bg-indigo-100"}`}
+                    />
+                    <span className={`text-[7.5px] font-semibold ${i === 5 ? "text-indigo-500" : "text-gray-300"}`}>
+                      {DAY_LABELS[i]}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-2xl border border-black/[0.05] bg-[#F9FAFB] p-3.5">
+              <p className="mb-2.5 text-[8.5px] font-semibold uppercase tracking-wider text-gray-400">Chapter Completion</p>
+              {CHAPTERS.map((ch, i) => (
+                <div key={i} className="mb-2.5 last:mb-0">
+                  <div className="mb-1 flex justify-between">
+                    <span className="text-[10px] font-medium text-gray-600">{ch.label}</span>
+                    <span className="text-[9.5px] font-semibold" style={{ color: ch.color }}>{ch.pct}%</span>
+                  </div>
+                  <div className="h-1.5 overflow-hidden rounded-full bg-gray-200/60">
+                    <motion.div
+                      initial={{ width: 0 }}
+                      animate={{ width: `${ch.pct}%` }}
+                      transition={{ duration: 0.9, delay: 0.15 + i * 0.15, ease }}
+                      className="h-full rounded-full"
+                      style={{ background: ch.color }}
+                    />
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="flex items-center gap-2.5 rounded-xl border border-indigo-100 bg-indigo-50/60 px-3 py-2.5">
+              <span className="text-sm leading-none">💡</span>
+              <p className="text-[10.5px] font-medium leading-snug text-indigo-700">
+                You study best between <strong>7–9 PM</strong>. Next session in 2 hrs.
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+}
+
+// ─── Main Hero ────────────────────────────────────────────────────────────────
 
 export default function Hero() {
   const navigate = useNavigate();
   const { isSignedIn } = useUser();
-
-  const fadeUp = {
-    hidden: {
-      opacity: 0,
-      y: 30,
-    },
-
-    visible: (delay = 0) => ({
-      opacity: 1,
-      y: 0,
-
-      transition: {
-        duration: 0.8,
-        delay,
-        ease: [0.22, 1, 0.36, 1],
-      },
-    }),
-  };
+  const shouldReduceMotion = useReducedMotion();
 
   return (
     <main className="relative overflow-hidden bg-[#F7F8FA] text-[#111827]">
 
-      {/* BACKGROUND */}
-      <div className="absolute inset-0 -z-10 overflow-hidden">
-
-        {/* MAIN BLUR */}
+      {/* Atmospheric background */}
+      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
         <motion.div
-          animate={{
-            x: [0, 40, 0],
-            y: [0, -20, 0],
-          }}
-          transition={{
-            duration: 12,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute left-1/2 top-0 h-[350px] w-[500px] -translate-x-1/2 rounded-full bg-indigo-100/50 blur-3xl sm:h-[500px] sm:w-[700px]"
+          animate={shouldReduceMotion ? {} : { x: [0, 40, 0], y: [0, -20, 0] }}
+          transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute left-1/2 top-[-80px] h-[440px] w-[680px] -translate-x-1/2 rounded-full bg-indigo-100/50 blur-[90px] sm:h-[560px] sm:w-[860px]"
         />
-
-        {/* SECOND BLUR */}
         <motion.div
-          animate={{
-            x: [0, -30, 0],
-            y: [0, 20, 0],
-          }}
-          transition={{
-            duration: 15,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-          className="absolute right-0 top-40 h-[220px] w-[220px] rounded-full bg-violet-100/40 blur-3xl sm:h-[300px] sm:w-[300px]"
+          animate={shouldReduceMotion ? {} : { x: [0, -26, 0], y: [0, 24, 0] }}
+          transition={{ duration: 17, repeat: Infinity, ease: "easeInOut" }}
+          className="absolute -right-24 top-32 h-[260px] w-[260px] rounded-full bg-violet-200/28 blur-[64px] sm:h-[360px] sm:w-[360px]"
+        />
+        <motion.div
+          animate={shouldReduceMotion ? {} : { x: [0, 20, 0], y: [0, -14, 0] }}
+          transition={{ duration: 20, repeat: Infinity, ease: "easeInOut", delay: 4 }}
+          className="absolute -bottom-10 -left-10 h-[180px] w-[300px] rounded-full bg-sky-100/35 blur-[60px]"
+        />
+        <div
+          className="absolute inset-0 opacity-[0.016]"
+          style={{ backgroundImage: "radial-gradient(circle, #111827 1px, transparent 1px)", backgroundSize: "28px 28px" }}
         />
       </div>
 
-      {/* NAVBAR */}
       <Navbar />
 
-      {/* HERO */}
-      <section className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pb-14 pt-24 sm:px-6 sm:pb-16 sm:pt-28 lg:flex-row lg:items-center lg:gap-20 lg:px-10">
+      <section className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-5 pb-16 pt-20 sm:px-8 sm:pb-20 sm:pt-26 lg:flex-row lg:items-center lg:gap-14 lg:px-12 xl:gap-20">
 
-        {/* LEFT */}
-        <div className="flex-1">
+        {/* LEFT: Copy */}
+        <div className="flex-1 lg:max-w-[540px] xl:max-w-[600px]">
 
-          {/* BADGE */}
+          {/* Trust badge */}
           <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0}
-            className="mb-6 inline-flex items-center gap-2 rounded-full border border-black/5 bg-white px-4 py-2 shadow-sm"
+            variants={fadeUp} initial="hidden" animate="visible" custom={0}
+            className="mb-6 inline-flex items-center gap-2.5 rounded-full border border-black/[0.06] bg-white px-4 py-2 shadow-sm sm:mb-7"
           >
-            <div className="h-2 w-2 rounded-full bg-emerald-500" />
-
-            <span className="text-[13px] font-medium text-gray-600">
-              Trusted by 150+ students
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-55" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-500" />
+            </span>
+            <span className="text-[12px] font-medium tracking-[-0.01em] text-gray-500 sm:text-[12.5px]">
+              Trusted by 250+ students
             </span>
           </motion.div>
 
-          {/* HEADING */}
+          {/* Heading */}
           <motion.h1
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.1}
-            className="max-w-[320px] text-[36px] font-semibold leading-[1.02] tracking-tight text-black sm:max-w-3xl sm:text-6xl lg:text-7xl"
+            variants={fadeUp} initial="hidden" animate="visible" custom={0.08}
+            className="text-[36px] font-semibold leading-[1.06] tracking-[-0.032em] text-black sm:text-[52px] md:text-[58px] lg:text-[60px] xl:text-[68px]"
           >
             Build a study routine
-            <span className="text-gray-400">
-              {" "}you’ll actually follow.
-            </span>
+            <br />
+            <span style={{ color: "#9CA3AF" }}>you'll actually follow.</span>
           </motion.h1>
 
-          {/* DESCRIPTION */}
+          {/* Sub-copy */}
           <motion.p
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.2}
-            className="mt-6 max-w-xl text-[15px] leading-7 text-gray-500 sm:text-lg sm:leading-8"
+            variants={fadeUp} initial="hidden" animate="visible" custom={0.17}
+            className="mt-4 max-w-[380px] text-[14px] leading-[1.78] text-gray-500 sm:mt-5 sm:max-w-[420px] sm:text-[16px] lg:text-[15.5px]"
           >
-            StudyFlow helps students plan sessions,
-            practice smarter, track consistency,
-            and stay focused without feeling overwhelmed.
+            StudyFlow helps you plan sessions, practice board questions,
+            track chapters, and stay consistent — without the overwhelm.
           </motion.p>
 
-          {/* BUTTONS */}
+          {/* Feature tags */}
           <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.3}
-            className="mt-8 flex flex-col gap-3 sm:flex-row"
+            variants={fadeUp} initial="hidden" animate="visible" custom={0.24}
+            className="mt-4 flex flex-wrap gap-2 sm:mt-5"
           >
-            <button
-              onClick={() => navigate("/planner")}
-              className="rounded-2xl bg-black px-7 py-4 text-sm font-medium text-white transition-all duration-300 hover:-translate-y-[1px] hover:shadow-lg active:scale-[0.98]"
-            >
-              Start studying
-            </button>
-
-            <button
-              onClick={() => {
-                const section =
-                  document.getElementById("features");
-
-                if (section) {
-                  section.scrollIntoView({
-                    behavior: "smooth",
-                  });
-                }
-              }}
-              className="rounded-2xl border border-black/5 bg-white/70 px-7 py-4 text-sm font-medium text-gray-700 backdrop-blur transition-all duration-300 hover:bg-white"
-            >
-              Explore platform
-            </button>
+            {TAGS.map((tag) => (
+              <motion.span
+                key={tag}
+                whileHover={{ scale: 1.04, y: -1 }}
+                className="cursor-default rounded-full border border-black/[0.06] bg-white px-3 py-1 text-[11px] font-medium text-gray-600 shadow-sm sm:text-[11.5px]"
+              >
+                {tag}
+              </motion.span>
+            ))}
           </motion.div>
 
-          {/* STATS */}
+          {/* CTA buttons */}
           <motion.div
-            variants={fadeUp}
-            initial="hidden"
-            animate="visible"
-            custom={0.4}
-            className="mt-12 grid grid-cols-3 gap-3 sm:mt-14 sm:flex sm:flex-wrap sm:items-center sm:gap-10"
+            variants={fadeUp} initial="hidden" animate="visible" custom={0.32}
+            className="mt-7 flex flex-col gap-3 sm:mt-8 sm:flex-row sm:gap-4"
           >
-            <div>
-              <p className="text-xl font-semibold sm:text-3xl">
-                <Counter to={190} suffix="+" />
-              </p>
+            <motion.button
+              whileHover={{ scale: 1.018, y: -1.5 }}
+              whileTap={{ scale: 0.972 }}
+              onClick={() => navigate("/planner")}
+              className="group relative overflow-hidden rounded-2xl bg-black px-6 py-3.5 text-[13px] font-medium text-white shadow-[0_2px_20px_rgba(0,0,0,0.18)] transition-shadow duration-300 hover:shadow-[0_4px_28px_rgba(0,0,0,0.26)] sm:px-7 sm:py-4 sm:text-[13.5px]"
+            >
+              <span className="relative z-10 flex items-center justify-center gap-2">
+                Start studying
+                <motion.span
+                  animate={{ x: [0, 3, 0] }}
+                  transition={{ duration: 1.6, repeat: Infinity, ease: "easeInOut" }}
+                >→</motion.span>
+              </span>
+              <motion.span
+                initial={{ x: "-100%" }}
+                whileHover={{ x: "0%" }}
+                transition={{ duration: 0.36, ease }}
+                className="absolute inset-0 bg-gradient-to-r from-indigo-700 to-violet-700"
+              />
+            </motion.button>
 
-              <p className="mt-1 text-[11px] text-gray-500 sm:text-sm">
-                active students
-              </p>
-            </div>
+            <motion.button
+              whileHover={{ scale: 1.012, y: -1 }}
+              whileTap={{ scale: 0.972 }}
+              onClick={() => {
+                const el = document.getElementById("features");
+                if (el) el.scrollIntoView({ behavior: "smooth" });
+              }}
+              className="flex items-center justify-center gap-2 rounded-2xl border border-black/[0.08] bg-white/80 px-6 py-3.5 text-[13px] font-medium text-gray-700 backdrop-blur-sm transition-all duration-300 hover:border-black/[0.14] hover:bg-white hover:shadow-sm sm:px-7 sm:py-4 sm:text-[13.5px]"
+            >
+              Explore platform
+            </motion.button>
+          </motion.div>
 
-            <div>
-              <p className="text-xl font-semibold sm:text-3xl">
-                <Counter to={10} suffix="k+" />
-              </p>
-
-              <p className="mt-1 text-[11px] text-gray-500 sm:text-sm">
-                quizzes completed
-              </p>
-            </div>
-
-            <div>
-              <p className="text-xl font-semibold sm:text-3xl">
-                <Counter to={92} suffix="%" />
-              </p>
-
-              <p className="mt-1 text-[11px] text-gray-500 sm:text-sm">
-                weekly consistency
-              </p>
-            </div>
+          {/* Stats */}
+          <motion.div
+            variants={fadeUp} initial="hidden" animate="visible" custom={0.42}
+            className="mt-10 flex flex-wrap items-start gap-x-7 gap-y-4 sm:mt-12 sm:gap-x-10"
+          >
+            {STATS.map(({ to, suffix, label }) => (
+              <div key={label}>
+                <p className="text-[20px] font-semibold tracking-[-0.025em] text-black sm:text-[26px] lg:text-[28px]">
+                  <Counter to={to} suffix={suffix} />
+                </p>
+                <p className="mt-0.5 text-[10.5px] font-medium text-gray-400 sm:text-[12.5px]">{label}</p>
+              </div>
+            ))}
           </motion.div>
         </div>
 
-        {/* RIGHT */}
+        {/* RIGHT: Product card */}
         <motion.div
-          variants={fadeUp}
-          initial="hidden"
-          animate="visible"
-          custom={0.5}
-          className="relative mt-12 mx-auto w-full max-w-[340px] flex-1 sm:mt-16 sm:max-w-none lg:mt-0"
+          variants={fadeUp} initial="hidden" animate="visible" custom={0.48}
+          className="relative mx-auto mt-12 w-full max-w-[320px] flex-shrink-0 sm:mt-14 sm:max-w-[380px] lg:mt-0 lg:w-[390px] xl:w-[430px]"
         >
-
-          {/* FLOATING CARD */}
-          <motion.div
-            animate={{
-              y: [0, -10, 0],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className="absolute -top-5 right-3 z-20 hidden rounded-2xl border border-black/5 bg-white px-4 py-3 shadow-xl lg:block"
-          >
-            <p className="text-xs text-gray-400">
-              Weekly consistency
-            </p>
-
-            <div className="mt-1 flex items-end gap-2">
-              <span className="text-2xl font-semibold">
-                92%
-              </span>
-
-              <span className="text-sm text-emerald-600">
-                +12%
-              </span>
-            </div>
-          </motion.div>
-
-          {/* MAIN CARD */}
-          <motion.div
-            animate={{
-              y: [0, -6, 0],
-            }}
-            transition={{
-              duration: 6,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            whileHover={{
-              y: -3,
-            }}
-            className="overflow-hidden rounded-[24px] border border-black/5 bg-white shadow-[0_20px_80px_rgba(0,0,0,0.08)] sm:rounded-[30px]"
-          >
-
-            {/* TOP BAR */}
-            <div className="flex items-center gap-2 border-b border-black/5 px-4 py-3 sm:px-5 sm:py-4">
-              <div className="h-3 w-3 rounded-full bg-red-300" />
-
-              <div className="h-3 w-3 rounded-full bg-yellow-300" />
-
-              <div className="h-3 w-3 rounded-full bg-green-300" />
-            </div>
-
-            {/* CONTENT */}
-            <div className="grid gap-2.5 p-3.5 sm:gap-4 sm:p-5">
-
-              {/* TOP GRID */}
-              <div className="grid grid-cols-3 gap-2.5 sm:gap-4">
-
-                {/* STREAK */}
-                <motion.div
-                  animate={{
-                    y: [0, -2, 0],
-                  }}
-                  transition={{
-                    duration: 3,
-                    repeat: Infinity,
-                    ease: "easeInOut",
-                  }}
-                  className="rounded-2xl border border-black/5 bg-[#F9FAFB] p-3 sm:p-4"
-                >
-                  <p className="text-[9px] uppercase tracking-wide text-gray-400 sm:text-xs">
-                    Streak
-                  </p>
-
-                  <h3 className="mt-2 text-xl font-semibold sm:mt-3 sm:text-3xl">
-                    14
-                  </h3>
-
-                  <p className="mt-1 text-[10px] text-gray-500 sm:text-sm">
-                    days active
-                  </p>
-                </motion.div>
-
-                {/* PROGRESS */}
-                <div className="col-span-2 rounded-2xl border border-black/5 bg-[#F9FAFB] p-3 sm:p-4">
-
-                  <div className="flex items-center justify-between">
-
-                    <p className="text-[9px] uppercase tracking-wide text-gray-400 sm:text-xs">
-                      Weekly Progress
-                    </p>
-
-                    <p className="text-[10px] text-emerald-600 sm:text-sm">
-                      +18%
-                    </p>
-                  </div>
-
-                  {/* CHART */}
-                  <div className="mt-4 flex items-end gap-1.5 sm:mt-6 sm:gap-2">
-                    {[35, 55, 40, 75, 60, 90, 72].map(
-                      (height, i) => (
-                        <motion.div
-                          key={i}
-                          initial={{
-                            height: 0,
-                          }}
-                          animate={{
-                            height,
-                          }}
-                          transition={{
-                            duration: 0.7,
-                            delay: i * 0.08,
-                          }}
-                          className="flex-1 rounded-full bg-gradient-to-t from-indigo-600 to-violet-500"
-                        />
-                      )
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              {/* TASKS */}
-              <div className="rounded-2xl border border-black/5 bg-[#F9FAFB] p-4 sm:p-5">
-
-                <div className="flex items-center justify-between">
-
-                  <h3 className="text-[13px] font-medium sm:text-sm">
-                    Today's Study Plan
-                  </h3>
-
-                  <span className="text-[10px] text-gray-400 sm:text-sm">
-                    3 tasks
-                  </span>
-                </div>
-
-                <div className="mt-4 flex flex-col gap-2.5 sm:gap-3">
-
-                  {[
-                    {
-                      title: "Physics Revision",
-                      time: "7:00 PM",
-                      completed: true,
-                    },
-
-                    {
-                      title: "Math Mock Test",
-                      time: "8:30 PM",
-                    },
-
-                    {
-                      title: "Chemistry Quiz",
-                      time: "10:00 PM",
-                    },
-                  ].map((task, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{
-                        opacity: 0,
-                        x: -10,
-                      }}
-                      animate={{
-                        opacity: 1,
-                        x: 0,
-                      }}
-                      transition={{
-                        delay: i * 0.12,
-                      }}
-                      className="flex items-center justify-between rounded-xl border border-black/5 bg-white px-3 py-2.5 sm:px-4 sm:py-3"
-                    >
-                      <div className="flex items-center gap-3">
-
-                        {/* CHECK */}
-                        <div
-                          className={`flex h-5 w-5 items-center justify-center rounded-full border ${
-                            task.completed
-                              ? "border-indigo-600 bg-indigo-600 text-white"
-                              : "border-gray-300"
-                          }`}
-                        >
-                          {task.completed && (
-                            <svg
-                              width="10"
-                              height="10"
-                              viewBox="0 0 10 10"
-                              fill="none"
-                            >
-                              <path
-                                d="M1 5L4 8L9 2"
-                                stroke="white"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          )}
-                        </div>
-
-                        {/* TEXT */}
-                        <div>
-                          <p
-                            className={`text-[12px] font-medium sm:text-sm ${
-                              task.completed
-                                ? "text-gray-400 line-through"
-                                : "text-black"
-                            }`}
-                          >
-                            {task.title}
-                          </p>
-
-                          <p className="text-[10px] text-gray-400 sm:text-xs">
-                            {task.time}
-                          </p>
-                        </div>
-                      </div>
-
-                      <span className="text-[10px] text-gray-400 sm:text-xs">
-                        45 min
-                      </span>
-                    </motion.div>
-                  ))}
-                </div>
+          <FloatingBadge delay={0.75} offsetClass="-right-3 -top-6 xl:-right-6">
+            <div className="px-4 py-3">
+              <p className="text-[9.5px] font-semibold uppercase tracking-wider text-gray-400">Focus Mode</p>
+              <div className="mt-1 flex items-center gap-2">
+                <div className="h-2 w-2 rounded-full bg-emerald-400" />
+                <span className="text-[12.5px] font-semibold text-gray-800">Session active</span>
               </div>
             </div>
+          </FloatingBadge>
+
+          <FloatingBadge delay={0.95} offsetClass="-bottom-5 -left-5 xl:-left-8">
+            <div className="px-3.5 py-2.5">
+              <p className="text-[9.5px] font-semibold uppercase tracking-wider text-gray-400">Board Practice</p>
+              <p className="mt-0.5 text-[12.5px] font-semibold text-indigo-600">40 MCQs ready</p>
+            </div>
+          </FloatingBadge>
+
+          {/* Card ambient glow */}
+          <div
+            className="pointer-events-none absolute -inset-6 -z-10 rounded-full opacity-40 blur-[40px]"
+            style={{ background: "radial-gradient(ellipse, rgba(99,102,241,0.18) 0%, transparent 70%)" }}
+          />
+
+          <motion.div
+            animate={shouldReduceMotion ? {} : { y: [0, -8, 0] }}
+            transition={{ duration: 5.5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <HeroCard />
           </motion.div>
         </motion.div>
       </section>
