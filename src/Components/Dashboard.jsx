@@ -781,32 +781,7 @@ export default function Dashboard() {
     onClick={() => navigate("/")}
     className="flex items-center gap-2.5 group"
   >
-    {/* Premium Logo Icon */}
-    <div className="relative w-9 h-9 rounded-2xl bg-gradient-to-br from-indigo-600 via-violet-600 to-indigo-700 flex items-center justify-center shadow-lg shadow-indigo-200">
-      <div className="absolute inset-[1px] rounded-2xl bg-white/10 backdrop-blur-sm" />
-
-      <svg
-        width="18"
-        height="18"
-        viewBox="0 0 24 24"
-        fill="none"
-        className="relative z-10"
-      >
-        <path
-          d="M5 17L12 6L19 17"
-          stroke="white" 
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M8.5 13H15.5"
-          stroke="white"
-          strokeWidth="2"
-          strokeLinecap="round"
-        />
-      </svg>
-    </div>
+   
 
     {/* Text Logo */}
     <div className="flex flex-col leading-none">

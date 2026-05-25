@@ -220,7 +220,7 @@ function BoardPreview() {
     <div className="mt-5 flex flex-col gap-2">
       {[
         ["English Passage", "8/10"],
-        ["2024 PYQ", "14/15"],
+        ["All years combine PYQ", "2014-26"],
         ["Mock Test", "Ready"],
       ].map(([title, score], i) => (
         <motion.div
@@ -456,8 +456,8 @@ export default function Features() {
 
           {/* DESC */}
           <p className="mx-auto mt-4 max-w-xl text-sm sm:text-base leading-7 text-gray-500">
-            Planning, quizzes, board prep, and progress tracking —
-            all in one beautiful workspace built for students.
+            Planning, quizzes, board prep, and progress tracking 
+            all in one workspace built for students.
           </p>
         </motion.div>
 
