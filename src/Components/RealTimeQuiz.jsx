@@ -117,7 +117,7 @@ function FocusWarning({ count, visible }) {
 }
 
 /* ─── Main Component ─────────────────────────────────────────── */
-export default function RealTimeQuiz({ quiz, onExit }) {
+export default function RealTimeQuiz({ quiz,   studentName, onExit }) {
   const { user } = useUser();
 
   /* ─── ALL ORIGINAL STATE (UNCHANGED) ─── */
@@ -174,10 +174,14 @@ export default function RealTimeQuiz({ quiz, onExit }) {
 
   /* ─── SAVE RESULT (UNCHANGED) ─── */
   const saveResult = async () => {
-    if (!user || savedRef.current) return;
-    savedRef.current = true;
-    await supabase.from("board_results").insert({
+  if (!user || savedRef.current) return;
+  savedRef.current = true;
+
+  const { data, error } = await supabase
+    .from("board_results")
+    .insert({
       user_id: user.id,
+      student_name: studentName,
       class: quiz.class,
       test_id: quiz.id,
       test_name: quiz.title,
@@ -186,7 +190,10 @@ export default function RealTimeQuiz({ quiz, onExit }) {
       time_taken: seconds,
       accuracy: Math.round((score / total) * 100),
     });
-  };
+
+  console.log("DATA:", data);
+  console.log("ERROR:", error);
+};
 
   /* ─── END TEST (UNCHANGED LOGIC) ─── */
   if (!q) {

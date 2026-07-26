@@ -27,7 +27,7 @@ import { math12Test1 }             from "../data/math12_test1";
 import { biology12Test1 }          from "../data/biology12_test1";
 import { english12Test1 }          from "../data/english12_test1";
 import RealTimeQuiz                from "./RealTimeQuiz";
-
+import StudentNameModal from "./StudentNameModal";
 // ─── CSS injection (single call, idempotent) ──────────────────────────────────
 const SF_STYLE_ID = "sf-bp-v2";
 function injectStyles() {
@@ -445,7 +445,7 @@ function Pagination({ page, total, onPrev, onNext, onDot }) {
 /** Loader */
 function Loader() {
   const [step, setStep]   = useState(0);
-  const [tipIdx, setTip]  = useState(0);
+   const [tipIdx, setTipIdx] = useState(0);
   const [tipKey, setTipKey] = useState(0);
 
   useEffect(() => {
@@ -581,7 +581,10 @@ export default function BoardPractice() {
   const [selectedQuiz,  setSelectedQuiz]  = useState(null);
   const [isLoading,     setIsLoading]     = useState(false);
   const [page,          setPage]          = useState(0);
-  const [gridKey,       setGridKey]       = useState(0); // re-trigger card animations
+  const [gridKey,       setGridKey]       = useState(0); 
+  const [showNameModal, setShowNameModal] = useState(false);
+const [studentName, setStudentName] = useState("");
+const [pendingQuiz, setPendingQuiz] = useState(null);
 
   useEffect(() => { injectStyles(); }, []);
 
@@ -594,47 +597,80 @@ export default function BoardPractice() {
     return chosen;
   };
 
-  const startTest = () => {
-    if (!category || !selectedClass) return;
-    setIsLoading(true);
-    setTimeout(() => {
-      let quiz = null;
-      if (selectedClass === 10) {
-        const MAP = {
-          case: getUniqueCaseStudy(), bio: biology10Test1,     phy: physics10Test1,
-          chem: chemistry10Test1,    ff:  firstFlight10,       fp:  footprints10,
-          math10: math10,            hist: history10Test1,     geo: geography10Test1,
-          pol:  politicalScience10Test1,                       eco: economics10Test1,
-        };
-        quiz = MAP[category] ?? null;
-      }
-      if (selectedClass === 11) {
-        const MAP = { phy11: physics11Test1, chem11: chemistry11Test1, math11: math11Test1, bio11: biology11Test1 };
-        quiz = MAP[category] ?? null;
-      }
-      if (selectedClass === 12) {
-        const MAP = { phy12: physics12Test1, chem12: chemistry12Test1, math12: math12Test1, bio12: biology12Test1, eng12: english12Test1 };
-        quiz = MAP[category] ?? null;
-      }
-      setSelectedQuiz(quiz);
-      setIsLoading(false);
-    }, 9500);
-  };
+ const startTest = () => {
+  if (!category || !selectedClass) return;
+
+  setIsLoading(true);
+
+  setTimeout(() => {
+    let quiz = null;
+
+    if (selectedClass === 10) {
+      const MAP = {
+        case: getUniqueCaseStudy(),
+        bio: biology10Test1,
+        phy: physics10Test1,
+        chem: chemistry10Test1,
+        ff: firstFlight10,
+        fp: footprints10,
+        math10: math10,
+        hist: history10Test1,
+        geo: geography10Test1,
+        pol: politicalScience10Test1,
+        eco: economics10Test1,
+      };
+
+      quiz = MAP[category] ?? null;
+    }
+
+    if (selectedClass === 11) {
+      const MAP = {
+        phy11: physics11Test1,
+        chem11: chemistry11Test1,
+        math11: math11Test1,
+        bio11: biology11Test1,
+      };
+
+      quiz = MAP[category] ?? null;
+    }
+
+    if (selectedClass === 12) {
+      const MAP = {
+        phy12: physics12Test1,
+        chem12: chemistry12Test1,
+        math12: math12Test1,
+        bio12: biology12Test1,
+        eng12: english12Test1,
+      };
+
+      quiz = MAP[category] ?? null;
+    }
+
+   
+    setPendingQuiz(quiz);
+    setShowNameModal(true);
+    setIsLoading(false);
+
+  }, 9500);
+};
 
   const handleBack = () => {
     if (category) { setCategory(null); return; }
     window.location.href = "/";
   };
 
-  // ── route to quiz ───────────────────────────────────────────────────────────
   if (selectedQuiz) {
-    return (
-      <RealTimeQuiz
-        quiz={selectedQuiz}
-        onExit={() => { setSelectedQuiz(null); setCategory(null); }}
-      />
-    );
-  }
+  return (
+    <RealTimeQuiz
+      quiz={selectedQuiz}
+      studentName={studentName}
+      onExit={() => {
+        setSelectedQuiz(null);
+        setCategory(null);
+      }}
+    />
+  );
+}
 
   // ── subjects for current class ──────────────────────────────────────────────
   const allSubjects  = selectedClass === 10 ? CLASS10 : selectedClass === 11 ? CLASS11 : CLASS12;
@@ -729,11 +765,20 @@ export default function BoardPractice() {
           </p>
         )}
       </div>
-
-      {/* ── sticky bottom CTA ── */}
+          {/* ── sticky bottom CTA ── */}
       {category && !isLoading && (
         <BottomCTA subject={selectedSub} onStart={startTest} />
       )}
+
+      {/* Student Name Modal */}
+      <StudentNameModal
+        open={showNameModal}
+        onContinue={(name) => {
+          setStudentName(name);
+          setShowNameModal(false);
+          setSelectedQuiz(pendingQuiz);
+        }}
+      />
     </div>
   );
 }
