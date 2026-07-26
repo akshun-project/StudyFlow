@@ -7,172 +7,201 @@ export const math12Test1 = {
   title: "Class 12 Mathematics — Full Test (40 MCQs)",
 
   questions: [
-    {
+        {
       id: 1,
-      question:
-        "If A is a square matrix of order 3 such that |A| = -5, then what is the value of |3A|?",
-      options: ["-15", "-45", "-135", "135"],
-      correctIndex: 2,
+      question: "The principal value of sin⁻¹(sin(2π/3)) is:",
+      options: ["2π/3", "π/3", "-π/3", "4π/3"],
+      correctIndex: 1,
     },
 
     {
       id: 2,
-      question: "What is the principal value of cos⁻¹(cos(7π/6))?",
-      options: ["7π/6", "5π/6", "π/6", "-π/6"],
+      question: "The range of the function cosec⁻¹x is:",
+      options: [
+        "[-π/2, π/2]",
+        "[-π/2, π/2] − {0}",
+        "(0, π)",
+        "[0, π] − {π/2}",
+      ],
       correctIndex: 1,
     },
 
     {
       id: 3,
-      question:
-        "If A is a symmetric matrix and B is a skew-symmetric matrix of the same order, then the matrix AB - BA is always a:",
-      options: [
-        "Symmetric matrix",
-        "Skew-symmetric matrix",
-        "Identity matrix",
-        "Zero matrix",
-      ],
-      correctIndex: 0,
-    },
-
-    {
-      id: 4,
-      question:
-        "If A is a 2×2 matrix such that |A| = 3, then the value of |2A| is:",
-      options: ["6", "9", "12", "24"],
+      question: "The value of tan⁻¹(√3) − cot⁻¹(−√3) is:",
+      options: ["π", "π/2", "-π/2", "π/3"],
       correctIndex: 2,
     },
 
     {
+      id: 4,
+      question: "The domain of cos⁻¹(2x − 1) is:",
+      options: ["[0,1]", "[-1,1]", "(-1,1)", "[0,π]"],
+      correctIndex: 0,
+    },
+
+    {
       id: 5,
-      question:
-        "If A is a 3×3 invertible matrix, then which of the following is equal to |adj A|?",
-      options: ["|A|", "|A|²", "|A|³", "3|A|"],
-      correctIndex: 1,
+      question: "The value of sin[π/3 − sin⁻¹(−1/2)] is:",
+      options: ["1/2", "√3/2", "0", "1"],
+      correctIndex: 3,
     },
 
     {
       id: 6,
-      question: "Evaluate tan⁻¹(1) + cos⁻¹(-1/2) + sin⁻¹(-1/2).",
-      options: ["π/4", "3π/4", "π/2", "11π/12"],
-      correctIndex: 1,
+      question:
+        "If tan⁻¹x + tan⁻¹y = 4π/5, then cot⁻¹x + cot⁻¹y equals:",
+      options: ["π/5", "2π/5", "3π/5", "π"],
+      correctIndex: 0,
     },
 
     {
       id: 7,
       question:
-        "If a matrix A is both symmetric and skew-symmetric, then A must be a:",
+        "The simplest form of tan⁻¹[(cos x)/(1 − sin x)] for −π/2 < x < π/2 is:",
       options: [
-        "Diagonal matrix",
-        "Zero matrix",
-        "Identity matrix",
-        "Scalar matrix",
+        "x/2",
+        "π/4 − x/2",
+        "π/4 + x/2",
+        "π/4 − x",
       ],
-      correctIndex: 1,
-    },
-
-    {
-      id: 8,
-      question:
-        "Let A be a square matrix of order 3×3. If every element of A is multiplied by 2 to form matrix B, then how are the determinants |A| and |B| related?",
-      options: ["|B| = 2|A|", "|B| = 4|A|", "|B| = 8|A|", "|B| = 6|A|"],
       correctIndex: 2,
     },
 
     {
-      id: 9,
-      question: "What is the value of tan(cos⁻¹(4/5) + tan⁻¹(2/3))?",
-      options: ["6/17", "17/6", "7/12", "17/12"],
+      id: 8,
+      question: "If 3sin⁻¹x = π, then x is:",
+      options: ["1/2", "√3/2", "1", "1/√2"],
       correctIndex: 1,
     },
 
     {
+      id: 9,
+      question: "The value of tan[(1/2)cos⁻¹(2/3)] is:",
+      options: ["√5", "√5/5", "1/√5", "√(5/13)"],
+      correctIndex: 2,
+    },
+
+    {
       id: 10,
-      question:
-        "If A and B are square matrices of the same order such that AB = A and BA = B, then B² is equal to:",
-      options: ["A", "B", "I", "O"],
+      question: "The value of cos⁻¹(cos(7π/6)) is:",
+      options: ["7π/6", "5π/6", "π/6", "-π/6"],
       correctIndex: 1,
     },
 
     {
       id: 11,
       question:
-        "If two rows of a determinant are identical, then the value of the determinant is:",
-      options: ["1", "-1", "0", "Depends on matrix"],
-      correctIndex: 2,
+        "If f(x) = {kcosx/(π−2x), x ≠ π/2 and 3, x = π/2} is continuous at x = π/2, then k is:",
+      options: ["3", "6", "12", "3/2"],
+      correctIndex: 1,
     },
 
     {
       id: 12,
-      question:
-        "If the area of a triangle with vertices (2, -6), (5, 4), and (k, 4) is 35 square units, then the value of k is:",
-      options: ["12", "-2", "12 or -2", "12 or -4"],
-      correctIndex: 2,
+      question: "The derivative of log(sin x) with respect to x is:",
+      options: ["tan x", "cot x", "sec x", "cosec x"],
+      correctIndex: 1,
     },
 
     {
       id: 13,
-      question: "What is the principal value of tan⁻¹(tan(5π/6))?",
-      options: ["5π/6", "-π/6", "π/6", "-5π/6"],
+      question: "The function f(x) = |x − 1| is:",
+      options: [
+        "Continuous and differentiable at x = 1",
+        "Continuous but not differentiable at x = 1",
+        "Neither continuous nor differentiable at x = 1",
+        "Differentiable but not continuous at x = 1",
+      ],
       correctIndex: 1,
     },
+
     {
       id: 14,
       question:
-        "If A = [aᵢⱼ] is a 2×2 matrix whose elements are given by aᵢⱼ = (i + 2j)² / 2, then the element a₁₂ is:",
-      options: ["9/2", "25/2", "8", "18"],
+        "If x = a cosθ and y = b sinθ, then dy/dx is:",
+      options: [
+        "-(b/a)tanθ",
+        "-(b/a)cotθ",
+        "(b/a)cotθ",
+        "(a/b)tanθ",
+      ],
       correctIndex: 1,
     },
 
     {
       id: 15,
       question:
-        "If A is a singular matrix, then matrix A satisfies which of the following conditions?",
-      options: ["|A| ≠ 0", "|A| = 0", "A⁻¹ exists", "A = A'"],
-      correctIndex: 1,
+        "If y = tan⁻¹[(3x − x³)/(1 − 3x²)], then dy/dx is:",
+      options: [
+        "3/(1+x²)",
+        "1/(1+x²)",
+        "3/(1+9x²)",
+        "3x²/(1+x²)",
+      ],
+      correctIndex: 0,
     },
+
     {
       id: 16,
-      question:
-        "If A and B are invertible matrices of the same order, then which of the following statements is NOT correct?",
+      question: "If y = e^(x+y), then dy/dx is:",
       options: [
-        "|A⁻¹| = 1/|A|",
-        "(AB)⁻¹ = B⁻¹A⁻¹",
-        "(A + B)⁻¹ = A⁻¹ + B⁻¹",
-        "(A')⁻¹ = (A⁻¹)'",
+        "y/x",
+        "1/(y−1)",
+        "y/(1−y)",
+        "e^(x+y)/(1−e^(x+y))",
       ],
-      correctIndex: 2,
+      correctIndex: 3,
     },
 
     {
       id: 17,
-      question: "The principal value range of sin⁻¹ x is:",
-      options: ["[-π/2, π/2]", "[0, π]", "[-π, π]", "[0, 2π]"],
+      question: "The second derivative of x³ + tanx is:",
+      options: [
+        "6x + 2sec²x tanx",
+        "3x² + sec²x",
+        "6x + sec²x tanx",
+        "6x + 2secx",
+      ],
       correctIndex: 0,
     },
 
     {
       id: 18,
       question:
-        "If A is a square matrix of order 3 and |adj A| = 64, then the possible values of |A| are:",
-      options: ["±4", "±8", "8", "64"],
-      correctIndex: 1,
+        "If x = at² and y = 2at, then d²y/dx² is:",
+      options: [
+        "-1/(2at²)",
+        "1/(2at³)",
+        "-1/(2at³)",
+        "-1/t²",
+      ],
+      correctIndex: 2,
     },
 
     {
       id: 19,
       question:
-        "If A = [cos α  -sin α; sin α  cos α], and A + A' = I, then the value of α in the first quadrant is:",
-      options: ["π/6", "π/3", "π/4", "π/2"],
-      correctIndex: 1,
+        "For what value of λ is the function f(x) = {λ(x²−2x), x≤0 and 4x+1, x>0} continuous at x = 0?",
+      options: [
+        "0",
+        "1",
+        "Any real value",
+        "No value of λ",
+      ],
+      correctIndex: 3,
     },
 
     {
       id: 20,
-      question:
-        "If A is a 3×3 matrix and |A| = 4, then the determinant of adj(A) is:",
-      options: ["4", "16", "64", "2"],
-      correctIndex: 1,
+      question: "If y = log(log x), then dy/dx is:",
+      options: [
+        "1/x",
+        "1/log x",
+        "1/(x log x)",
+        "x/log x",
+      ],
+      correctIndex: 2,
     },
 
     {
