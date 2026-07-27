@@ -201,6 +201,7 @@ export default function RealTimeQuiz({ quiz,   studentName, onExit }) {
     saveResult();
     return (
       <BoardTestResult
+        studentName={studentName}
         score={score}
         total={total}
         timeSeconds={seconds}

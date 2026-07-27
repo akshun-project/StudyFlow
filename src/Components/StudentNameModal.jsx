@@ -66,8 +66,8 @@ export default function StudentNameModal({
           </div>
 
           <p className="mt-5 text-gray-500 leading-relaxed text-[15px]">
-            Before starting your board practice, tell us what you'd like to be
-            called. Your name will appear on your test report.
+            Before starting your board practice, tell us your name
+           Your name will appear on your test report.
           </p>
 
         </div>
@@ -97,7 +97,7 @@ export default function StudentNameModal({
               onKeyDown={(e) => {
                 if (e.key === "Enter") handleContinue();
               }}
-              placeholder="e.g. Akshun Jindal"
+              placeholder="e.g. Rahul Sharma"
               className="w-full rounded-2xl border border-gray-300 bg-white py-3.5 pl-12 pr-4 text-[15px] font-medium text-gray-900 outline-none transition-all duration-200 focus:border-violet-500 focus:ring-4 focus:ring-violet-100"
             />
 
@@ -125,7 +125,7 @@ export default function StudentNameModal({
           <button
             onClick={handleContinue}
             disabled={!name.trim()}
-            className="group mt-7 flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 font-semibold text-white transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-100 disabled:cursor-not-allowed disabled:opacity-50"
+            className="group mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-violet-600 to-indigo-600 font-semibold text-white transition-all duration-300 hover:shadow-xl hover:scale-[1.02] active:scale-100 disabled:cursor-not-allowed disabled:opacity-50"
           >
 
             Start Board Test
@@ -143,8 +143,6 @@ export default function StudentNameModal({
 
             <p className="text-center text-xs leading-relaxed text-gray-500">
               Your name is only used to identify your test reports.
-              <br />
-              We never share your personal information.
             </p>
 
           </div>
