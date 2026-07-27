@@ -129,7 +129,7 @@ export const math11Test1 = {
       id: 16,
       question: "The value of i³⁰⁰ + i⁶⁰⁰ + i⁹⁰⁰ is:",
       options: ["3", "1", "-1", "0"],
-      correctIndex: 2,
+      correctIndex: 0,
     },
 
   {
@@ -157,7 +157,7 @@ export const math11Test1 = {
       id: 20,
       question: "The value of i⁵⁶⁷ + i⁵⁶⁸ is:",
       options: ["-1 - i", "-1 + i", "1 + i", "1 - i"],
-      correctIndex: 1,
+      correctIndex: 3,
     },
   ],
 };

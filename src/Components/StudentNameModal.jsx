@@ -66,7 +66,7 @@ export default function StudentNameModal({
           </div>
 
           <p className="mt-5 text-gray-500 leading-relaxed text-[15px]">
-            Before starting your board practice, tell us your name
+            Before starting your board practice, tell us your name. 
            Your name will appear on your test report.
           </p>
 
