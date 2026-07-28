@@ -564,7 +564,7 @@ function BottomCTA({ subject, onStart }) {
 
         {/* social proof */}
         <p className="text-center text-[10px] text-slate-600 mt-2 font-medium">
-          🔥 Attempted by 10,000+ students this week
+          🔥 Attempted 1000+ quizzes this week by students
         </p>
 
         {/* iOS safe area */}
